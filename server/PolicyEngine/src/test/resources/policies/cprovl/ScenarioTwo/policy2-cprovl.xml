@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cprovl:POLICY xmlns:cprov="http://labs.orange.com/uk/cprov#" xmlns:cprovl="http://labs.orange.com/uk/cprovl#"
+	xmlns:prov="http://www.w3.org/ns/prov#" xmlns:cprovd="http://labs.orange.com/uk/cprovd#"
+	xmlns:r="http://labs.orange.com/uk/r#" xmlns:cu="http://www.w3.org/1999/xhtml/datatypes/"
+	xmlns:ex="http://labs.orange.com/uk/ex#" xmlns:opmx="http://openprovenance.org/model/opmx#"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://labs.orange.com/uk/cprovl#
+	file:/C:/Users/Mufajjul/Dropbox/EngD/year3/schema/cProvl/cProvl-v1.1.xsd">
+	<cprovl:entity prov:id="ex:policy1">
+		<cprovl:description>
+		</cprovl:description>
+	</cprovl:entity>
+	<cprovl:RULE>
+		<cprovl:entity prov:id="ex:rule1">
+			<cprovl:description>
+				Any non-provisioned Telco services can access user’s personal data, but cannot allow
+				access or share of these data to any 3rd party services that the user is not aware
+				of.
+			</cprovl:description>
+		</cprovl:entity>
+		<cprovl:DEF>
+			<cprovl:entity prov:id="ex:def">
+				<cprovl:range>cprovd:All</cprovl:range>
+			</cprovl:entity>
+		</cprovl:DEF>
+		<cprovl:IF cprovl:quantifier="cprovd:There-exist">
+			
+			<!-- -->
+			<cprovl:target>
+				<cprovl:ID cprovl:var_type="cprovd:d-ref" cprovl:var_identifier="ex:ag001" cprovl:category_type="cprovd:Subject">ex:ag001</cprovl:ID>
+			</cprovl:target>
+			
+			<!-- Telco Service 1 -->
+			<cprovl:target>
+				<cprovl:ID cprovl:var_identifier="ex:a001" cprovl:category_type="cprovd:Action">ex:a001</cprovl:ID>
+			</cprovl:target>
+			
+			<!-- Telco Service 2 -->
+			<cprovl:target>
+				<cprovl:ID cprovl:var_identifier="ex:a002" cprovl:category_type="cprovd:Action">ex:a002</cprovl:ID>
+			</cprovl:target>
+			
+			<!-- Telco Service 3 - Non telco service -->
+			<cprovl:target>
+				<cprovl:ID cprovl:var_identifier="ex:a003" cprovl:var_type="cprovd:s-ref" cprovl:category_type="cprovd:Action">ex:a003</cprovl:ID>
+			</cprovl:target>
+			
+			<!-- Any data -->
+			<cprovl:target>
+				<cprovl:ID cprovl:var_type="cprovd:new"
+					cprovl:var_identifier="r:e001">r:e001</cprovl:ID>
+			</cprovl:target>
+			
+			<!-- all the services using the data -->
+			<cprovl:target>
+				<cprovl:ID cprovl:var_type="cprovd:new"
+					cprovl:var_identifier="r:a001">r:a001</cprovl:ID>
+			</cprovl:target>
+			
+		</cprovl:IF>
+		<cprovl:SUCH-THAT>
+			<cprovl:statements>
+				
+				<!-- Check if the -->
+				
+				<!-- Get all the data associated with the user -->
+				<cprovl:statement>
+					
+					<cprov:hadOwnership>
+						<prov:entity prov:ref="r:e001" />
+						<prov:agent prov:ref="ex:ag001" />
+						<cprov:ownershipType>cprovd:Possession</cprov:ownershipType>
+					</cprov:hadOwnership>
+				</cprovl:statement>
+				
+				<!-- Check for all data wasExplicitCall Edge -->
+				
+				<cprovl:statement>
+					
+					<cprov:wasExpicitCall prov:id="ex:wec001">
+						<prov:informed prov:ref="r:a002" />
+						<prov:informant prov:ref="ex:a001" />
+						<cprov:type>ex:sdsd</cprov:type>
+						<cprov:callComm>ex:sds</cprov:callComm>
+						
+					</cprov:wasExpicitCall>
+				</cprovl:statement>
+				
+				<cprovl:statement>
+					<cprov:wasVirtualizedBy prov:id="ex:wvb001">
+						<prov:entity prov:ref="r:e001" />
+						<prov:activity prov:ref="ex:a002" />
+						<cprov:purpose>generatedFile</cprov:purpose>
+					</cprov:wasVirtualizedBy>
+				</cprovl:statement>
+				
+				<cprovl:statement>
+					<cprov:hadParticipatedAt prov:id="ex:hpa003">
+						<prov:generatedEntity prov:ref="r:e001" />
+						<prov:usedEntity prov:ref="r:t001" />
+					</cprov:hadParticipatedAt>
+				</cprovl:statement>
+				
+				<cprovl:statement>
+					<cprov:transition prov:id="ex:t001">
+						<cprov:region>GB</cprov:region>
+					</cprov:transition>
+				</cprovl:statement>
+				
+			</cprovl:statements>
+			
+		</cprovl:SUCH-THAT>
+		<cprovl:THEN>
+			<cprovl:var cprovl:var_type="cprovd:new" cprovl:var_identifier="ex:result" />
+			<cprovl:entity prov:id="ex:result">
+				<cprovl:actionType>cprovd:Permit</cprovl:actionType>
+				<cprovl:resourceType>r:processRef</cprovl:resourceType>
+			</cprovl:entity>
+			<cprov:hadOwnership>
+				<prov:entity prov:ref="ex:result" />
+				<prov:agent prov:ref="ex:ag001" />
+				<cprov:ownershipType>cprovd:Possession</cprov:ownershipType>
+			</cprov:hadOwnership>
+		</cprovl:THEN>
+	</cprovl:RULE>
+	
+	<cprovl:RULE>
+		<cprovl:entity>
+			<cprovl:description>Otherwise deny all</cprovl:description>
+		</cprovl:entity>
+		<cprovl:DEF>
+			<cprovl:entity>
+				<cprovl:range>cprovd:All</cprovl:range>
+			</cprovl:entity>
+		</cprovl:DEF>
+		<cprovl:THEN>
+			<cprovl:var cprovl:var_type="cprovd:new" cprovl:var_identifier="ex:result" />
+			<cprovl:entity prov:id="ex:result">
+				<cprovl:actionType>cprovd:Deny</cprovl:actionType>
+				<cprovl:resourceType>r:processRef</cprovl:resourceType>
+			</cprovl:entity>
+			<cprov:hadOwnership>
+				<prov:entity prov:ref="ex:result" />
+				<prov:agent prov:ref="ex:ag001" />
+				<cprov:ownershipType>cprovd:Possession</cprov:ownershipType>
+			</cprov:hadOwnership>
+		</cprovl:THEN>
+	</cprovl:RULE>
+</cprovl:POLICY>

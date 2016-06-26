@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cprovl:POLICY xmlns:cprov="http://labs.orange.com/uk/cprov#"
+ xmlns:cprovl="http://labs.orange.com/uk/cprovl#"
+ xmlns:prov="http://www.w3.org/ns/prov#"
+ xmlns:cprovd="http://labs.orange.com/uk/cprovd#"
+ xmlns:r="http://labs.orange.com/uk/r#"
+ xmlns:cu="http://www.w3.org/1999/xhtml/datatypes/"
+ xmlns:ex="http://labs.orange.com/uk/ex#"
+ xmlns:opmx="http://openprovenance.org/model/opmx#"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://labs.orange.com/uk/cprovl# file:/Users/mufy/Dropbox/EngD/year3/schema/cProvl/cProvl-v1.1.xsd">
+    <cprovl:entity prov:id="ex:policy1">
+        <cprovl:description></cprovl:description>
+    </cprovl:entity>
+    <cprovl:RULE>
+        <cprovl:entity prov:id="ex:rule1">
+            <cprovl:description>check for variable ID ref ex:a001 (id ex:ag001 will be matched against the input request)</cprovl:description>
+        </cprovl:entity>
+        <cprovl:DEF>
+            <cprovl:entity prov:id="ex:def">
+                <cprovl:range>cprovd:All</cprovl:range>
+            </cprovl:entity>
+        </cprovl:DEF>
+        <cprovl:IF cprovl:quantifier="cprovd:There-exist">
+            
+    <cprovl:target>
+        <cprovl:ID  cprovl:var_identifier="r:ag001" cprovl:var_type="cprovd:d-ref" cprovl:category_type="cprovd:Subject">r:ag001</cprovl:ID> 
+    </cprovl:target>   
+     
+    <cprovl:target>
+                <cprovl:ID cprovl:var_identifier="r:a001" cprovl:var_type="cprovd:new" cprovl:category_type="cprovd:Action">r:a001</cprovl:ID>         
+    </cprovl:target>
+            
+            
+        <!--     <cprovl:ID reqField="cprovd:Action">ex:a003</cprovl:ID> 
+            <cprovl:var type="ref" identifier="ex:a003" /> 
+            
+            <cprovl:ID reqField="cprovd:Subject">ex:e006</cprovl:ID> 
+            <cprovl:var type="ref" identifier="ex:e006" /> 
+            
+            <cprovl:ID reqField="cprovd:Subject">ex:e009</cprovl:ID> 
+            -->
+            
+        </cprovl:IF> 
+        <cprovl:THEN>
+            <cprovl:var cprovl:var_type="cprovd:new" cprovl:var_identifier="ex:result"/>
+            <cprovl:entity prov:id="ex:result">
+                <cprovl:actionType>cprovd:Permit</cprovl:actionType>
+                <cprovl:resourceId>r:processRef</cprovl:resourceId>
+            </cprovl:entity>
+            <cprov:hadOwnership>
+                <prov:entity prov:ref="ex:result"/>
+                <prov:agent prov:ref="ex:ag001"/>
+                <cprov:ownershipType>cprovd:possession</cprov:ownershipType>
+            </cprov:hadOwnership>
+        </cprovl:THEN>
+    </cprovl:RULE>
+    
+    <cprovl:RULE>
+        <cprovl:entity>
+            <cprovl:description>Otherwise deny all</cprovl:description>
+        </cprovl:entity>
+        <cprovl:DEF>
+            <cprovl:entity>
+                <cprovl:range>cprovd:All</cprovl:range>
+            </cprovl:entity>
+        </cprovl:DEF>
+        <cprovl:THEN>
+            <cprovl:var cprovl:var_type="cprovd:new" cprovl:var_identifier="ex:result"/>
+            <cprovl:entity prov:id="ex:result">
+                <cprovl:actionType>cprovd:Deny</cprovl:actionType>
+                <cprovl:resourceId>r:processRef</cprovl:resourceId>
+            </cprovl:entity>
+            <cprov:hadOwnership>
+                <prov:entity prov:ref="ex:result"/>
+                <prov:agent prov:ref="ex:ag001"/>
+                <cprov:ownershipType>cprovd:possession</cprov:ownershipType>
+            </cprov:hadOwnership>
+        </cprovl:THEN>
+    </cprovl:RULE>
+</cprovl:POLICY>

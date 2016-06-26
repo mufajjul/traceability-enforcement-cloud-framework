@@ -1,0 +1,47 @@
+body {
+	background-color:black;
+	color:#FFFFFF;
+}
+
+div {
+	display: block;
+}
+
+a:link { /* unvisited link */
+	text-decoration:underline;
+	color:#6698FF;
+}      
+a:visited {  /* visited link */
+	color:#6698FF;
+} 
+a:hover { /* mouse over link */
+	color:#6698FF
+	text-decoration:none;
+}  
+a:active { /* selected link */
+	color:#6698FF;
+	text-decoration:none;
+}  
+
+#login-area{ 
+	margin: 1em auto;
+	width: 20%;
+	min-width:15em;
+	padding: 1em;
+	text-align: center;
+}
+
+#login-area h2{
+	background-color:#82CAFF;
+	margin-bottom:0;
+	padding-bottom:0;
+	color:black;
+}
+
+#login-form{
+	border: 3px solid #82CAFF;
+}
+
+.error{
+	color:#FF0000;
+}

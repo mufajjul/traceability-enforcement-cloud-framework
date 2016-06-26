@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cprovl:POLICY xmlns:cprov="http://labs.orange.com/uk/cprov#" xmlns:cprovl="http://labs.orange.com/uk/cprovl#"
+	xmlns:prov="http://www.w3.org/ns/prov#" xmlns:cprovd="http://labs.orange.com/uk/cprovd#"
+	xmlns:r="http://labs.orange.com/uk/r#" xmlns:cu="http://www.w3.org/1999/xhtml/datatypes/"
+	xmlns:confidenshare="http://labs.orange.com/uk/confidenshare#" xmlns:opmx="http://openprovenance.org/model/opmx#"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://labs.orange.com/uk/cprovl#
+	file:/Users/mufy/Dropbox/EngD/year3/schema/cProvl/cProvl-v1.1.xsd">
+	
+	<cprovl:entity prov:id="confidenshare:policy9">
+		<cprovl:description>
+			A user (userA) can share a file, which is marked as non-modifiable, to another user
+			(userB), this user (userB) cannot share the file if it has been modified by him/herself
+			(userB).
+		</cprovl:description>
+	</cprovl:entity>
+	
+	<cprovl:ENV>
+		<cprovl:entity prov:id="confidenshare:mod.share.confidenshare.labs.orange.com">
+			<cprovl:description/>
+		</cprovl:entity>
+	</cprovl:ENV>
+	
+	<cprovl:RULE>
+		<cprovl:entity prov:id="confidenshare:rule1">
+			<cprovl:description>
+			</cprovl:description>
+		</cprovl:entity>
+		<cprovl:DEF>
+			<cprovl:entity prov:id="confidenshare:def">
+				<cprovl:range>cprovd:All</cprovl:range>
+			</cprovl:entity>
+		</cprovl:DEF>
+		<cprovl:IF cprovl:quantifier="cprovd:There-exist">
+			
+			<!-- Check input request resource with the store -->
+			<cprovl:target>
+				<cprovl:ID cprovl:var_type="cprovd:d-ref" cprovl:var_identifier="r:fileA" cprovl:category_type="cprovd:Resource">r:fileA</cprovl:ID>
+			</cprovl:target>
+			
+			<!-- Check for the request user -->
+			<cprovl:target>
+				<cprovl:ID cprovl:var_type="cprovd:d-ref" cprovl:var_identifier="r:ag001" cprovl:category_type="cprovd:Subject">r:ag001</cprovl:ID>
+			</cprovl:target>
+			
+			<!-- Process for sharing -->
+			<cprovl:target>
+				<cprovl:ID cprovl:category_type="cprovd:Action">confidenshare:share</cprovl:ID>
+			</cprovl:target>
+			
+			<!-- variable to populate new midification -->
+			<cprovl:target>
+				<cprovl:ID cprovl:var_type="cprovd:new" cprovl:var_identifier="r:newModification">r:newModification</cprovl:ID>
+			</cprovl:target>
+			
+		</cprovl:IF>
+		<cprovl:SUCH-THAT>
+			
+			<cprovl:statements>
+				<!-- Check if he/she is NOT the owner (owner does not need to have such restriction)
+					-->
+				<cprovl:statement cprovl:negate="true">
+					<cprov:hadOwnership prov:id="confidenshare:hd1">
+						<prov:entity prov:ref="r:fileA" />
+						<prov:agent prov:ref="r:ag001" />
+						<cprov:ownershipType>cprovd:originator</cprov:ownershipType>
+					</cprov:hadOwnership>
+				</cprovl:statement>
+				
+				<!-- Check if the file was derived from another file-->
+				<cprovl:statement>
+					<cprov:wasRepresentationOf prov:id="confidenshare:wro1">
+						<prov:generatedEntity prov:ref="r:fileA" />
+						<prov:usedEntity prov:ref="r:newModification" />
+					</cprov:wasRepresentationOf>
+				</cprovl:statement>
+				
+				
+				<!-- Check if ancestor file is 'non-modifiable' -->
+				<cprovl:statement cprovl:negate="true">
+					<cprov:cResource prov:id="r:newModification">
+						<cprov:restrictionType>cprovd:non-modifiable</cprov:restrictionType>
+					</cprov:cResource>
+				</cprovl:statement>
+				
+			</cprovl:statements>
+		</cprovl:SUCH-THAT>
+		<cprovl:THEN>
+			<cprovl:entity prov:id="confidenshare:result">
+				<cprovl:actionType>cprovd:Permit</cprovl:actionType>
+				<cprovl:resourceId>confidenshare:share</cprovl:resourceId>
+			</cprovl:entity>
+			<cprov:hadOwnership>
+				<prov:entity prov:ref="confidenshare:result" />
+				<prov:agent prov:ref="confidenshare:ag001" />
+				<cprov:ownershipType>cprovd:possession</cprov:ownershipType>
+			</cprov:hadOwnership>
+		</cprovl:THEN>
+	</cprovl:RULE>
+	
+	<cprovl:RULE>
+		<cprovl:entity>
+			<cprovl:description>Otherwise deny all</cprovl:description>
+		</cprovl:entity>
+		<cprovl:DEF>
+			<cprovl:entity>
+				<cprovl:range>cprovd:All</cprovl:range>
+			</cprovl:entity>
+		</cprovl:DEF>
+		<cprovl:IF cprovl:quantifier="cprovd:There-exist">
+			<cprovl:target>
+				<cprovl:ID cprovl:var_type="cprovd:s-ref" cprovl:var_identifier="r:ag001" cprovl:category_type="cprovd:Subject">r:ag001</cprovl:ID>
+			</cprovl:target>
+		</cprovl:IF>
+		<cprovl:THEN>
+			<cprovl:entity prov:id="confidenshare:result">
+				<cprovl:actionType>cprovd:Deny</cprovl:actionType>
+				<cprovl:resourceId>confidenshare:share</cprovl:resourceId>
+			</cprovl:entity>
+			<cprov:hadOwnership>
+				<prov:entity prov:ref="confidenshare:result" />
+				<prov:agent prov:ref="r:ag001" />
+				<cprov:ownershipType>cprovd:possession</cprov:ownershipType>
+			</cprov:hadOwnership>
+		</cprovl:THEN>
+	</cprovl:RULE>
+</cprovl:POLICY>

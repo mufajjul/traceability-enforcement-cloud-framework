@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cprovl:POLICY xmlns:cprov="http://labs.orange.com/uk/cprov#"
+	xmlns:cprovl="http://labs.orange.com/uk/cprovl#" xmlns:prov="http://www.w3.org/ns/prov#"
+	xmlns:cprovd="http://labs.orange.com/uk/cprovd#" xmlns:r="http://labs.orange.com/uk/r#"
+	xmlns:cu="http://www.w3.org/1999/xhtml/datatypes/" xmlns:ex="http://labs.orange.com/uk/ex#"
+	xmlns:opmx="http://openprovenance.org/model/opmx#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://labs.orange.com/uk/cprovl# file:/Users/mufy/Dropbox/EngD/year3/schema/cProvl/cProvl-v1.1.xsd">
+	<cprovl:entity prov:id="ex:policy1">
+		<cprovl:description>Multiple condition test. This policy allows only ag001 to execute process a001, only if he/she has triggered it in the past (with necessary properties). </cprovl:description>
+	</cprovl:entity>
+	<cprovl:RULE>
+		<cprovl:entity prov:id="ex:rule1">
+			<cprovl:description>Response should be deny as wicb0031 does not exist</cprovl:description>
+		</cprovl:entity>
+		<cprovl:DEF>
+			<cprovl:entity prov:id="ex:def">
+				<cprovl:range>cprovd:All</cprovl:range>
+			</cprovl:entity>
+		</cprovl:DEF>
+		<cprovl:IF cprovl:quantifier="cprovd:There-exist">
+			<cprovl:target>
+				<cprovl:ID cprovl:var_identifier="ex:ag001"
+					cprovl:var_type="cprovd:s-ref" cprovl:category_type="cprovd:Subject">ex:ag001</cprovl:ID>
+			</cprovl:target>
+			<cprovl:target>
+				<cprovl:ID cprovl:category_type="cprovd:Action">ex:a001</cprovl:ID>
+			</cprovl:target>
+		</cprovl:IF>
+		<cprovl:SUCH-THAT>
+			<!-- Statements assumes explicit and -->
+			<cprovl:statements>
+				<cprovl:grouping cprovl:l_operator="cprovd:Or">
+					<cprovl:statement>
+						<cprov:wasInitiallyCalledBy prov:id="ex:wicb002">
+							<prov:activity prov:ref="ex:a002" />
+							<prov:agent prov:ref="ex:ag002" />
+							<cprov:purpose>cprovd:operation</cprov:purpose>
+						</cprov:wasInitiallyCalledBy>
+					</cprovl:statement>
+					<cprovl:statement>
+						<cprov:wasInitiallyCalledBy prov:id="ex:wicb001">
+							<prov:activity prov:ref="ex:a001" />
+							<prov:agent prov:ref="ex:ag001" />
+							<cprov:purpose>cprovd:operation</cprov:purpose>
+						</cprov:wasInitiallyCalledBy>
+					</cprovl:statement>
+				</cprovl:grouping>
+			</cprovl:statements>
+		</cprovl:SUCH-THAT>
+		<cprovl:THEN>
+			<cprovl:var cprovl:var_type="cprovd:new"
+				cprovl:var_identifier="ex:result" />
+			<cprovl:entity prov:id="ex:result">
+				<cprovl:actionType>cprovd:Permit</cprovl:actionType>
+				<cprovl:resourceId>r:processRef</cprovl:resourceId>
+			</cprovl:entity>
+			<cprov:hadOwnership>
+				<prov:entity prov:ref="ex:result" />
+				<prov:agent prov:ref="ex:ag001" />
+				<cprov:ownershipType>cprovd:possession</cprov:ownershipType>
+			</cprov:hadOwnership>
+		</cprovl:THEN>
+	</cprovl:RULE>
+
+	<cprovl:RULE>
+		<cprovl:entity>
+			<cprovl:description>Otherwise deny all</cprovl:description>
+		</cprovl:entity>
+		<cprovl:DEF>
+			<cprovl:entity>
+				<cprovl:range>cprovd:All</cprovl:range>
+			</cprovl:entity>
+		</cprovl:DEF>
+		<cprovl:THEN>
+			<cprovl:var cprovl:var_type="cprovd:new"
+				cprovl:var_identifier="ex:result" />
+			<cprovl:entity prov:id="ex:result">
+				<cprovl:actionType>cprovd:Deny</cprovl:actionType>
+				<cprovl:resourceId>r:processRef</cprovl:resourceId>
+			</cprovl:entity>
+			<cprov:hadOwnership>
+				<prov:entity prov:ref="ex:result" />
+				<prov:agent prov:ref="ex:ag001" />
+				<cprov:ownershipType>cprovd:possession</cprov:ownershipType>
+			</cprov:hadOwnership>
+		</cprovl:THEN>
+	</cprovl:RULE>
+</cprovl:POLICY>

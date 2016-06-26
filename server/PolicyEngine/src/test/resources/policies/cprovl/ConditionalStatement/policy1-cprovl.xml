@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cprovl:POLICY xmlns:cprov="http://labs.orange.com/uk/cprov#"
+	xmlns:cprovl="http://labs.orange.com/uk/cprovl#" xmlns:prov="http://www.w3.org/ns/prov#"
+	xmlns:cprovd="http://labs.orange.com/uk/cprovd#" xmlns:r="http://labs.orange.com/uk/r#"
+	xmlns:cu="http://www.w3.org/1999/xhtml/datatypes/" xmlns:ex="http://labs.orange.com/uk/ex#"
+	xmlns:opmx="http://openprovenance.org/model/opmx#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://labs.orange.com/uk/cprovl# file:/Users/mufy/Dropbox/EngD/year3/schema/cProvl/cProvl-v1.1.xsd">
+	<cprovl:entity prov:id="ex:policy1">
+		<cprovl:description>Single condition test. This policy checks if the meeting reqest process exits, and has the necessary properties </cprovl:description>
+	</cprovl:entity>
+	<cprovl:RULE>
+		<cprovl:entity prov:id="ex:rule1">
+			<cprovl:description></cprovl:description>
+		</cprovl:entity>
+		<cprovl:DEF>
+			<cprovl:entity prov:id="ex:def">
+				<cprovl:range>cprovd:All</cprovl:range>
+			</cprovl:entity>
+		</cprovl:DEF>
+		<cprovl:IF cprovl:quantifier="cprovd:There-exist">
+			<cprovl:target>
+				<cprovl:ID cprovl:category_type="cprovd:Action" cprovl:var_type="cprovd:s-ref"
+					cprovl:var_identifier="ex:a001">ex:a001</cprovl:ID>
+			</cprovl:target>
+		</cprovl:IF>
+		<cprovl:SUCH-THAT>
+			<!-- Statements assumes explicit and -->
+			<cprovl:statements>
+				<cprovl:statement cprovl:category_type="cprovd:Action">
+					<cprov:cProcess prov:id="ex:a001">
+						<cprov:userCloudRef>/user@matt/cluster001/image001</cprov:userCloudRef>
+						<cprov:vProcessRef>/linux/meeting/gsmr</cprov:vProcessRef>
+						<cprov:pProcessRef>/Cluster001/192.34.23.45/00-11-AA-00</cprov:pProcessRef>
+					</cprov:cProcess>
+					<!-- <cprovl:var type="ref" identifier="ex:ag001" /> -->
+				</cprovl:statement>
+			</cprovl:statements>
+		</cprovl:SUCH-THAT>
+		<cprovl:THEN>
+			<cprovl:var cprovl:var_type="cprovd:new" cprovl:var_identifier="ex:result" />
+			<cprovl:entity prov:id="ex:result">
+				<cprovl:actionType>cprovd:Permit</cprovl:actionType>
+				<cprovl:resourceId>r:processRef</cprovl:resourceId>
+			</cprovl:entity>
+			<cprov:hadOwnership>
+				<prov:entity prov:ref="ex:result" />
+				<prov:agent prov:ref="ex:ag001" />
+				<cprov:ownershipType>cprovd:possession</cprov:ownershipType>
+			</cprov:hadOwnership>
+		</cprovl:THEN>
+	</cprovl:RULE>
+
+	<cprovl:RULE>
+		<cprovl:entity>
+			<cprovl:description>Otherwise deny all</cprovl:description>
+		</cprovl:entity>
+		<cprovl:DEF>
+			<cprovl:entity>
+				<cprovl:range>cprovd:All</cprovl:range>
+			</cprovl:entity>
+		</cprovl:DEF>
+		<cprovl:THEN>
+			<cprovl:var cprovl:var_type="cprovd:new" cprovl:var_identifier="ex:result" />
+			<cprovl:entity prov:id="ex:result">
+				<cprovl:actionType>cprovd:Deny</cprovl:actionType>
+				<cprovl:resourceId>r:processRef</cprovl:resourceId>
+			</cprovl:entity>
+			<cprov:hadOwnership>
+				<prov:entity prov:ref="ex:result" />
+				<prov:agent prov:ref="ex:ag001" />
+				<cprov:ownershipType>cprovd:possession</cprov:ownershipType>
+			</cprov:hadOwnership>
+		</cprovl:THEN>
+	</cprovl:RULE>
+</cprovl:POLICY>

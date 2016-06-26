@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cprovl:PolicyRequest xmlns:prov="http://www.w3.org/ns/prov#"
+	xmlns:cu="http://www.w3.org/1999/xhtml/datatypes/" xmlns:cprov="http://labs.orange.com/uk/cprov#"
+	xmlns:cprovl="http://labs.orange.com/uk/cprovl#" xmlns:cprovd="http://labs.orange.com/uk/cprovd#"
+	xmlns:r="http://labs.orange.com/uk/r#" xmlns:ex="http://labs.orange.com/uk/ex#"
+	xmlns:opmx="http://openprovenance.org/model/opmx#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://labs.orange.com/uk/cprovl# file:/Users/mufy/Dropbox/EngD/year3/schema/cProvl/cProvl-v1.1.xsd">
+
+	<!-- Phil would like to get access to everything on the MMC service -->
+
+	<cprovl:Agent prov:id="ex:ag001" isRef="true">
+	</cprovl:Agent>
+	<cprovl:Entity prov:id="ex:e-req1-001">
+		<cprovl:reqField>cprovd:Service</cprovl:reqField>
+		<cprovl:fieldValue>MMC</cprovl:fieldValue>
+		<cprovl:description>Phil would like to send out meeting requests using MMC service  </cprovl:description>
+	</cprovl:Entity>
+
+	<cprovl:Entity prov:id="ex:e-req1-002">
+		<cprovl:reqField>cprovd:Action</cprovl:reqField>
+		<cprovl:fieldValue isRef="true">ex:a001</cprovl:fieldValue>
+		<cprovl:description> ex:a006 to execute the request</cprovl:description>
+	</cprovl:Entity>
+
+	<cprov:hadOwnership>
+		<prov:entity prov:ref="ex:e-req1-001" />
+		<prov:agent prov:ref="ex:ag001" />
+		<cprov:ownershipType>cprovd:originator</cprov:ownershipType>
+	</cprov:hadOwnership>
+
+	<cprov:hadOwnership>
+		<prov:entity prov:ref="ex:e-req1-002" />
+		<prov:agent prov:ref="ex:ag001" />
+		<cprov:ownershipType>cprovd:originator</cprov:ownershipType>
+	</cprov:hadOwnership>
+
+</cprovl:PolicyRequest>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cprovl:PolicyRequest xmlns:prov="http://www.w3.org/ns/prov#" xmlns:cu="http://www.w3.org/1999/xhtml/datatypes/"
+	xmlns:cprov="http://labs.orange.com/uk/cprov#" xmlns:cprovl="http://labs.orange.com/uk/cprovl#"
+	xmlns:cprovd="http://labs.orange.com/uk/cprovd#" xmlns:r="http://labs.orange.com/uk/r#"
+	xmlns:confidenshare="http://labs.orange.com/uk/confidenshare#" xmlns:opmx="http://openprovenance.org/model/opmx#"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://labs.orange.com/uk/cprovl#
+	file:/Users/mufy/Dropbox/EngD/year3/schema/cProvl/cProvl-v1.1.xsd">
+	
+	<cprovl:Agent prov:id="confidenshare:Admin" isRef="true">
+	</cprovl:Agent>
+	
+	
+	<cprovl:Entity prov:id="confidenshare:documentA">
+		<cprovl:categoryType>cprovd:Resource</cprovl:categoryType>
+		<cprovl:categoryValue isRef="false">confidenshare:documentA</cprovl:categoryValue>
+		<cprovl:description>
+		</cprovl:description>
+	</cprovl:Entity>
+	
+	<cprovl:Entity prov:id="confidenshare:replicate">
+		<cprovl:categoryType>cprovd:Action</cprovl:categoryType>
+		<cprovl:categoryValue isRef="true">confidenshare:replicate</cprovl:categoryValue>
+		<cprovl:description>
+		</cprovl:description>
+	</cprovl:Entity>
+	
+	<cprovl:Entity prov:id="confidenshare:rep.store.confidenshare.labs.orange.com">
+		<cprovl:categoryType>cprovd:Environment</cprovl:categoryType>
+		<cprovl:categoryValue>confidenshare:rep.store.confidenshare.labs.orange.com</cprovl:categoryValue>
+		<cprovl:description>
+		</cprovl:description>
+	</cprovl:Entity>
+	
+	<cprov:hadOwnership>
+		<prov:entity prov:ref="confidenshare:e-req1-001" />
+		<prov:agent prov:ref="confidenshare:ag001" />
+		<cprov:ownershipType>cprovd:originator</cprov:ownershipType>
+	</cprov:hadOwnership>
+	
+	<cprov:hadOwnership>
+		<prov:entity prov:ref="confidenshare:e-req1-002" />
+		<prov:agent prov:ref="confidenshare:ag001" />
+		<cprov:ownershipType>cprovd:originator</cprov:ownershipType>
+	</cprov:hadOwnership>
+	
+	
+</cprovl:PolicyRequest>

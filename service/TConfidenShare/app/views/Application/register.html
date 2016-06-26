@@ -1,0 +1,72 @@
+#{extends 'login-main.html' /}
+#{set title:'You want to register for the first time' /}
+
+<div class="span5">
+  <h2>Register</h2>
+   <p>If you don't have an account, you can register now. All you need is a email address and in less than a minute, you will be good to go.</p>
+
+</div>
+<div class="span5">
+	<h2>Please enter your details</h2>
+	<div id="login-form">
+	#{ifErrors}
+	<p>An error occured, please correct the fields and submit again</p> 
+	#{/ifErrors}
+	
+	#{form @Application.createUser(), id:'createForm', enctype:'multipart/form-data' }
+
+	#{field 'userName '}
+	<label>&{field.name}:</label> <span class="error">${field.error}</span>
+	<input type="text" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+	#{/}
+
+	#{field 'email'}
+	<label>&{field.name}:</label> <span class="error">${field.error}</span>
+	<input type="text" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+	#{/}
+	#{field 'password'}
+	<label>&{field.name}:</label>  <span class="error">${field.error}</span>
+	  <input type="password" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+	#{/}
+	#{field 'confirm'}
+	<label>&{field.name}:</label> <span class="error">${field.error}</span>
+	<input type="password" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+	#{/}
+<!-- 
+	#{field 'fullname'}
+	<label>&{field.name}:</label> <span class="error">${field.error}</span>
+	<input type="text" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+	#{/}
+	
+	#{field 'address'}
+	<label>&{field.name}:</label> <span class="error">${field.error}</span>
+	<input type="text" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+	#{/}
+
+	#{field 'DOB'}
+	<label>&{field.name}:</label> <span class="error">${field.error}</span>
+	<input type="text" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+	#{/}
+
+	#{field 'gender'}
+	<label>&{field.name}:</label> <span class="error">${field.error}</span>
+	<input type="text" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+	#{/}
+
+	#{field 'tel'}
+	<label>&{field.name}:</label> <span class="error">${field.error}</span>
+	<input type="text" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+	#{/}
+	
+	#{field 'mobile'}
+	<label>&{field.name}:</label> <span class="error">${field.error}</span>
+	<input type="text" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+	#{/}
+-->	
+	<p>
+	  <input class="btn" type="submit" id="login" name="Login" value="I want to register" class="${errors.forKey('login') ? 'has_error' : ''}">
+	  <span class="error">${errors.forKey('login')}</span>
+	</p>
+	#{/form}
+</div>
+</div>

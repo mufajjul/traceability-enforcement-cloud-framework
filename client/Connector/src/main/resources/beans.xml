@@ -1,0 +1,116 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="responseExtraction"
+		class="com.provenance.cloudprovenance.connector.traceability.response.ResponseExtraction">
+		<property name="cProvMapper" ref="cprovNamespacePrefixMapper" />
+		<property name="xpathToDocumentId"
+			value="/cprov:traceabilityDocument/cprov:cResource/@prov:id" />
+		<property name="xpathToResource"
+			value="/cprov:traceabilityDocument/cprov:cResource/cprov:des" />
+
+	</bean>
+
+	<bean id="traceabilityStoreConnector"
+		class="com.provenance.cloudprovenance.connector.traceability.TraceabilityStoreConnector">
+		<property name="server_add" value="127.0.0.1" />
+		<property name="port_no" value="7000" />
+		<property name="service" value="TraceabilityStoreWS" />
+		<property name="resource" value="traceabilityDocument" />
+		<property name="TRACEABILITY_TYPE" value="ServiceTraceability" />
+		<property name="DEFAULT_TIMEOUT" value="1000000" />
+	</bean>
+
+	<bean id="policyEnforcementConnector"
+		class="com.provenance.cloudprovenance.connector.policy.PolicyEnforcementConnector">
+		<property name="server_add" value="127.0.0.1" />
+		<property name="port_no" value="7000" />
+		<property name="service" value="PolicyHandlerWS" />
+		<property name="resource" value="policyEnforcement" />
+		<property name="DEFAULT_TIMEOUT" value="1000000" />
+	</bean>
+
+	<bean id="traceabilityEventConsumer"
+		class="com.provenance.cloudprovenance.connector.traceability.TraceabilityEventConsumer"
+		scope="prototype">
+		<property name="resExtraction" ref="responseExtraction" />
+		<constructor-arg index="0" ref="traceabilityStoreConnector" />
+		<constructor-arg index="1" value="ConfidenShare" />
+		<property name="jmsTemplate" ref="jmsTemplate" />
+		<property name="responseTraceabilityQueueName" value="traceabilityResponseQueue" />
+		<property name="traceabilityStoreStorageAck" value="true" />
+	</bean>
+
+	<bean id="policyEventConsumer"
+		class="com.provenance.cloudprovenance.connector.policy.PolicyEventConsumer">
+		<property name="resExtraction" ref="responseExtraction" />
+		<constructor-arg index="0" ref="policyEnforcementConnector" />
+		<constructor-arg index="1" value="ConfidenShare" />
+		<property name="jmsTemplate" ref="jmsTemplate1" />
+		<property name="responsePolicyQueueName" value="enforcementResponseQueue" />
+	</bean>
+
+	<!-- Activemq connection factory -->
+	<bean id="amqConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<constructor-arg index="0" value="tcp://localhost:61616" />
+
+		<!-- <property name="brokerURL"> <value>tcp://localhost:61617</value> </property> -->
+	</bean>
+
+	<!-- ConnectionFactory Definition -->
+	<bean id="connectionFactory"
+		class="org.springframework.jms.connection.CachingConnectionFactory">
+		<constructor-arg ref="amqConnectionFactory" />
+
+	</bean>
+
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="defaultDestination" ref="defaultDestination2" />
+	</bean>
+
+	<bean id="jmsTemplate1" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="defaultDestination" ref="defaultDestination3" />
+	</bean>
+
+
+	<bean id="defaultDestination3" class="org.apache.activemq.command.ActiveMQQueue">
+		<!-- <constructor-arg index="0" value="${jms.queue.name}"/> -->
+		<constructor-arg index="0" value="enforcementResponseQueue" />
+	</bean>
+
+	<bean id="defaultDestination2" class="org.apache.activemq.command.ActiveMQQueue">
+		<!-- <constructor-arg index="0" value="${jms.queue.name}"/> -->
+		<constructor-arg index="0" value="traceabilityResponseQueue" />
+	</bean>
+
+	<bean id="messageContainer"
+		class="org.springframework.jms.listener.SimpleMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destinationName" value="traceabilityQueue" />
+		<property name="messageListener" ref="traceabilityEventConsumer" />
+	</bean>
+
+	<bean id="messageContainer1"
+		class="org.springframework.jms.listener.SimpleMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destinationName" value="enforcementQueue" />
+		<property name="messageListener" ref="policyEventConsumer" />
+	</bean>
+
+	<bean id="cprovNamespacePrefixMapper"
+		class="com.provenance.cloudprovenance.traceabilitystore.ns.CprovNamespacePrefixMapper">
+		<property name="nsSuffixCprov" value="http://labs.orange.com/uk/cprov#" />
+		<property name="nsSuffixProv" value="http://www.w3.org/ns/prov#" />
+		<property name="nsSuffixCprovl" value="http://labs.orange.com/uk/cprovl#" />
+		<property name="nsSuffixCProvd" value="http://labs.orange.com/uk/cprovd#" />
+		<property name="nsSuffixR" value="http://labs.orange.com/uk/r#" />
+		<property name="nsSuffixEx" value="http://labs.orange.com/uk/ex#" />
+		<property name="nsSuffixCu" value="http://www.w3.org/1999/xhtml/datatypes/" />
+		<property name="nsSuffixCOnfidenshare" value="http://labs.orange.com/uk/confidenshare#" />
+	</bean>
+
+
+</beans>

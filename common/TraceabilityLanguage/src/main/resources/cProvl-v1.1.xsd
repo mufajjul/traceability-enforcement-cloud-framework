@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Author: Mufy -->
+<xs:schema targetNamespace="http://labs.orange.com/uk/cprovl#"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    attributeFormDefault="unqualified" xmlns:cprov="http://labs.orange.com/uk/cprov#"
+    xmlns:cprovl="http://labs.orange.com/uk/cprovl#" xmlns:prov="http://www.w3.org/ns/prov#"
+    xmlns:cprovd="http://labs.orange.com/uk/cprovd#" xmlns:r="http://labs.orange.com/uk/r#">
+    <xs:import namespace="http://labs.orange.com/uk/cprov#"
+        schemaLocation="cProv-v1.3.xsd"/>
+    <xs:import namespace="http://www.w3.org/ns/prov#"
+        schemaLocation="prov-07012013.xsd"/>
+    <xs:element name="POLICY" type="cprovl:Policy"> </xs:element>
+    <xs:complexType name="Policy">
+        <xs:sequence>
+            <xs:element name="entity" type="cprovl:u-Entity"/>
+            <xs:element ref="cprovl:ENV"/>
+            <xs:element ref="cprovl:RULE" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="RULE" type="cprovl:Rule"> </xs:element>
+    <xs:element name="INHERIT" type="cprovl:Inherit"> </xs:element>
+    <xs:element name="REFERENCE" type="cprovl:Override"> </xs:element>
+    <xs:element name="DEF" type="cprovl:Def"> </xs:element>
+    <xs:element name="IF" type="cprovl:targets"> </xs:element>
+    <xs:element name="THEN" type="cprovl:execution"> </xs:element>
+    <xs:complexType name="Rule">
+        <xs:sequence>
+            <xs:element name="entity" type="cprovl:u-Entity"/>
+            <xs:choice>
+                <xs:element ref="cprovl:INHERIT" maxOccurs="1" minOccurs="0"/>
+                <xs:element ref="cprovl:REFERENCE"/>
+            </xs:choice>
+            <xs:element ref="cprovl:DEF" maxOccurs="1" minOccurs="1"/>
+            <xs:element ref="cprovl:IF" maxOccurs="1" minOccurs="0"/>
+            <xs:element ref="cprovl:SUCH-THAT" maxOccurs="1" minOccurs="0"/>
+            <xs:element ref="cprovl:THEN" maxOccurs="1" minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="targets">
+        <xs:sequence>
+            <xs:choice maxOccurs="unbounded">
+                <xs:element form="qualified" name="target" type="cprovl:identifier"
+                    maxOccurs="unbounded" minOccurs="0"/>
+            </xs:choice>
+        </xs:sequence>
+        <xs:attribute use="required" ref="cprovl:quantifier"/>
+    </xs:complexType>
+    <xs:complexType name="identifier">
+        <xs:choice>
+            <xs:element name="ID" maxOccurs="unbounded" minOccurs="1">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:QName">
+                            <xs:attribute use="optional" ref="cprovl:var_type"> </xs:attribute>
+                            <xs:attribute use="optional" ref="cprovl:var_identifier"/>
+                            <xs:attribute ref="cprovl:category_type"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+        <xs:attribute default="cprovd:And" ref="cprovl:l_operator"/>
+    </xs:complexType>
+    <xs:complexType name="condition">
+        <xs:sequence>
+            <xs:element ref="cprovl:statements" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="SUCH-THAT" type="cprovl:condition"> </xs:element>
+    <xs:complexType name="Inherit">
+        <xs:sequence maxOccurs="unbounded">
+            <xs:element form="qualified" name="var" type="cprovl:var"/>
+            <xs:element name="entity" type="cprovl:i-Entity"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Override">
+        <xs:sequence>
+            <xs:element form="qualified" name="var" type="cprovl:var"/>
+            <xs:element name="entity" type="cprovl:o-Entity"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Before">
+        <xs:sequence maxOccurs="unbounded">
+            <xs:element form="qualified" name="var" type="cprovl:var"/>
+            <xs:element ref="prov:entity"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="After">
+        <xs:sequence maxOccurs="unbounded">
+            <xs:element form="qualified" name="var" type="cprovl:var"/>
+            <xs:element ref="prov:entity"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Def">
+        <xs:sequence>
+            <xs:element name="entity" type="cprovl:d-Entity"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="statements" type="cprovl:Statements"/>
+    <xs:complexType name="Statements">
+        <xs:sequence maxOccurs="unbounded">
+            <xs:choice>
+                <xs:element name="statement" type="cprovl:Statement"/>
+                <xs:element ref="cprovl:grouping" minOccurs="0"/>
+                <xs:element ref="cprovl:operator" minOccurs="0"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="execution">
+        <xs:sequence>
+            <xs:element form="qualified" name="var" type="cprovl:var" minOccurs="0"
+                maxOccurs="unbounded"/>
+            <xs:element maxOccurs="2" name="entity" type="cprovl:e-Entity"/>
+            <xs:element maxOccurs="unbounded" ref="cprov:hadOwnership"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="executionStatement" type="cprovl:ExecutionStatement"/>
+    <xs:complexType name="ExecutionStatement">
+        <xs:sequence>
+            <xs:element form="qualified" name="var" type="cprovl:var"/>
+            <xs:element name="statement" type="cprovl:Statement"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Statement">
+        <xs:complexContent>
+            <xs:extension base="cprov:TraceabilityDocument">
+                <xs:choice>
+                    <xs:element name="var" type="cprovl:var" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:choice>
+                <xs:attribute ref="cprovl:negate"/>
+                <xs:attribute ref="cprovl:category_type"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="grouping" type="cprovl:Grouping"> </xs:element>
+    <xs:complexType name="Grouping">
+        <xs:sequence maxOccurs="unbounded">
+            <xs:choice>
+                <xs:element ref="cprovl:grouping"/>
+                <xs:element name="statement" type="cprovl:Statement"/>
+                <xs:element ref="cprovl:operator" minOccurs="0"/>
+            </xs:choice>
+        </xs:sequence>
+        <xs:attribute ref="cprovl:l_operator"/>
+    </xs:complexType>
+    <xs:element name="operator" type="cprovl:ConOperator"/>
+    <xs:complexType name="ConOperator">
+        <xs:sequence>
+            <xs:element name="statement" type="cprovl:Statement" maxOccurs="2" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute ref="cprovl:c_operator"/>
+    </xs:complexType>
+    <xs:element name="PolicyRequest" type="cprovl:policyRequest"> </xs:element>
+    <xs:complexType name="policyRequest">
+        <xs:sequence>
+            <xs:element name="Agent" maxOccurs="unbounded" minOccurs="1">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="prov:Agent">
+                            <xs:attribute form="unqualified" name="isRef" type="xs:boolean"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Entity" nillable="false" type="cprovl:r-Entity" maxOccurs="unbounded"/>
+            <xs:element maxOccurs="4" minOccurs="1" ref="cprov:hadOwnership"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="categoryType">
+        <xs:restriction base="xs:QName">
+            <xs:enumeration value="cprovd:Service"/>
+            <xs:enumeration value="cprovd:Subject"/>
+            <xs:enumeration value="cprovd:Resource"/>
+            <xs:enumeration value="cprovd:Action"/>
+            <xs:enumeration value="cprovd:Environment"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="categoryValue">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="policyResponse" type="cprovl:policyResponse"/>
+    <xs:complexType name="policyResponse">
+        <xs:sequence>
+            <xs:element name="Agent">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="prov:Agent">
+                            <xs:attribute form="unqualified" name="isRef" type="xs:boolean"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Entity" type="cprovl:rs-Entity"/>
+            <xs:element maxOccurs="unbounded" ref="cprov:cResource"/>
+            <xs:element maxOccurs="unbounded" ref="cprov:cProcess"/>
+            <xs:element ref="cprov:transition"/>
+            <xs:element ref="cprov:hadOwnership"/>
+            <xs:element ref="cprov:wasReferenceOf"/>
+            <xs:element ref="cprov:wasImplicitlyCalledBy" maxOccurs="unbounded"/>
+            <xs:element ref="cprov:wasVirtualizedBy" maxOccurs="unbounded"/>
+            <xs:element ref="cprov:wasInitiallyCalledBy"/>
+            <xs:element ref="prov:used"/>
+            <xs:element ref="cprov:hadTransitionState_c"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="logicalOperator">
+        <xs:restriction base="xs:QName">
+            <xs:enumeration value="cprovd:And"/>
+            <xs:enumeration value="cprovd:Or"/>
+            <xs:enumeration value="cprovd:Not"/>
+            <xs:enumeration value="cprovd:Implication"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="targetID">
+        <xs:attribute name="newAttribute"/>
+    </xs:complexType>
+    <xs:complexType name="var">
+        <xs:attribute use="required" ref="cprovl:var_type"> </xs:attribute>
+        <xs:attribute use="required" ref="cprovl:var_identifier"/>
+    </xs:complexType>
+    <xs:simpleType name="varType">
+        <xs:restriction base="xs:QName">
+            <xs:enumeration value="cprovd:new"/>
+            <xs:enumeration value="cprovd:s-ref"/>
+            <xs:enumeration value="cprovd:d-ref"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Identifier">
+        <xs:restriction base="xs:QName"/>
+    </xs:simpleType>
+    <xs:simpleType name="range">
+        <xs:restriction base="xs:QName">
+            <xs:enumeration value="cprovd:event"/>
+            <xs:enumeration value="cprovd:All"/>
+            <xs:enumeration value="cprovd:Node"/>
+            <xs:enumeration value="cprovd:Edge"/>
+            <xs:enumeration value="cprovd:Entity"/>
+            <xs:enumeration value="cprovd:Activity"/>
+            <xs:enumeration value="cprovd:Agent"/>
+            <xs:enumeration value="cprovd:Wgb"/>
+            <xs:enumeration value="cprovd:WdF"/>
+            <xs:enumeration value="cprovd:WaW"/>
+            <xs:enumeration value="cprovd:WaT"/>
+            <xs:enumeration value="cprovd:WiB"/>
+            <xs:enumeration value="cprovd:Used"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="u-Entity">
+        <xs:complexContent>
+            <xs:extension base="prov:Entity">
+                <xs:choice>
+                    <xs:element name="description" type="cprovl:description"/>
+                </xs:choice>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="d-Entity">
+        <xs:complexContent>
+            <xs:extension base="prov:Entity">
+                <xs:choice>
+                    <xs:element name="range" type="cprovl:range"/>
+                </xs:choice>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="e-Entity">
+        <xs:complexContent>
+            <xs:extension base="prov:Entity">
+                <xs:choice>
+                    <xs:sequence>
+                        <xs:element name="actionType" type="cprovl:actionType"/>
+                        <xs:element name="resourceId" type="cprovl:resourceID"/>
+                        <xs:sequence>
+                            <xs:element name="obligationSet" type="cprovl:obligationSet"
+                                minOccurs="0"/>
+                            <xs:element name="obligationType" type="cprovl:obligationType"
+                                minOccurs="0"/>
+                            <xs:element name="obligationAction" type="cprovl:obligationAction"
+                                minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:sequence>
+                    <xs:element name="description" type="cprovl:description"/>
+                </xs:choice>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="i-Entity">
+        <xs:complexContent>
+            <xs:extension base="prov:Entity">
+                <xs:choice>
+                    <xs:element name="rule" type="xs:QName"/>
+                    <xs:element name="part" type="xs:QName"/>
+                </xs:choice>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="o-Entity">
+        <xs:complexContent>
+            <xs:extension base="prov:Entity">
+                <xs:choice>
+                    <xs:element name="rule" type="xs:QName"/>
+                    <xs:element name="order" type="cprovl:order"/>
+                </xs:choice>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="ENV" type="cprovl:ENV"/>
+    <xs:complexType name="ENV">
+        <xs:sequence>
+            <xs:element name="entity" type="cprovl:u-Entity"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="actionType">
+        <xs:restriction base="xs:QName">
+            <xs:enumeration value="cprovd:Permit"/>
+            <xs:enumeration value="cprovd:Deny"/>
+            <xs:enumeration value="cprovd:Indeterminate"/>
+            <xs:enumeration value="cprovd:Not-applicable"/>
+            <xs:enumeration value="cprovd:Obligation"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="resourceID">
+        <xs:restriction base="xs:QName"/>
+    </xs:simpleType>
+    <xs:simpleType name="obligationType">
+        <xs:restriction base="xs:QName">
+            <xs:enumeration value="cprovd:Alert"/>
+            <xs:enumeration value="cprovd:Notify"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="obligationAction">
+        <xs:restriction base="xs:QName">
+            <xs:enumeration value="cprovd:Record"/>
+            <xs:enumeration value="cprovd:Delete"/>
+            <xs:enumeration value="cprovd:Copy"/>
+            <xs:enumeration value="cprovd:Read-only"/>
+            <xs:enumeration value="cprovd:Read-write"/>
+            <xs:enumeration value="cprovd:check-user-history"/>
+            <xs:enumeration value="cprovd:Non-share"/>
+            <xs:enumeration value="cprovd:Block-user"/>
+            <xs:enumeration value="cprovd:Remove-user"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="obligationSet">
+        <xs:restriction base="xs:QName">
+            <xs:enumeration value="cprovd:Pre"/>
+            <xs:enumeration value="cprovd:Post"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="msg">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:simpleType name="description">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:simpleType name="conditonalOperator">
+        <xs:restriction base="xs:QName">
+            <xs:enumeration value="cprovd:Equal-to"/>
+            <xs:enumeration value="cprovd:Greater-than"/>
+            <xs:enumeration value="cprovd:Less-than"/>
+            <xs:enumeration value="cprovd:Not-equal-to"/>
+            <xs:enumeration value="cprovd:Greater-than-or-equal-to"/>
+            <xs:enumeration value="cprovd:Less-than-or-equal-to"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="targetQuantifier">
+        <xs:restriction base="xs:QName">
+            <xs:enumeration value="cprovd:There-exist"/>
+            <xs:enumeration value="cprovd:For-all"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:attribute name="var_type" type="cprovl:varType"/>
+    <xs:attribute name="var_identifier" type="cprovl:Identifier"/>
+    <xs:attribute name="category_type" type="cprovl:requestField"/>
+    <xs:attribute name="l_operator" type="cprovl:logicalOperator"/>
+    <xs:attribute name="c_operator" type="cprovl:conditonalOperator"/>
+    <xs:attribute name="quantifier" type="cprovl:targetQuantifier"/>
+    <xs:attribute default="false" name="negate" type="xs:boolean"/>
+    <xs:simpleType name="part">
+        <xs:restriction base="xs:QName">
+            <xs:enumeration value="cprovd:Condition"/>
+            <xs:enumeration value="cprovd:Execution"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="order">
+        <xs:restriction base="xs:QName">
+            <xs:enumeration value="cprovd:Before"/>
+            <xs:enumeration value="cprovd:After"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="requestField">
+        <xs:restriction base="xs:QName">
+            <xs:enumeration value="cprovd:Service"/>
+            <xs:enumeration value="cprovd:Subject"/>
+            <xs:enumeration value="cprovd:Resource"/>
+            <xs:enumeration value="cprovd:Action"/>
+            <xs:enumeration value="cprovd:Environment"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="fieldValue">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
+    <xs:complexType name="r-Entity">
+        <xs:complexContent>
+            <xs:extension base="prov:Entity">
+                <xs:sequence>
+                    <xs:element name="categoryType" type="cprovl:requestField"/>
+                    <xs:element name="categoryValue">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="cprovl:fieldValue">
+                                    <xs:attribute name="isRef" type="xs:boolean"/>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="description" type="cprovl:description"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="rs-Entity">
+        <xs:complexContent>
+            <xs:extension base="prov:Entity">
+                <xs:sequence>
+                    <xs:element name="service" type="xs:QName"/>
+                    <xs:element name="decision" type="cprovl:actionType"/>
+                    <xs:element name="description" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

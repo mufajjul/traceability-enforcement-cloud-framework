@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cprovl:POLICY xmlns:cprov="http://labs.orange.com/uk/cprov#" xmlns:cprovl="http://labs.orange.com/uk/cprovl#"
+	xmlns:prov="http://www.w3.org/ns/prov#" xmlns:cprovd="http://labs.orange.com/uk/cprovd#"
+	xmlns:r="http://labs.orange.com/uk/r#" xmlns:cu="http://www.w3.org/1999/xhtml/datatypes/"
+	xmlns:confidenshare="http://labs.orange.com/uk/confidenshare#" xmlns:opmx="http://openprovenance.org/model/opmx#"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://labs.orange.com/uk/cprovl#
+	file:/Users/mufy/Dropbox/EngD/year3/schema/cProvl/cProvl-v1.1.xsd">
+	
+	<cprovl:entity prov:id="confidenshare:policy6">
+		<cprovl:description>
+			If a user (userA) is classed as ‘removed’, all the associated shared files (file X)
+			cannot be shared further
+		</cprovl:description>
+	</cprovl:entity>
+	
+	<cprovl:ENV>
+		<cprovl:entity prov:id="confidenshare:removed.share.confidenshare.labs.orange.com">
+			<cprovl:description />
+		</cprovl:entity>
+	</cprovl:ENV>
+	
+	<cprovl:RULE>
+		<cprovl:entity prov:id="confidenshare:rule1">
+			<cprovl:description>
+			</cprovl:description>
+		</cprovl:entity>
+		<cprovl:DEF>
+			<cprovl:entity prov:id="confidenshare:def">
+				<cprovl:range>cprovd:All</cprovl:range>
+			</cprovl:entity>
+		</cprovl:DEF>
+		<cprovl:IF cprovl:quantifier="cprovd:There-exist">
+			
+			<!-- Check for any input request and match it with the store -->
+			<cprovl:target>
+				<cprovl:ID cprovl:var_type="cprovd:d-ref" cprovl:var_identifier="r:e001" cprovl:category_type="cprovd:Resource">r:e001</cprovl:ID>
+			</cprovl:target>
+			
+			<!-- Check for the request user -->
+			<cprovl:target>
+				<cprovl:ID cprovl:var_type="cprovd:d-ref" cprovl:var_identifier="r:ag001" cprovl:category_type="cprovd:Subject">r:ag001</cprovl:ID>
+			</cprovl:target>
+			
+			<!-- Process for sharing -->
+			<cprovl:target>
+				<cprovl:ID cprovl:var_type="cprovd:s-ref" cprovl:category_type="cprovd:Action">confidenshare:share</cprovl:ID>
+			</cprovl:target>
+			
+			<cprovl:target>
+				<cprovl:ID cprovl:var_type="cprovd:new" cprovl:var_identifier="r:originAgent">r:originAgent</cprovl:ID>
+			</cprovl:target>
+			
+			<cprovl:target>
+				<cprovl:ID cprovl:var_type="cprovd:new" cprovl:var_identifier="r:originFile">r:originFile</cprovl:ID>
+			</cprovl:target>
+			
+		</cprovl:IF>
+		<cprovl:SUCH-THAT>
+			
+			<cprovl:statements>
+				
+				<!-- Check if user is not the originator of the file -->
+				
+				<cprovl:grouping cprovl:l_operator="cprovd:Or">
+					
+					<!-- if he/she is the owner of the file, then permit -->
+					<cprovl:statement>
+						<cprov:hadOwnership prov:id="confidenshare:hd1">
+							<prov:entity prov:ref="r:e001" />
+							<prov:agent prov:ref="r:ag001" />
+							<cprov:ownershipType>cprovd:Originator</cprov:ownershipType>
+						</cprov:hadOwnership>
+					</cprovl:statement>
+					
+					<!-- otherwsie check for the following conditions for removal share violation-->
+					<cprovl:grouping>
+						<!-- File is shared with the user (in his/her possession) -->
+						<cprovl:statement>
+							<cprov:hadOwnership prov:id="confidenshare:hd2">
+								<prov:entity prov:ref="r:e001" />
+								<prov:agent prov:ref="r:ag001" />
+								<cprov:ownershipType>cprovd:Possession</cprov:ownershipType>
+							</cprov:hadOwnership>
+						</cprovl:statement>
+						
+						<!-- Check if the file was derived from another file-->
+						<cprovl:statement>
+							<cprov:wasRepresentationOf prov:id="confidenshare:wro1">
+								<prov:generatedEntity prov:ref="r:e001" />
+								<prov:usedEntity prov:ref="r:originFile" />
+							</cprov:wasRepresentationOf>
+						</cprovl:statement>
+						
+						<!-- get the origin file user -->
+						<cprovl:statement>
+							<cprov:hadOwnership prov:id="confidenshare:hd3">
+								<prov:entity prov:ref="r:originFile" />
+								<prov:agent prov:ref="r:originAgent" />
+								<cprov:ownershipType>cprovd:Originator</cprov:ownershipType>
+							</cprov:hadOwnership>
+						</cprovl:statement>
+						
+						<!-- Check if the origin file owner is deleted -->
+						<cprovl:statement>
+							<cprov:wasInitiallyCalledBy prov:id="confidenshare:wic1">
+								<prov:activity prov:ref="confidenshare:delete" />
+								<prov:agent prov:ref="r:originAgent" />
+							</cprov:wasInitiallyCalledBy>
+						</cprovl:statement>
+					</cprovl:grouping>
+				</cprovl:grouping>
+				
+			</cprovl:statements>
+		</cprovl:SUCH-THAT>
+		<cprovl:THEN>
+			<cprovl:entity prov:id="confidenshare:result">
+				<cprovl:actionType>cprovd:Permit</cprovl:actionType>
+				<cprovl:resourceId>confidenshare:share</cprovl:resourceId>
+			</cprovl:entity>
+			<cprov:hadOwnership>
+				<prov:entity prov:ref="confidenshare:result" />
+				<prov:agent prov:ref="r:ag001" />
+				<cprov:ownershipType>cprovd:possession</cprov:ownershipType>
+			</cprov:hadOwnership>
+		</cprovl:THEN>
+	</cprovl:RULE>
+	
+	<cprovl:RULE>
+		<cprovl:entity>
+			<cprovl:description>Otherwise deny all</cprovl:description>
+		</cprovl:entity>
+		<cprovl:DEF>
+			<cprovl:entity>
+				<cprovl:range>cprovd:All</cprovl:range>
+			</cprovl:entity>
+		</cprovl:DEF>
+		<cprovl:IF cprovl:quantifier="cprovd:There-exist">
+			<cprovl:target>
+				<cprovl:ID cprovl:var_type="cprovd:s-ref" cprovl:var_identifier="r:ag001" cprovl:category_type="cprovd:Subject">r:ag001</cprovl:ID>
+			</cprovl:target>
+		</cprovl:IF>
+		<cprovl:THEN>
+			<cprovl:entity prov:id="confidenshare:result">
+				<cprovl:actionType>cprovd:Deny</cprovl:actionType>
+				<cprovl:resourceId>confidenshare:share</cprovl:resourceId>
+			</cprovl:entity>
+			<cprov:hadOwnership>
+				<prov:entity prov:ref="confidenshare:result" />
+				<prov:agent prov:ref="r:ag001" />
+				<cprov:ownershipType>cprovd:possession</cprov:ownershipType>
+			</cprov:hadOwnership>
+		</cprovl:THEN>
+	</cprovl:RULE>
+
+</cprovl:POLICY>

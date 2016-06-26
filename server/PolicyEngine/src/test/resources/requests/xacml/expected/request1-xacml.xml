@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Request xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cprov="http://labs.orange.com/uk/cprov#"
+	xmlns:cprovl="http://labs.orange.com/uk/cprovl#" xmlns:prov="http://www.w3.org/ns/prov#"
+	xmlns:cprovd="http://labs.orange.com/uk/cprovd#" xmlns:r="http://labs.orange.com/uk/r#"
+	xmlns:cu="http://www.w3.org/1999/xhtml/datatypes/" xmlns:ex="http://labs.orange.com/uk/r#"
+	xsi:schemaLocation="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17 http://docs.oasis-open.org/xacml/3.0/xacml-core-v3-schema-wd-17.xsd"
+	ReturnPolicyIdList="false" CombinedDecision="false">
+	
+	<Attributes
+		Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
+		<Content>
+			<cprovl:Agent prov:id="ex:ag001">
+				<prov:label>Phil</prov:label>
+			</cprovl:Agent>
+		</Content>
+		<Attribute IncludeInResult="false"
+			AttributeId="urn:oasis:names:tc:xacml:3.0:ex:ag001">
+			<AttributeValue
+				XPathCategory="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+				DataType="urn:oasis:names:tc:xacml:3.0:data-type:xpathExpression">//cprovl:Agent/[@id="ex:ag001"]</AttributeValue>
+		</Attribute>
+
+	</Attributes>
+	<Attributes
+		Category="urn:com:provenance:cloudprovenance:cprovl:1.0:attribute-category:service">
+		<Content>
+			<cprovl:Entity prov:id="ex:e-req1-001">
+				<cprovl:reqField>cprovd:Service</cprovl:reqField>
+				<cprovl:fieldValue>MMC</cprovl:fieldValue>
+				<cprovl:description>Phil would like to send out meeting requests
+					using MMC service
+				</cprovl:description>
+			</cprovl:Entity>
+		</Content>
+
+		<Attribute IncludeInResult="false"
+			AttributeId="urn:com:provenance:cloudprovenance:cprovl:1.0:service:MMC">
+
+			<AttributeValue
+				XPathCategory="urn:com:provenance:cloudprovenance:cprovl:1.0:attribute-category:service"
+				DataType="urn:oasis:names:tc:xacml:3.0:data-type:xpathExpression">//cprovl:Entity/[@id="ex:e-req1-001"]</AttributeValue>
+		</Attribute>
+	</Attributes>
+	<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
+		<Content>
+			<cprovl:Entity prov:id="ex:e-req1-002">
+				<cprovl:reqField>cprovd:Action</cprovl:reqField>
+				<cprovl:fieldValue>ex:a001</cprovl:fieldValue>
+				<cprovl:description>Access to process ex:a001 for sending out
+					meeting requests
+				</cprovl:description>
+			</cprovl:Entity>
+		</Content>
+
+		<Attribute IncludeInResult="false"
+			AttributeId="urn:oasis:names:tc:xacml:3.0:ex:a001">
+
+			<AttributeValue
+				XPathCategory="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+				DataType="urn:oasis:names:tc:xacml:3.0:data-type:xpathExpression">cprovl:Entity</AttributeValue>
+		</Attribute>
+	</Attributes>
+</Request>

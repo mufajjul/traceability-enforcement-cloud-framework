@@ -1,0 +1,49 @@
+#{extends 'login-main.html' /} #{set title:'Traceability Configuration'
+/}
+
+<div class="span5">
+	<h2>Create Meeting File</h2>
+	<p></p>
+	
+	 <p></p>
+    	<img src = "/public/images/meeting.png"/>
+ 	 <p></p>	
+	
+	<p></p>
+</div>
+
+<div class="span6">
+	<div id="tr-settings">
+		#{form @Application.storeMeeting(), id:'createMeetingForm',
+		enctype:'multipart/form-data' }
+		
+		 #{field 'Filename'} <label>&{field.name}:</label>
+		<input type="text" id="filename" name="filename" value=""
+			class="${field.errorClass}"> <span class="error">${field.error}</span>
+		#{/}
+		<p>
+
+		#{field 'Title'} <label>&{field.name}:</label> <input type="text"
+			id="title" name="title" value="" class="${field.errorClass}">
+		<span class="error">${field.error}</span> 
+		
+		#{/}
+		<p>
+		#{field 'Content'} <label>&{field.name}:</label> <textArea
+			id="content" rows="20" cols="20" name="content" value=""></textArea>
+		
+		#{/}
+		<p>
+			<input class="btn" type="submit" id="store" name="store"
+				value="Create Meeting File"
+				class="${errors.forKey('login') ? 'has_error' : ''}"> <span
+				class="error">${errors.forKey('login')}</span>
+		<p>
+		<hr>
+		#{/form}
+		
+	
+	</div>
+</div>
+
+

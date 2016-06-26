@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cprov="http://labs.orange.com/uk/cprov#"
+	xmlns:cprovl="http://labs.orange.com/uk/cprovl#" xmlns:prov="http://www.w3.org/ns/prov#"
+	xmlns:cprovd="http://labs.orange.com/uk/cprovd#" xmlns:r="http://labs.orange.com/uk/r#"
+	xmlns:cu="http://www.w3.org/1999/xhtml/datatypes/" xmlns:ex="http://labs.orange.com/uk/r#"
+	xsi:schemaLocation="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17 file:/C:/Users/lbwm7009/Dropbox/EngD/year3/schema/cProvl/xacml/xacml-core-v3-schema-wd-17.xsd"
+	PolicyId="urn:oasis:names:tc:xacml:3.0:cprovl:ex:policy1" Version="1.0"
+	RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable">
+	<Description>This policy only allows Phil to send out meeting requests</Description>
+	<PolicyDefaults>
+		<XPathVersion>http://www.w3.org/TR/1999/Rec-xpath-19991116</XPathVersion>
+	</PolicyDefaults>
+	<Target />
+	<Rule RuleId="urn:oasis:names:tc:xacml:3.0:ex:rule1" Effect="Permit">
+		<Description />
+
+		<!-- <Target> <AnyOf> <AllOf> <Match MatchId="urn:oasis:names:tc:xacml:3.0:function:xpath-provenance-id-match"> 
+			<AttributeValue DataType="urn:oasis:names:tc:xacml:3.0:data-type:xpathExpression" 
+			XPathCategory="urn:oasis:names:tc:xacml:3.0:attribute-category:action">ex:ag002</AttributeValue> 
+			<AttributeDesignator MustBePresent="false" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" 
+			AttributeId="urn:oasis:names:tc:xacml:3.0:ex:a001" DataType="urn:oasis:names:tc:xacml:3.0:data-type:xpathExpression" 
+			/> </Match> </AllOf> </AnyOf> </Target> -->
+
+		<Condition>
+			<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+			<Apply FunctionId="urn:oasis:names:tc:xacml:3.0:function:xpath-provenance-node-match">
+					<AttributeValue DataType="urn:oasis:names:tc:xacml:3.0:data-type:xpathExpression"
+					XPathCategory="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">//ex:ag002</AttributeValue>
+				</Apply>
+			
+			<Apply FunctionId="urn:oasis:names:tc:xacml:3.0:function:xpath-provenance-node-match">
+					<AttributeValue DataType="urn:oasis:names:tc:xacml:3.0:data-type:xpathExpression"
+					XPathCategory="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">//ex:ag002</AttributeValue>
+				</Apply>
+
+
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule RuleId="urn:oasis:names:tc:xacml:3.0:" Effect="Deny">
+		<Description>Otherwise deny all</Description>
+	</Rule>
+</Policy>

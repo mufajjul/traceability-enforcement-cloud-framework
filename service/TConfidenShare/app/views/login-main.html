@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>#{get 'title' /}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/bootstrap.css'}">
+        <style type="text/css">
+      		body {
+        		padding-top: 60px;
+        		padding-bottom: 40px;
+      		}
+    	</style>
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/bootstrap-responsive.css'}">
+        #{get 'moreStyles' /}
+        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+        <script src="@{'/public/javascripts/jquery-1.4.2.min.js'}" type="text/javascript" charset="utf-8"></script>
+        #{get 'moreScripts' /}
+    </head>
+    <body>
+    	#{topbar /}
+    	<div class="container">
+	    	<!-- Main hero unit for a primary marketing message or call to action -->
+	      		<div class="hero-unit">
+			        <h1>Welcome to a safer traceable world!</h1>
+			        <p>Traceable ConfidenShare is an end-to-end solution that allows use to store and share <strong>confidential</strong> files in the cloud securely.</p>
+			        <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+	      		</div>
+	      		
+	  		<div class="row">
+		        #{doLayout /}
+	     	</div>
+	     </div>
+    </body>
+</html>

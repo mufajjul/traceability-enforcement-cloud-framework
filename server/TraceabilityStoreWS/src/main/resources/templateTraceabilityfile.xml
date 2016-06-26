@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cprov:traceabilityDocument xmlns:prov="http://www.w3.org/ns/prov#"
+	xmlns:cprov="http://labs.orange.com/uk/cprov#" xmlns:cu="http://www.w3.org/1999/xhtml/datatypes/"
+	xmlns:r="http://labs.orange.com/uk/r#" xmlns:ex="http://www.example.org/"
+	xmlns:confidenshare="http://labs.orange.com/uk/confidenshare#"
+	xmlns:opmx="http://openprovenance.org/model/opmx#" xmlns:cprovd="http://labs.orange.com/uk/cprovd#"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://labs.orange.com/uk/cprov# file:/Users/mufy/Dropbox/EngD/year3/schema/cProv-inherited/cProv-v1.3.xsd">
+
+	<!-- <cprov:cResource prov:id="ex:e-provrecord"> <cprov:userCloudRef>=system[=]!:uuid:f81d4fae</cprov:userCloudRef> 
+		<cprov:vResourceRef>[=]!:pid:g81d4fde-record</cprov:vResourceRef> <cprov:pResourceRef>192.168.1.34</cprov:pResourceRef> 
+		<cprov:isReplicable>true</cprov:isReplicable> </cprov:cResource> -->
+
+</cprov:traceabilityDocument>	
+

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>#{get 'title' /}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" media="screen"
+	href="@{'/public/stylesheets/bootstrap.css'}">
+<style type="text/css">
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+
+.sidebar-nav {
+	padding: 9px 0;
+}
+</style>
+<link rel="stylesheet" type="text/css" media="screen"
+	href="@{'/public/stylesheets/bootstrap-responsive.css'}">
+<link rel="stylesheet" type="text/css" media="screen"
+	href="@{'/public/stylesheets/tables.css'}">
+#{get 'moreStyles' /}
+<link rel="shortcut icon" type="image/png"
+	href="@{'/public/images/favicon.png'}">
+<script src="@{'/public/javascripts/jquery-1.4.2.min.js'}"
+	type="text/javascript" charset="utf-8"></script>
+#{get 'moreScripts' /}
+</head>
+<body>
+	<!-- Topbar is included from chiled because we need to pass it parameters that only child has-->
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span2">
+				<div class="well sidebar-nav">
+					<ul class="nav nav-list">
+						<li class="nav-header">You</li>
+						<li><a href="@{Application.register()}">register</a></li>
+						<li><a href="@{Application.userDetails()}">details</a></li>
+						<li><a href="/logout">logout</a></li>
+						<li class="nav-header">Actions</li>
+						<li><a href="@{Application.home()}">your files</a></li>
+					</ul>
+
+
+				</div>
+				<!--/.well -->
+			</div>
+			<div class="span7">#{doLayout /}</div>
+		</div>
+	</div>
+
+	<!-- 
+			              <li><a href="{ManageDevices.listAllUserDevices()}">your devices</a></li>
+			              <li><a href="{ManageKeys.listReencKeys()}">your sharing keys</a></li>
+	-->
+
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="/public/javascripts/bootstrap.js"></script>
+</body>
+</html>
+
+

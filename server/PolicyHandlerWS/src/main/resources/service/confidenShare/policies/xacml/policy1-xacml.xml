@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:cprov="http://labs.orange.com/uk/cprov#"
+        xmlns:cprovl="http://labs.orange.com/uk/cprovl#"
+        xmlns:prov="http://www.w3.org/ns/prov#"
+        xmlns:cprovd="http://labs.orange.com/uk/cprovd#"
+        xmlns:r="http://labs.orange.com/uk/r#"
+        xmlns:cu="http://www.w3.org/1999/xhtml/datatypes/"
+        xmlns:ex="http://labs.orange.com/uk/r#"
+        xsi:schemaLocation="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17 file:/C:/Users/lbwm7009/Dropbox/EngD/year3/schema/cProvl/xacml/xacml-core-v3-schema-wd-17.xsd"
+        PolicyId="urn:oasis:names:tc:xacml:3.0:cprovl:ex:policy1"
+        Version="1.0"
+        RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable">
+   <Description/>
+   <PolicyDefaults>
+      <XPathVersion>http://www.w3.org/TR/1999/Rec-xpath-19991116</XPathVersion>
+   </PolicyDefaults>
+   <Target/>
+   <Rule RuleId="urn:oasis:names:tc:xacml:3.0:ex:rule1" Effect="Permit">
+      <Description> </Description>
+      <Target>
+         <AnyOf>
+            <AllOf>
+               <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">ex:ag-bob</AttributeValue>
+                  <AttributeDesignator MustBePresent="false"
+                                       AttributeId="urn:oasis:names:tc:xacml:3.0:subject-id"
+                                       DataType="http://www.w3.org/2001/XMLSchema#string"
+                                       Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"/>
+               </Match>
+            </AllOf>
+         </AnyOf>
+      </Target>
+      <Condition>
+         <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+            <Apply FunctionId="urn:oasis:names:tc:xacml:3.0:function:ext:xpath-provenance-node-match">
+               <AttributeValue DataType="urn:oasis:names:tc:xacml:3.0:data-type:xpathExpression"
+                               XPathCategory="urn:oasis:names:tc:xacml:3.0:attribute-category:cprov">ex:wicb1</AttributeValue>
+            </Apply>
+            <Apply FunctionId="urn:oasis:names:tc:xacml:3.0:function:ext:xpath-provenance-node-match">
+               <AttributeValue DataType="urn:oasis:names:tc:xacml:3.0:data-type:xpathExpression"
+                               XPathCategory="urn:oasis:names:tc:xacml:3.0:attribute-category:cprov">ex:wvb4</AttributeValue>
+            </Apply>
+         </Apply>
+      </Condition>
+   </Rule>
+   <Rule RuleId="urn:oasis:names:tc:xacml:3.0:" Effect="Deny">
+      <Description>Otherwise deny all</Description>
+   </Rule>
+</Policy>

@@ -1,0 +1,80 @@
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:oxm="http://www.springframework.org/schema/oxm"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd http://cxf.apache.org/jaxrs
+		http://cxf.apache.org/schemas/jaxrs.xsd">
+	
+	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"
+		/>
+	<!-- <import resource="classpath:META-INF/cxf/cxf.xml" /> <import resource="classpath:META-INF/cxf/cxf-servlet.xml"
+		/> <import resource="classpath:META-INF/cxf/cxf-extension-jaxrs-binding.xml" />
+		-->
+	<!--  service ID: MMC, ConfidenShare, ETC -->
+	<bean id="xPathUtility" class="com.provenance.cloudprovenance.storagecontroller.persistence.xpath.XPathUtility">
+		<property name="serviceId" value="ConfidenShare" />
+		<property name="traceabilityType" value="ServiceTraceability" />
+		<property name="conn" ref="xmlDbConnector" />
+		<property name="service" ref="xmlDBservice" />
+	</bean>
+	<bean id="cprovNamespacePrefixMapper" class="com.provenance.cloudprovenance.traceabilitystore.ns.CprovNamespacePrefixMapper">
+		<property name="nsSuffixCprov" value="http://labs.orange.com/uk/cprov#" />
+		<property name="nsSuffixProv" value="http://www.w3.org/ns/prov#" />
+		<property name="nsSuffixCprovl" value="http://labs.orange.com/uk/cprovl#" />
+		<property name="nsSuffixCProvd" value="http://labs.orange.com/uk/cprovd#" />
+		<property name="nsSuffixR" value="http://labs.orange.com/uk/r#" />
+		<property name="nsSuffixEx" value="http://labs.orange.com/uk/ex#" />
+		<property name="nsSuffixCu" value="http://www.w3.org/1999/xhtml/datatypes/" />
+		<property name="nsSuffixCOnfidenshare" value="http://labs.orange.com/uk/confidenshare#"
+			/>
+	</bean>
+	
+	<bean id="xmlDbConnector" class="com.provenance.cloudprovenance.storagecontroller.presistence.xmldb.XmlDbConnector">
+		<property name="driver" value="org.exist.xmldb.DatabaseImpl" />
+	</bean>
+	
+	
+	<bean id="xmlDBservice" class="com.provenance.cloudprovenance.storagecontroller.presistence.xmldb.XmlDbService">
+		<property name ="cProvNameSpace" ref ="cprovNamespacePrefixMapper" />
+		<property name="store" value="/db/TraceabilityStore" />
+		<property name="dbCommURI" value="xmldb:exist://localhost:8080/exist/xmlrpc" />
+		<property name="userName" value="admin" />
+		<property name="password" value="Adminadmin" />
+		
+	</bean>
+	
+	<bean id="xPathProvenanceConditionUtility" class="com.provenance.cloudprovenance.policyengine.service.XPathProvenanceConditionUtility">
+		<property name="serviceId" value="/db/TraceabilityStore" />
+		<property name="xpUtility" ref="xPathUtility" />
+	</bean>
+	
+	
+	<!-- Look at the list of properties ..... -->
+	<bean id="policyEngine" class="com.provenance.cloudprovenance.policyengine.service.PolicyEngine"
+		/>
+	
+	
+	<context:component-scan base-package="com.provenance.cloudprovenance.policyengine.service.controller"
+		/>
+	<!-- <jaxrs:server id="myService" address="/"> <jaxrs:serviceBeans> <ref bean="xacmlPolicyWebController"
+		/> </jaxrs:serviceBeans> <jaxrs:extensionMappings> <entry key="xml" value="application/xml"
+		/> </jaxrs:extensionMappings> </jaxrs:server> <bean id="xacmlPolicyWebController"
+		class="com.provenance.cloudprovenance.policyengine.service.controller.XacmlPolicyWebController">
+		<property name="cProvlPolicyDirectoryPath" value="/WEB-INF/classes/service/confidenShare/policies/cprovl"
+		/> <property name="xacmlPolicyConverterFile" value="/WEB-INF/classes/service/confidenShare/transformer/cprovl-to-xacml-policy-converter-v.1.0.xsl"
+		/> <property name="xacmlPolicyDirectoryPath" value="/WEB-INF/classes/service/confidenShare/policies/xacml"
+		/> <property name="cProvlRequestDirectoryPath" value="/WEB-INF/classes/service/confidenShare/request/cprovl"
+		/> <property name="xacmlRequestConverterFile" value="/WEB-INF/classes/service/confidenShare/transformer/cprovl-to-xacml-request-converter-v.1.0.xsl"
+		/> <property name="xacmlRequestDirectoryPath" value="/WEB-INF/classes/service/confidenShare/request/xacml"
+		/> </bean> -->
+	
+</beans>

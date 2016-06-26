@@ -1,0 +1,33 @@
+<beans default-autowire="byType"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+	<bean
+		class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+
+	<bean id="resourceConverter"
+		class="com.provenance.cloudprovenance.sconverter.translate.ResourceTranslator" />
+
+	<bean id="policyResponseConverter"
+		class="com.provenance.cloudprovenance.sconverter.PolicyResponseConverter">
+		<property name="cProvPrefixMapper" ref="cprovNamespacePrefixMapper">
+		</property>
+		<property name="pathToXACMLtoCprovResponse"
+			value="classpath:binding/translate/xacml-to-cprovl-response-converter-v0.1.xsl">
+		</property>
+	</bean>
+
+	<bean id="cprovNamespacePrefixMapper"
+		class="com.provenance.cloudprovenance.traceabilitystore.ns.CprovNamespacePrefixMapper">
+		<property name="nsSuffixCprov" value="http://labs.orange.com/uk/cprov#" />
+		<property name="nsSuffixProv" value="http://www.w3.org/ns/prov#" />
+		<property name="nsSuffixCprovl" value="http://labs.orange.com/uk/cprovl#" />
+		<property name="nsSuffixCProvd" value="http://labs.orange.com/uk/cprovd#" />
+		<property name="nsSuffixR" value="http://labs.orange.com/uk/r#" />
+		<property name="nsSuffixEx" value="http://labs.orange.com/uk/ex#" />
+		<property name="nsSuffixCu" value="http://www.w3.org/1999/xhtml/datatypes/" />
+		<property name="nsSuffixCOnfidenshare" value="http://labs.orange.com/uk/confidenshare#" />
+	</bean>
+</beans>

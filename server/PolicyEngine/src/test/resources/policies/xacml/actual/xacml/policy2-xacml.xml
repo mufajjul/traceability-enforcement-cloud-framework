@@ -1,0 +1,51 @@
+<Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ex="http://labs.orange.com/uk/ex#" xmlns:prov="http://www.w3.org/ns/prov#" xmlns:r="http://labs.orange.com/uk/r#" xmlns:cprovl="http://labs.orange.com/uk/cprovl#" xmlns:cprov="http://labs.orange.com/uk/cprov#" xmlns:cu="http://www.w3.org/1999/xhtml/datatypes/" xmlns:cprovd="http://labs.orange.com/uk/cprovd#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" PolicyId="urn:oasis:names:tc:xacml:3.0:cprovl:ex:policy1" RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable" Version="1.0" xsi:schemaLocation="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17 file:/Users/mufy/Dropbox/EngD/year3/schema/cProvl/xacml/xacml-core-v3-schema-wd-17.xsd">
+   <Description>Reuse dynamic variable </Description>
+   <PolicyDefaults>
+      <XPathVersion>http://www.w3.org/TR/1999/Rec-xpath-19991116
+				</XPathVersion>
+   </PolicyDefaults>
+   <Target/>
+   <Rule Effect="Permit" RuleId="urn:oasis:names:tc:xacml:3.0:ex:rule1">
+      <Description/>
+      <Target>
+         <AnyOf>
+            <AllOf>
+               <Match MatchId="labs:orange:com:function:ext:xpath-provenance-d-id-match">
+                  <AttributeValue AttributeId="urn:com:provenance:cloudprovenance:cprovl:1.0:attribute-id:cprov:s-ref" DataType="urn:oasis:names:tc:xacml:3.0:data-type:xpathExpression" XPathCategory="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">r:sub1</AttributeValue>
+                  <AttributeDesignator AttributeId="urn:com:provenance:cloudprovenance:cprovl:1.0:attribute-id:cprov:s-ref" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="urn:oasis:names:tc:xacml:3.0:data-type:xpathExpression" MustBePresent="false"/>
+               </Match>
+            </AllOf>
+         </AnyOf>
+         <AnyOf>
+            <AllOf>
+               <Match MatchId="labs:orange:com:function:ext:xpath-provenance-d-id-match">
+                  <AttributeValue AttributeId="urn:com:provenance:cloudprovenance:cprovl:1.0:attribute-id:cprov:s-ref" DataType="urn:oasis:names:tc:xacml:3.0:data-type:xpathExpression" XPathCategory="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">r:sub2</AttributeValue>
+                  <AttributeDesignator AttributeId="urn:com:provenance:cloudprovenance:cprovl:1.0:attribute-id:cprov:s-ref" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="urn:oasis:names:tc:xacml:3.0:data-type:xpathExpression" MustBePresent="false"/>
+               </Match>
+            </AllOf>
+         </AnyOf>
+         <AnyOf>
+            <AllOf>
+               <Match MatchId="labs:orange:com:function:ext:xpath-provenance-d-id-match">
+                  <AttributeValue AttributeId="urn:com:provenance:cloudprovenance:cprovl:1.0:attribute-id:cprov:newvar" DataType="urn:oasis:names:tc:xacml:3.0:data-type:xpathExpression" XPathCategory="urn:com:provenance:cloudprovenance:cprovl:1.0:attribute-category:cprov:newvar">r:a001</AttributeValue>
+                  <AttributeDesignator AttributeId="urn:com:provenance:cloudprovenance:cprovl:1.0:attribute-category:cprov:newvar" Category="urn:com:provenance:cloudprovenance:cprovl:1.0:attribute-category:cprov:newvar" DataType="urn:oasis:names:tc:xacml:3.0:data-type:xpathExpression" MustBePresent="false"/>
+               </Match>
+            </AllOf>
+         </AnyOf>
+      </Target>
+      <Condition>
+         <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+            <Apply FunctionId="labs:orange:com:function:ext:xpath-provenance-node-match">
+               <AttributeValue AttributeId="urn:com:provenance:cloudprovenance:cprovl:1.0:attribute-id:cprov" DataType="urn:oasis:names:tc:xacml:3.0:data-type:xpathExpression" XPathCategory="urn:oasis:names:tc:xacml:3.0:attribute-category:cprov">ex:wicb001</AttributeValue>
+            </Apply>
+            <Apply FunctionId="labs:orange:com:function:ext:xpath-provenance-node-match">
+               <AttributeValue AttributeId="urn:com:provenance:cloudprovenance:cprovl:1.0:attribute-id:cprov" DataType="urn:oasis:names:tc:xacml:3.0:data-type:xpathExpression" XPathCategory="urn:oasis:names:tc:xacml:3.0:attribute-category:cprov">ex:wicb003</AttributeValue>
+            </Apply>
+         </Apply>
+      </Condition>
+   </Rule>
+   
+   <Rule Effect="Deny" RuleId="urn:oasis:names:tc:xacml:3.0:">
+      <Description>Otherwise deny all</Description>
+   </Rule>
+  </Policy> 

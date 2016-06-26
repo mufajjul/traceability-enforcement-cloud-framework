@@ -1,0 +1,86 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:oxm="http://www.springframework.org/schema/oxm" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd http://cxf.apache.org/jaxrs
+		http://cxf.apache.org/schemas/jaxrs.xsd">
+
+	<bean
+		class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+	<!-- <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" /> -->
+	<import resource="classpath:META-INF/cxf/cxf-extension-jaxrs-binding.xml" />
+
+	<bean id="TraceabilityResponse"
+		class="com.provenance.cloudprovenance.traceabilitystore.ws.support.TraceabilityResponse" />
+
+	<bean id="xmlDbServiceTraceability"
+		class="com.provenance.cloudprovenance.storagecontroller.presistence.traceabilitystore.service.XmlDbServiceTraceability">
+		<constructor-arg index="0" ref="xmlDBservice" />
+		<constructor-arg index="1" value="XMLResource" />
+	</bean>
+
+
+	<bean id="xmlDbConnector"
+		class="com.provenance.cloudprovenance.storagecontroller.presistence.xmldb.XmlDbConnector">
+		<property name="driver" value="org.exist.xmldb.DatabaseImpl" />
+	</bean>
+
+	<bean id="xmlDBservice"
+		class="com.provenance.cloudprovenance.storagecontroller.presistence.xmldb.XmlDbService">
+		<property name="cProvNameSpace" ref="cprovNamespacePrefixMapper" />
+		<property name="store" value="/db/TraceabilityStore" />
+		<property name="dbCommURI" value="xmldb:exist://localhost:8080/exist/xmlrpc" />
+		<property name="userName" value="admin" />
+		<property name="password" value="Adminadmin" />
+
+	</bean>
+
+	<bean id="traceabilityConverter"
+		class="com.provenance.cloudprovenance.converter.resource.TraceabilityConverter">
+		<property name="cProvPrefixMapper" ref="cprovNamespacePrefixMapper" />
+		<property name="instanceDir"
+			value="com.provenance.cloudprovenance.traceabilityModel.generated" />
+	</bean>
+
+	<bean id="cprovNamespacePrefixMapper"
+		class="com.provenance.cloudprovenance.traceabilitystore.ns.CprovNamespacePrefixMapper">
+		<property name="nsSuffixCprov" value="http://labs.orange.com/uk/cprov#" />
+		<property name="nsSuffixProv" value="http://www.w3.org/ns/prov#" />
+		<property name="nsSuffixCprovl" value="http://labs.orange.com/uk/cprovl#" />
+		<property name="nsSuffixCProvd" value="http://labs.orange.com/uk/cprovd#" />
+		<property name="nsSuffixR" value="http://labs.orange.com/uk/r#" />
+		<property name="nsSuffixEx" value="http://labs.orange.com/uk/ex#" />
+		<property name="nsSuffixCu" value="http://www.w3.org/1999/xhtml/datatypes/" />
+		<property name="nsSuffixCOnfidenshare" value="http://labs.orange.com/uk/confidenshare#" />
+	</bean>
+
+	<!-- <mvc:annotation-driven /> xmlns:mvc="http://www.springframework.org/schema/mvc" -->
+	<context:component-scan
+		base-package="com.provenance.cloudprovenance.traceabilitystore.ws.controller" />
+
+	<jaxrs:server id="myService" address="/">
+		<jaxrs:serviceBeans>
+			<ref bean="provenanceStoreController" />
+		</jaxrs:serviceBeans>
+		<jaxrs:extensionMappings>
+			<entry key="xml" value="application/xml" />
+		</jaxrs:extensionMappings>
+	</jaxrs:server>
+
+	<bean id="provenanceStoreController"
+		class="com.provenance.cloudprovenance.traceabilitystore.ws.controler.TraceabilityStoreController">
+		<property name="maxSizeRecord" value="100" />
+		<property name="defaultFileExtensionOfrecord" value="xml" />
+		<property name="defaultServiceNamespace" value="confidenshare" />
+	</bean>
+
+</beans>

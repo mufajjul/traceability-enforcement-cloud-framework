@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cprov:traceabilityDocument xmlns:prov="http://www.w3.org/ns/prov#"
+	xmlns:cprov="http://labs.orange.com/uk/cprov#" xmlns:cu="http://www.w3.org/1999/xhtml/datatypes/"
+	xmlns:r="http://labs.orange.com/uk/r#" xmlns:ex="http://www.example.org/"
+	xmlns:opmx="http://openprovenance.org/model/opmx#" xmlns:cprovd="http://labs.orange.com/uk/cprovd#"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://labs.orange.com/uk/cprov# file:/Users/mufy/Dropbox/EngD/year3/schema/cProv-inherited/cProv-v1.3.xsd">
+
+	<!-- TODO: Update the field contents -->
+	<!-- Meeting requests -->
+	<!-- Agents -->
+	<prov:agent prov:id="ex:ag001">
+		<prov:label>matt</prov:label>
+	</prov:agent>
+	<prov:agent prov:id="ex:ag002">
+		<prov:label>jane</prov:label>
+	</prov:agent>
+	<prov:agent prov:id="ex:ag003">
+		<prov:label>phil</prov:label>
+	</prov:agent>
+
+	<prov:used prov:id="ex:u001">
+		<prov:activity prov:ref="ex:a002" />
+		<prov:entity prov:ref="ex:e001" />
+	</prov:used>
+	<prov:used prov:id="ex:u002">
+		<prov:activity prov:ref="ex:a003" />
+		<prov:entity prov:ref="ex:e002" />
+	</prov:used>
+	<prov:used prov:id="ex:u003">
+		<prov:activity prov:ref="ex:a001" />
+		<prov:entity prov:ref="ex:e003" />
+	</prov:used>
+	<prov:used prov:id="ex:u004">
+		<prov:activity prov:ref="ex:a001" />
+		<prov:entity prov:ref="ex:e004" />
+	</prov:used>
+
+	<!-- Resources -->
+	<cprov:cResource prov:id="ex:e001">
+		<cprov:resType>cprovd:data</cprov:resType>
+		<cprov:userTrustDegree>1</cprov:userTrustDegree>
+		<cprov:userCloudRef>http://orangecloud/user@matt/cluster001/image001</cprov:userCloudRef>
+		<cprov:vResourceRef>/linux/meetingService/res001</cprov:vResourceRef>
+		<cprov:pResourceRef>/Cluster001/126.23.43.45/server001/00-12-00-12-00-1/e001</cprov:pResourceRef>
+		<cprov:TTL>2015-10-10T12:00:00-05:00</cprov:TTL>
+	</cprov:cResource>
+
+	<cprov:transition prov:id="ex:t001">
+		<cprov:state>cprovd:Source</cprov:state>
+		<cprov:latitude>51.2171N</cprov:latitude>
+		<cprov:longitude>0.1172W</cprov:longitude>
+		<cprov:country>UK</cprov:country>
+		<cprov:region>GB</cprov:region>
+		<cprov:event>ex:ev001</cprov:event>
+	</cprov:transition>
+
+	<cprov:cResource prov:id="ex:e002">
+		<cprov:resType>cprovd:data</cprov:resType>
+		<cprov:userTrustDegree>1</cprov:userTrustDegree>
+		<cprov:userCloudRef>http://orangecloud/user@matt/cluster001/image001</cprov:userCloudRef>
+		<cprov:vResourceRef>/linux/meetingService/res002</cprov:vResourceRef>
+		<cprov:pResourceRef>/Cluster001/126.23.43.45/server001/00-12-00-12-00-1/e002</cprov:pResourceRef>
+		<cprov:TTL>2015-10-10T12:00:00-05:00</cprov:TTL>
+	</cprov:cResource>
+
+	<cprov:transition prov:id="ex:t002">
+		<cprov:state>cprovd:Source</cprov:state>
+		<cprov:latitude>51.2171N</cprov:latitude>
+		<cprov:longitude>0.1172W</cprov:longitude>
+		<cprov:country>UK</cprov:country>
+		<cprov:region>GB</cprov:region>
+		<cprov:event>ex:ev001</cprov:event>
+	</cprov:transition>
+
+	<!-- Meeting responses -->
+
+	<cprov:cResource prov:id="ex:e003">
+	    <cprov:resType>cprovd:data</cprov:resType>
+		<cprov:userTrustDegree>1</cprov:userTrustDegree>
+		<cprov:userCloudRef>http://orangecloud/user@jane/cluster001/image002</cprov:userCloudRef>
+		<cprov:vResourceRef>/linux/meetingService/res003</cprov:vResourceRef>
+		<cprov:pResourceRef>/Cluster001/126.23.43.45/server001/00-12-00-12-00-2/e003</cprov:pResourceRef>
+		<cprov:TTL>2015-10-10T12:00:00-05:00</cprov:TTL>
+	</cprov:cResource>
+
+	<cprov:transition prov:id="ex:t003">
+		<cprov:state>cprovd:Source</cprov:state>
+		<cprov:latitude>51.2171N</cprov:latitude>
+		<cprov:longitude>0.1172W</cprov:longitude>
+		<cprov:country>UK</cprov:country>
+		<cprov:region>GB</cprov:region>
+		<cprov:event>ex:ev001</cprov:event>
+	</cprov:transition>
+
+	<cprov:cResource prov:id="ex:e004">
+	    <cprov:resType>cprovd:data</cprov:resType>
+		<cprov:userTrustDegree>1</cprov:userTrustDegree>
+		<cprov:userCloudRef>http://orangecloud/user@phil/cluster001/image004</cprov:userCloudRef>
+		<cprov:vResourceRef>/linux/meetingService/res004</cprov:vResourceRef>
+		<cprov:pResourceRef></cprov:pResourceRef>
+		<cprov:TTL>2015-10-10T12:00:00-05:00</cprov:TTL>
+	</cprov:cResource>
+
+	<cprov:transition prov:id="ex:t004">
+		<cprov:state>cprovd:Source</cprov:state>
+		<cprov:latitude>51.2171N</cprov:latitude>
+		<cprov:longitude>0.1172W</cprov:longitude>
+		<cprov:country>UK</cprov:country>
+		<cprov:region>GB</cprov:region>
+		<cprov:event>ex:ev001</cprov:event>
+	</cprov:transition>
+
+	<!-- Activties -->
+
+	<cprov:cProcess prov:id="ex:a001">
+		<cprov:userCloudRef>/user@matt/cluster001/image001</cprov:userCloudRef>
+		<cprov:vProcessRef>/linux/meeting/gsmr</cprov:vProcessRef>
+		<cprov:pProcessRef>/Cluster001/192.34.23.45/00-11-AA-00</cprov:pProcessRef>
+	</cprov:cProcess>
+
+	<cprov:cProcess prov:id="ex:a002">
+		<cprov:userCloudRef>/user@jane/cluster001/image001</cprov:userCloudRef>
+		<cprov:vProcessRef>/linux/meeting/gsmr</cprov:vProcessRef>
+		<cprov:pProcessRef>/Cluster001/192.34.23.45/00-11-AA-00</cprov:pProcessRef>
+	</cprov:cProcess>
+
+	<cprov:cProcess prov:id="ex:a003">
+		<cprov:userCloudRef>/user@phil/cluster001/image001</cprov:userCloudRef>
+		<cprov:vProcessRef>/linux/meeting/gsmr</cprov:vProcessRef>
+		<cprov:pProcessRef>/Cluster001/192.34.23.45/00-11-AA-00</cprov:pProcessRef>
+	</cprov:cProcess>
+
+	<!-- Transitions with activities -->
+
+	<cprov:transition prov:id="ex:t005">
+		<cprov:state>cprovd:Source</cprov:state>
+		<cprov:latitude>51.2171N</cprov:latitude>
+		<cprov:longitude>0.1172W</cprov:longitude>
+		<cprov:country>UK</cprov:country>
+		<cprov:region>GB</cprov:region>
+		<cprov:event>ex:ev001</cprov:event>
+	</cprov:transition>
+
+	<cprov:transition prov:id="ex:t006">
+		<cprov:state>cprovd:Destination</cprov:state>
+		<cprov:latitude>51.2171N</cprov:latitude>
+		<cprov:longitude>0.1172W</cprov:longitude>
+		<cprov:country>UK</cprov:country>
+		<cprov:region>GB</cprov:region>
+		<cprov:event>ex:ev001</cprov:event>
+	</cprov:transition>
+
+	<cprov:transition prov:id="ex:t007">
+		<cprov:state>cprovd:Destination</cprov:state>
+		<cprov:latitude>51.2171N</cprov:latitude>
+		<cprov:longitude>0.1172W</cprov:longitude>
+		<cprov:country>UK</cprov:country>
+		<cprov:region>GB</cprov:region>
+		<cprov:event>ex:ev001</cprov:event>
+	</cprov:transition>
+
+	<!-- Relations -->
+
+	<cprov:wasVirtualizedBy prov:id="ex:wvb001">
+		<prov:entity prov:ref="ex:e001" />
+		<prov:activity prov:ref="ex:a001" />
+		<cprov:purpose>meetingReq</cprov:purpose>
+	</cprov:wasVirtualizedBy>
+
+	<cprov:wasVirtualizedBy prov:id="ex:wvb002">
+		<prov:entity prov:ref="ex:e002" />
+		<prov:activity prov:ref="ex:a001" />
+		<cprov:purpose>meetingReq</cprov:purpose>
+	</cprov:wasVirtualizedBy>
+
+	<cprov:wasVirtualizedBy prov:id="ex:wvb003">
+		<prov:entity prov:ref="ex:e003" />
+		<prov:activity prov:ref="ex:a002" />
+		<cprov:purpose>meetingReq</cprov:purpose>
+	</cprov:wasVirtualizedBy>
+
+	<cprov:wasVirtualizedBy prov:id="ex:wvb004">
+		<prov:entity prov:ref="ex:e004" />
+		<prov:activity prov:ref="ex:a003" />
+		<cprov:purpose>meetingReq</cprov:purpose>
+	</cprov:wasVirtualizedBy>
+
+	<!-- Transition linking -->
+	<cprov:hadTransitionState_a prov:id="ex:hts001">
+		<prov:generatedEntity prov:ref="ex:e001" />
+		<prov:usedEntity prov:ref="ex:t001" />
+	</cprov:hadTransitionState_a>
+
+	<cprov:hadTransitionState_a prov:id="ex:hts002">
+		<prov:generatedEntity prov:ref="ex:e002" />
+		<prov:usedEntity prov:ref="ex:t002" />
+	</cprov:hadTransitionState_a>
+
+	<cprov:hadTransitionState_a prov:id="ex:hts003">
+		<prov:generatedEntity prov:ref="ex:e003" />
+		<prov:usedEntity prov:ref="ex:t003" />
+	</cprov:hadTransitionState_a>
+
+	<cprov:hadTransitionState_a prov:id="ex:hts004">
+		<prov:generatedEntity prov:ref="ex:e004" />
+		<prov:usedEntity prov:ref="ex:t004" />
+	</cprov:hadTransitionState_a>
+
+	<cprov:hadTransitionState_b prov:id="ex:hts005">
+		<prov:entity prov:ref="ex:t001" />
+		<prov:activity prov:ref="ex:a001" />
+	</cprov:hadTransitionState_b>
+
+	<cprov:hadTransitionState_b prov:id="ex:hts006">
+		<prov:entity prov:ref="ex:t005" />
+		<prov:activity prov:ref="ex:a001" />
+	</cprov:hadTransitionState_b>
+
+	<cprov:hadTransitionState_b prov:id="ex:hts007">
+		<prov:entity prov:ref="ex:t006" />
+		<prov:activity prov:ref="ex:a002" />
+	</cprov:hadTransitionState_b>
+
+	<cprov:hadTransitionState_b prov:id="ex:hts008">
+		<prov:entity prov:ref="ex:t007" />
+		<prov:activity prov:ref="ex:a003" />
+	</cprov:hadTransitionState_b>
+
+	<cprov:wasInitiallyCalledBy prov:id="ex:wicb001">
+		<prov:activity prov:ref="ex:a001" />
+		<prov:agent prov:ref="ex:ag001" />
+		<cprov:purpose>cprovd:operation</cprov:purpose>
+	</cprov:wasInitiallyCalledBy>
+
+	<!-- <cprov:wasInitiallyCalledBy prov:id="ex:wicb002"> <prov:activity prov:ref="ex:a002" 
+		/> <prov:agent prov:ref="ex:r234" /> <cprov:purpose> generate meeting response</cprov:purpose> 
+		</cprov:wasInitiallyCalledBy> -->
+
+	<cprov:wasInitiallyCalledBy prov:id="ex:wicb002">
+		<prov:activity prov:ref="ex:a001" />
+		<prov:agent prov:ref="ex:ag003" />
+		<cprov:purpose>cprovd:operation</cprov:purpose>
+	</cprov:wasInitiallyCalledBy>
+
+	<!-- test:finish remove -->
+
+	<cprov:wasInitiallyCalledBy prov:id="ex:wicb003">
+		<prov:activity prov:ref="ex:a003" />
+		<prov:agent prov:ref="ex:ag003" />
+		<cprov:purpose>cprovd:operation</cprov:purpose>
+	</cprov:wasInitiallyCalledBy>
+
+</cprov:traceabilityDocument>

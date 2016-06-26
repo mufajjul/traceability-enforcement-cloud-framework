@@ -1,0 +1,60 @@
+==========================
+Traceability Enforcement Cloud Framework
+==========================
+
+Welcome to the Traceability Enforcement Cloud Framework. This framework is designed to aid the development of provenance-aware cloud service with enforcement capabilities. 
+It provides necessary APIs for a service to enable capturing of its traceable data, processing capabilities, and assertions on the traceable data.  
+
+Key Features
+============
+
+* cProv Traceability Model 
+* cProvl Policy Language
+* XACML 3.0 engine support for provenance/traceability data 
+* cProvl to XACML 3.0 policy translation
+* Dynamic generation of cProvl authorisation request
+* cProvl request to XACML request translation
+* XACML single to cProvl multi-value mapping
+* Static and dynamic variable holding 
+* XML-DB based traceability store
+* XML-DB based policy store 
+* Service Gateway 
+
+MODULES
+==============================================
+
+POLICY-ENGINE -  Provenance-aware XACML Policy Engine, based on the extension of the open-source Balana XACML 3.0 engine
+POLICY-HANDLER-WS -
+SCONVERTER -
+CONVERTER -
+CONNECTOR -
+SERVICE-API -
+EVENT-HANDLER -
+TRACEABILITY-MODEL - Represents traceability model, it defines the schema that presents the traceable nodes, edges, and associated properties.  
+TRACEABILIY-LANGUAGE -
+TRACEABILITY-STORE-WS -
+STORAGE-CONTROLLER - Holds the traceability data; provides a REST interface a service interaction
+
+System Requirements
+===================
+1. Minimum memory - 1 GB
+2. Processor      - Pentium 800MHz or equivalent at minimum
+3. Java SE Development Kit 1.6 or higher
+4. EXIST-XML DB
+5. TOMCAT 7.0
+6. Spring Framework 3.0
+6. Maven
+7. Balana Engine 
+  
+
+Installation and Running
+========================
+TODO
+
+Known Issues
+============
+TODO
+
+Issues Fixed In This Release
+============================
+TODO
