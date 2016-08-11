@@ -1,26 +1,25 @@
 ==========================
-Storage Controller
+Converter
 ==========================
 
-This module handles the communication the Exist DB 
-
+This module handles all the conversion between various encoding. Primary objective is to convert Java Objects in XML elements.
+ 
 
 Key Features
 ============
+* Uses JAXB for marshalling and unmarshalling
 
-TODO
 
 TECHNOLOGIES
 ==============================================
-- SPRING Framework
-- XPath/XQuery
+* JAXB 
+* Spring Framework
 
 System Requirements
 ===================
 1. Minimum memory - 1 GB
 2. Processor      - Pentium 800MHz or equivalent at minimum
 3. JRE 1.6 or higher
-
 
 Installation and Running
 ========================

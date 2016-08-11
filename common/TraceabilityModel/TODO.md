@@ -1,3 +1,7 @@
+TODO - Find a proper solution to the issue of dynamic generation of the Java Objects from the XML schema with 
+some missing namespaces. 
+
+The following is a workaround, which requires inserting it manually.
 
 String prefix = "confidenshare";
 		String suffix = "http://labs.orange.com/uk/confidenShare#";

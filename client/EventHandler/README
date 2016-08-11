@@ -1,26 +1,26 @@
 ==========================
-Storage Controller
+Event Handler
 ==========================
 
-This module handles the communication the Exist DB 
-
+This module handles generation of all traceabiltiy messages. It complies all the messages until a certain threshold is met, 
+then an event is fired which sends all the messages to a JMS Queue. 
 
 Key Features
 ============
-
 TODO
+
 
 TECHNOLOGIES
 ==============================================
-- SPRING Framework
-- XPath/XQuery
+* Spring Framework
+* ActiveMQ
+
 
 System Requirements
 ===================
 1. Minimum memory - 1 GB
 2. Processor      - Pentium 800MHz or equivalent at minimum
 3. JRE 1.6 or higher
-
 
 Installation and Running
 ========================

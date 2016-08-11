@@ -1,3 +1,7 @@
+TODO - need to find a proper solution to namespace going missing when generating Java Objects from the XML Schema.
+
+Below is a work around, inserting it manually. 
+
 @javax.xml.bind.annotation.XmlSchema(namespace = "http://labs.orange.com/uk/cprovl#",
 
 //@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.w3.org/ns/prov#",

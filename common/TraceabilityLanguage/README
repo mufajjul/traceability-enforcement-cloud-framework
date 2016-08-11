@@ -1,9 +1,8 @@
 ==========================
-Storage Controller
+Traceability Language
 ==========================
 
-This module handles the communication the Exist DB 
-
+This module models the traceability policy language as Java Objects from the cPRovl XML schema. 
 
 Key Features
 ============
@@ -12,8 +11,8 @@ TODO
 
 TECHNOLOGIES
 ==============================================
-- SPRING Framework
-- XPath/XQuery
+* SPRING Framework
+* JAXB 
 
 System Requirements
 ===================

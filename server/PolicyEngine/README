@@ -1,26 +1,27 @@
 ==========================
-Storage Controller
+Policy Engine
 ==========================
 
-This module handles the communication the Exist DB 
-
+This is an extended Balana XACML engine that supports handing of provenance data.  This engine will validate an XACML equivalent request with an XACML policy 
+and will produce a XAMCL response. 
 
 Key Features
 ============
 
-TODO
+* Extended Balana engine to support provenance data 
+* It is XACML 3.0 standard compliant 
 
 TECHNOLOGIES
-==============================================
-- SPRING Framework
-- XPath/XQuery
+===========================
+*  Spring Framework 
+*  XPath/XQuery
+
 
 System Requirements
 ===================
 1. Minimum memory - 1 GB
 2. Processor      - Pentium 800MHz or equivalent at minimum
 3. JRE 1.6 or higher
-
 
 Installation and Running
 ========================

@@ -1,8 +1,8 @@
 ==========================
-Storage Controller
+ServiceAPI
 ==========================
 
-This module handles the communication the Exist DB 
+This module provides two Java AP: for capturing provenance (traceability of a service) and making a policy request.  
 
 
 Key Features
@@ -13,7 +13,6 @@ TODO
 TECHNOLOGIES
 ==============================================
 - SPRING Framework
-- XPath/XQuery
 
 System Requirements
 ===================

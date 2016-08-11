@@ -1,26 +1,26 @@
 ==========================
-Storage Controller
+Connector
 ==========================
 
-This module handles the communication the Exist DB 
+This module collects all the JMS messages from the Queue and interfaces with the server side (HTTP). If the messages are provenance data
+they are requested to be permanently store in the provenance store. If the messages are policy request, they are handled by the policy engine.
 
 
 Key Features
 ============
-
 TODO
 
 TECHNOLOGIES
 ==============================================
-- SPRING Framework
-- XPath/XQuery
+* ActiveMQ
+* Apache CXF front-end 
+* Spring Framework
 
 System Requirements
 ===================
 1. Minimum memory - 1 GB
 2. Processor      - Pentium 800MHz or equivalent at minimum
 3. JRE 1.6 or higher
-
 
 Installation and Running
 ========================

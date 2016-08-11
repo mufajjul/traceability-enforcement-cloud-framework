@@ -1,0 +1,99 @@
+==========================
+PolicyHandlerWS
+==========================
+
+This is a Web Service that exposes a number of REST APIs for handing of policy request and response. 
+
+Key Features
+============
+
+Resource URI
+1 /****** posting a policy request *********/
+2 http://labs.orange.com/uk/cloudProvenance/PolicyController/policyEnforcement/{serviceId}
+
+3 /******* getting a server response **********/
+4 http://labs.orange.com/uk/cloudProvenance/PolicyController/policyEnforcement/{serviceId}/{responseId}
+
+ServiceId - Unique identifier of the service making the request
+responsetId -  The identifier used to retrieve the response for the policy request
+
+---- Service Policy Request ----
+
+Operation Description - A service user can make requests to gain access to one or
+more resources, or to attain a certain level of privileges.
+
+Response Code - HTTP/1.1 200 OK
+Response Error - HTTP/1.1 400 Bad Request
+Response Body - requestId and responseId
+Response Format - XML
+Action - POST /policyEnforcement/serviceId
+
+	---An example ---
+
+	REQUEST- POST http://labs.orange.com/uk/cloudProvenance/PolicyController/
+      	policyEnforcement/ConfidenShare HTTP/1.1
+      	Host: labs.orange.com
+      	Content-Type: application/xml
+      	Content-Length: nnn
+ 	<cProvl:policyRequest>  ...... </cProvl:policyRequest>
+
+
+	RESPONSE -  HTTP/1.1 200 OK
+    	Content-Type: application/xml; charset=utf-8
+    	Content-Length: nnn
+		<cprov:TraceabilityDocument>
+			<cprov:cResource prov:id=’ex:req001’> </cprov:cResource> <!-- request Id -->
+   			<cprov:cResource prov:id=’ex:res001’ cprov:des="http://labs.orange.com/uk/
+       				cloudProvenance/PolicyController/policyEnforcement/ConfidenShare/res001">
+   			<!-- responseId with response URI -->
+   			</cprov:cResource>
+		 </cprov:TraceabilityDocument>
+
+
+---Service Policy Response ----
+
+Response Code - HTTP/1.1 200 OK
+Response Error - HTTP/1.1 400 Bad Request
+Response Body - cProvl policy response
+Response Format - XML
+Action - GET /policyEnforcement/serviceId/responseId
+
+	--An example -- 
+
+	REQUEST- GET http://labs.orange.com/uk/cloudProvenance/PolicyController/
+      	policyEnforcement/ConfidenShare/res001/ HTTP/1.1
+      	Host: labs.orange.com
+      	Content-Type: application/xml
+      	Content-Length: nnn
+
+	RESPONSE -  HTTP/1.1 200 OK
+    	Content-Type: application/xml; charset=utf-8
+    	Content-Length: nnn
+ 		<cProvl:policyResponse> ......    </cProvl:policyResponse>
+
+
+TECHNOLOGIES
+==============================================
+- CXF/SPRING Framework
+- REST
+
+
+System Requirements
+===================
+1. Minimum memory - 1 GB
+2. Processor      - Pentium 800MHz or equivalent at minimum
+3. JRE 1.6 or higher
+4. Tomcat 7
+
+
+Installation and Running
+========================
+TODO
+
+Known Issues
+============
+TODO
+
+Issues Fixed In This Release
+============================
+TODO
