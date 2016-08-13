@@ -1,9 +1,13 @@
-/**
- * @file 		PolicyEnforcementConnector.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		Conncetor
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) PolicyEnforcementConnector.java       1.1 13/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 
 package com.provenance.cloudprovenance.connector.policy;
@@ -14,79 +18,75 @@ import org.apache.log4j.Logger;
 import org.springframework.web.client.RestTemplate;
 
 /**
+ * This class implements the PolicyEnforcement interface methods
+ *
+ * @version 1.1 13 Aug 2016
  * @author Mufy
- * 
+ * @Module Connector
  */
 public class PolicyEnforcementConnector implements PolicyEnforcement {
 
-	private static String server_add;
-	private static int port_no;
+	// Load the values from the Spring Bean
+
+	private String server_add;
+	private int port_no;
+	private String protocol;
 	private String service;
 	private String resource;
 	private int DEFAULT_TIMEOUT;
 
-	private String policyResponseId = null;
-
 	private static Logger logger = Logger
 			.getLogger("PolicyEnforcementConnector");
 
+	/** Method returns the output of the policy request as a string */
 	@Override
 	public String policyRequest(String serviceId, String policyrequestContent) {
 
-		String restURI = "http://" + server_add + ":" + port_no + "/" + service
-				+ "/" + resource + "/" + serviceId;// + "/" ;
-
-		logger.info("Invoking URI: " + restURI);
 		RestTemplate restTemplate = new RestTemplate();
-		String policyIdResponse = restTemplate.postForObject(restURI,
+		String restURIstructure = new String();
+
+		restURIstructure = protocol + "://" + server_add + ":" + port_no + "/"
+				+ service + "/" + resource + "/" + serviceId;// + "/" ;
+
+		logger.info("Invoking URI: " + restURIstructure);
+
+		String policyIdResponse = restTemplate.postForObject(restURIstructure,
 				policyrequestContent, String.class);
 
 		return policyIdResponse;
 	}
 
+	/** Method retrieves the policy response based on a response Id as a string */
 	@Override
 	public String policyResponse(String serviceId, String policyResponseId) {
 
-		String restURI = "http://" + server_add + ":" + port_no + "/" + service
-				+ "/" + resource + "/" + serviceId + "/" + policyResponseId;
-
-		logger.info("Invoking URI: " + restURI);
 		RestTemplate restTemplate = new RestTemplate();
-		String policyResponse = restTemplate
-				.getForObject(restURI, String.class);
+		String restURIstructure = new String();
+
+		restURIstructure = protocol + "://" + server_add + ":" + port_no + "/"
+				+ service + "/" + resource + "/" + serviceId + "/"
+				+ policyResponseId;
+
+		logger.info("Invoking URI: " + restURIstructure);
+
+		String policyResponse = restTemplate.getForObject(restURIstructure,
+				String.class);
 
 		return policyResponse;
 	}
 
+	/** Method returns a policy response based on a repose URI as a string */
 	@Override
 	public String policyResponse(String serviceId, URL policyResponseURI) {
 
-		// String restURI = "http://" + server_add + ":" + port_no + "/" +
-		// service
-		// + "/" + resource + "/" + serviceId + "/" + policyResponseId;
+		RestTemplate restTemplate = new RestTemplate();
 
 		logger.info("Invoking URI: " + policyResponseURI);
-		RestTemplate restTemplate = new RestTemplate();
+
 		String policyResponse = restTemplate.getForObject(
 				policyResponseURI.toExternalForm(), String.class);
 
 		return policyResponse;
-	}
-
-	public static String getServer_add() {
-		return server_add;
-	}
-
-	public static void setServer_add(String server_add) {
-		PolicyEnforcementConnector.server_add = server_add;
-	}
-
-	public static int getPort_no() {
-		return port_no;
-	}
-
-	public static void setPort_no(int port_no) {
-		PolicyEnforcementConnector.port_no = port_no;
 	}
 
 	public String getService() {
@@ -111,6 +111,30 @@ public class PolicyEnforcementConnector implements PolicyEnforcement {
 
 	public void setDEFAULT_TIMEOUT(int dEFAULT_TIMEOUT) {
 		DEFAULT_TIMEOUT = dEFAULT_TIMEOUT;
+	}
+
+	public String getServer_add() {
+		return server_add;
+	}
+
+	public void setServer_add(String server_add) {
+		this.server_add = server_add;
+	}
+
+	public int getPort_no() {
+		return port_no;
+	}
+
+	public void setPort_no(int port_no) {
+		this.port_no = port_no;
+	}
+
+	public String getProtocol() {
+		return protocol;
+	}
+
+	public void setProtocol(String protocol) {
+		this.protocol = protocol;
 	}
 
 }

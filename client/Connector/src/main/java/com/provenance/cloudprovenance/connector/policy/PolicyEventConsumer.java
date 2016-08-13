@@ -1,9 +1,13 @@
-/**
- * @file 		PolicyEventConsumer.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		Connector
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) PolicyEventConsumer.java       1.1 13/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 
 package com.provenance.cloudprovenance.connector.policy;
@@ -28,20 +32,25 @@ import com.provenance.cloudprovenance.connector.traceability.callback.Traceabili
 import com.provenance.cloudprovenance.connector.traceability.response.ResponseExtraction;
 
 /**
- * @author Mufy
+ * This class listens for incoming JMS message as a policy request for a
+ * service. It then invokes relevant URI for the request to be processed. Once a
+ * response is received, the response is sent to another JMS queue for the
+ * client to read from.
  *
+ * @version 1.1 13 Aug 2016
+ * @author Mufy
+ * @Module Connector
  */
 public class PolicyEventConsumer implements MessageListener {
 
 	private PolicyEnforcement poEnforcement;
 	private String serviceID;
-	private static Logger logger = Logger.getLogger("PolicyEventConsumer");
 	private static int counter = 1;
 	private JmsTemplate jmsTemplate;
 	private String responsePolicyQueueName;
 	private ResponseExtraction resExtraction;
 
-	// public TraceabilityNotificationEvent<String> trPolicyResEvent;
+	private static Logger logger = Logger.getLogger("PolicyEventConsumer");
 
 	public PolicyEventConsumer(PolicyEnforcement poEnforcement, String serviceID) {
 		this.poEnforcement = poEnforcement;
@@ -51,18 +60,22 @@ public class PolicyEventConsumer implements MessageListener {
 
 	}
 
+	/** Method called when a new message arrives */
 	public void onMessage(final Message message) {
 
-		logger.info("Received Policy Request Message = " + counter++);
 		final String outcome;
 
+		logger.info("Received policy request message = " + counter++);
+
+		// Check if the message is a text message
 		if (message instanceof TextMessage) {
 			TextMessage textMessage = (TextMessage) message;
 			String policyRequest = null;
 			try {
 				policyRequest = textMessage.getText();
 
-				logger.info("Sending  poicy request: " + policyRequest);
+				logger.info("Sending  poicy request: " + policyRequest
+						+ " .....");
 				String response = poEnforcement.policyRequest(serviceID,
 						policyRequest);
 
@@ -70,15 +83,17 @@ public class PolicyEventConsumer implements MessageListener {
 
 				String responsURI = resExtraction.getResponseURI(response);
 
-				logger.info("Sucessfully extracted responseMSG URI from policy response: "
+				logger.debug("Sucessfully extracted response message URI from the policy execution: "
 						+ responsURI);
 
-				// TODO - how do you enforce the response ... need a callback
-				// method??????
 				outcome = poEnforcement.policyResponse(serviceID, new URL(
 						responsURI));
-				logger.info("Successfully received a policy response: "
+
+				logger.info("Successfully retrieved a policy response: "
 						+ outcome);
+
+				logger.info("Sending the retrieved response to a Queue for a client to read: "
+						+ outcome + " ......");
 
 				jmsTemplate.send(responsePolicyQueueName, new MessageCreator() {
 
@@ -86,44 +101,27 @@ public class PolicyEventConsumer implements MessageListener {
 							throws JMSException {
 						TextMessage message = session
 								.createTextMessage(outcome);
-						// message.setIntProperty("messageCount", i);
 						return message;
 					}
 				});
 
-				logger.info("Successfully sent the response to the requester: "
-						+ outcome);
-
-				// if (trPolicyResEvent != null) {
-				// trPolicyResEvent.storeNotification(outcome);
-				// }
+				logger.info("Successfully sent the response via the JMS queue to a client");
 
 			} catch (JMSException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-			// System.out.println("PO*****Received: " + text);
-			catch (XPathExpressionException e) {
-				// TODO Auto-generated catch block
+			} catch (XPathExpressionException e) {
 				e.printStackTrace();
 			} catch (ParserConfigurationException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (SAXException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else {
-			System.out.println("PO*****Received obj: " + message);
+			logger.warn("Message received, but unable to process : " + message
+					+ " ... !");
 		}
-	}
-
-	// TODO - extract the response from the request
-	public String getReponseId(String policyRequestResponse) {
-		return null;
 	}
 
 	public JmsTemplate getJmsTemplate() {

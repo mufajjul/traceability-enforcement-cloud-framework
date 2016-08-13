@@ -24,7 +24,9 @@
 
 	<bean id="policyEnforcementConnector"
 		class="com.provenance.cloudprovenance.connector.policy.PolicyEnforcementConnector">
-		<property name="server_add" value="127.0.0.1" />
+			
+		<property name="protocol" value="http" />
+	    <property name="server_add" value="127.0.0.1" />
 		<property name="port_no" value="7000" />
 		<property name="service" value="PolicyHandlerWS" />
 		<property name="resource" value="policyEnforcement" />
