@@ -1,24 +1,29 @@
-/**
- * @file 		TraceabilityStoreService.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		TraceabilityModel
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) TraceabilityStoreService.java       1.1 13/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.traceabilitystore.ws.controler;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Response;
 
 /**
- * This interface define operations for the provStore
- * 
+ * This interface defines a list of operations for interacting with the
+ * traceability store
+ *
+ * @version 1.1 13 Aug 2016
  * @author Mufy
- * 
+ * @Module TraceabilityStoreWS
  */
 public interface TraceabilityStoreService<T> {
 
-	String POLICY_ENTRY_TYPE = "PolicyTraceabiity";
+    String POLICY_ENTRY_TYPE = "PolicyTraceabiity";
 	String SERVICE_ENTRY_TYPE = "ServiceTraceability";
 	String RESOURCE_TYPE = "XMLResource";
 
@@ -45,16 +50,4 @@ public interface TraceabilityStoreService<T> {
 	public T getTraceabilityDocumentElement(String serviceId,
 			String traceabilityType, String documentId, String elementId);
 
-	// get all traceability records
-	// public T[] getAllTraceabilityInstances(String serviceId,
-	// String traceabilityType);
-
-	// create a traceability entry in a record
-	// public boolean createTraceabilityEntry(String serviceId,
-	// String traceabilityType, String instanceId, String entryType,
-	// T entryItem);
-
-	// Delete operation not considered (for future use)
-	// public boolean removeTraceabiltiltyInstance(String serviceId,
-	// String traceabilityType, String instanceId);
 }

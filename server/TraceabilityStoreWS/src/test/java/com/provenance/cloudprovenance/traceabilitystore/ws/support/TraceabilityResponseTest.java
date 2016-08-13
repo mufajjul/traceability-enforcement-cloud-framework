@@ -9,34 +9,30 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import com.provenance.cloudprovenance.converter.resource.TraceabilityConverter;
-import com.provenance.cloudprovenance.traceabilitystore.ns.CprovNamespacePrefixMapper;
-
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration ("classpath:beans.xml")
+@ContextConfiguration("classpath:beans.xml")
 public class TraceabilityResponseTest {
-	
-	@Autowired 
+
+	@Autowired
 	TraceabilityResponse trResponse;
-	//@Autowired 
-	//CprovNamespacePrefixMapper cMapper;
-	@Autowired 
+	@Autowired
 	TraceabilityConverter trConverter;
 
 	static Logger logger = Logger.getLogger("TraceabilityResponseTest");
 
-	
 	@Test
-	public void resGenForCreateTest(){
+	public void resGenForCreateTest() {
 		String currentTraceabilityRecord = "record1.xml";
 		String serviceId = "ConfidenShare";
 		String recordType = "xml";
-		String Uri = "http://labs.orange.com/uk/cloudProvenance/cprov-ProvenanceStore/traceabilityDocument/ConfidenShare/ServiceTraceability/document001";		
-		String responseContent = trResponse.genTraceabilityRecordIdResponse(currentTraceabilityRecord, serviceId, recordType, Uri);
+		String Uri = "http://labs.orange.com/uk/cloudProvenance/cprov-ProvenanceStore/traceabilityDocument/ConfidenShare/ServiceTraceability/document001";
+		String responseContent = trResponse.genTraceabilityRecordIdResponse(
+				currentTraceabilityRecord, serviceId, recordType, Uri);
 		logger.info(responseContent);
-		
+
 		Assert.notNull(responseContent);
-		
+
 	}
-	
+
 }

@@ -1,9 +1,13 @@
-/**
- * @file 		TraceabilityStoreController.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		TraceabilityStoreWS
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) TraceabilityStoreController.java       1.1 13/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.traceabilitystore.ws.controler;
 
@@ -31,14 +35,17 @@ import com.provenance.cloudprovenance.storagecontroller.presistence.traceability
 import com.provenance.cloudprovenance.traceabilitystore.ws.support.TraceabilityResponse;
 
 /**
- * REST implementations for service interactions
- * 
+ * This is the traceability controller class, it is designed to handle REST
+ * operations such as store, get and other operations related to the
+ * traceability data
+ *
+ * @version 1.1 13 Aug 2016
  * @author Mufy
- * 
+ * @Module TraceabilityStoreWS
  */
+
 @Path("/")
 @Produces("application/xml")
-// @Produces({"text/html"} )
 public class TraceabilityStoreController implements
 		TraceabilityStoreService<Response> {
 
@@ -49,7 +56,6 @@ public class TraceabilityStoreController implements
 	int maxSizeRecord;
 	String defaultFileExtensionOfrecord;
 	String defaultServiceNamespace;
-
 	static int fileCounter = 0;
 
 	@Autowired
@@ -67,14 +73,15 @@ public class TraceabilityStoreController implements
 
 		boolean response = false;
 		String bodyText = null;
+
+		// Read the http message body contents
 		try {
 			bodyText = getBody(request);
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		;
 
+		// Check if the current traceability record Id exists
 		if (currentTraceabilityRecordId == null) {
 			currentTraceabilityRecordId = "TraceabilityRecord-"
 					+ (System.currentTimeMillis());
@@ -96,14 +103,15 @@ public class TraceabilityStoreController implements
 					"", tempelateProvText);
 			logger.info("Traceability record created successfully");
 		} else {
-			// add sent traceability data
 
+			// add sent traceability data
 			logger.info("Creating traceability record with the content from the request: \n"
 					+ bodyText);
 			response = traceabilityStoreService.createTraceabilityEntry(
 					serviceId, traceabilityType,
 					constructTraceabilityFileName(currentTraceabilityRecordId),
 					"", bodyText);
+
 			logger.info("traceability record created successfully");
 		}
 
@@ -177,15 +185,13 @@ public class TraceabilityStoreController implements
 			if (currentFileEntrySize > this.maxSizeRecord) {
 
 				String filePart = (documentId.split(".xml"))[0];
-
 				String updatedFileName = filePart += "part-" + (++fileCounter);
+
 				// new file
 				traceabilityStoreService.createTraceabilityInstance(serviceId,
 						traceabilityType,
 						constructTraceabilityFileName(updatedFileName));
-
 				currentTraceabilityRecordId = updatedFileName;
-
 				documentId = constructTraceabilityFileName(updatedFileName);
 
 				logger.info("created a new file: " + documentId);
@@ -215,8 +221,6 @@ public class TraceabilityStoreController implements
 			ResponseBuilder rBuilder = Response.status(501);
 			return rBuilder.build();
 		}
-
-		// return false;
 	}
 
 	@Override
@@ -228,7 +232,6 @@ public class TraceabilityStoreController implements
 			@Context HttpServletRequest request) {
 
 		if (currentTraceabilityRecordId == null) {
-
 			logger.warn("Current file record Id does not exist, need to create a new record !!!");
 			ResponseBuilder rBuilder = Response.status(404);
 			rBuilder.entity("<TraceabilityDocument></TraceabilityDocument>");
@@ -281,7 +284,6 @@ public class TraceabilityStoreController implements
 			return rBuilder.build();
 
 		}
-		// return "<outcome> not yet implemented </outcome>";
 	}
 
 	@Override
@@ -292,7 +294,6 @@ public class TraceabilityStoreController implements
 			@PathParam("traceabilityType") String traceabilityType,
 			@PathParam("documentId") String documentId,
 			@PathParam("elementId") String elementId) {
-		// return "<outcome> not yet implemented </outcome>";
 
 		ResponseBuilder rBuilder = Response.status(501);
 		return rBuilder.build();
@@ -312,7 +313,6 @@ public class TraceabilityStoreController implements
 		logger.debug("clientRequestRecordId: " + clientRequestRecordId);
 
 		if (clientRequestRecordId.contains("confidenshare")) {
-
 			String updatedId = clientRequestRecordId.split("confidenshare:")[1];
 			logger.info("updated record Id without namespace prefix: "
 					+ updatedId);
@@ -325,7 +325,7 @@ public class TraceabilityStoreController implements
 	 * Get request body content
 	 * 
 	 * @param request
-	 * @return
+	 * @return string
 	 * @throws IOException
 	 */
 	public static String getBody(HttpServletRequest request) throws IOException {
