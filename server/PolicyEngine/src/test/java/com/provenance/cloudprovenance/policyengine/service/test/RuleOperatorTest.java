@@ -1,9 +1,13 @@
-/**
- * @file 		RuleOperatorTest.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		PolicyEngine
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) RuleOperatorTest.java       1.1 14/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.policyengine.service.test;
 
@@ -12,40 +16,38 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * @author Mufy
+ * This class provide tests for the rule operator 
+ * TODO - to be implemented
  * 
+ * @version 1.1 14 Aug 2016
+ * @author Mufy
+ * @Module PolicyEngine
  */
 @Ignore
 public class RuleOperatorTest {
-	/**
-	 * description: To be implemented
-	 * 
-	 * @author Mufy
-	 * 
-	 */
 
 	@Ignore
 	@Test
-	public void ruleOrderingBeforeTest(){
+	public void ruleOrderingBeforeTest() {
 		Assert.fail("Not yet implemented");
 	}
 
 	@Ignore
 	@Test
-	public void ruleOrderingAfterTest(){
+	public void ruleOrderingAfterTest() {
 		Assert.fail("Not yet implemented");
 
 	}
-	
+
 	@Ignore
 	@Test
-	public void ruleOrderingOverideTest(){
+	public void ruleOrderingOverideTest() {
 		Assert.fail("Not yet implemented");
 	}
-	
+
 	@Ignore
 	@Test
-	public void ruleOrderingInheritTest(){
+	public void ruleOrderingInheritTest() {
 		Assert.fail("Not yet implemented");
 	}
 }

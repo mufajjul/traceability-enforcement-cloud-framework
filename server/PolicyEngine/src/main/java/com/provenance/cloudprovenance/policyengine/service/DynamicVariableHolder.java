@@ -1,22 +1,26 @@
-/**
- * @file 		DynamicVariableHolder.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		PolicyEngine
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) DynamicVariableHolder.java       1.1 13/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.policyengine.service;
 
 import java.util.HashMap;
 import java.util.Set;
-
 import org.apache.log4j.Logger;
 
 /**
  * This class is responsible for storing and handling of the dynamic variables
  * 
+ * @version 1.1 13 Aug 2016
  * @author Mufy
- * @Note For scalability, DB should be considered  
+ * @Module PolicyEngine
  */
 public class DynamicVariableHolder {
 
@@ -25,6 +29,8 @@ public class DynamicVariableHolder {
 	Logger logger = Logger.getLogger(DynamicVariableHolder.class);
 	static DynamicVariableHolder dynamicHolder;
 
+	//TODO - for scalability, DB should be used
+	
 	private DynamicVariableHolder() {
 		if (variableMap == null) {
 			variableMap = new HashMap<String, Object>();

@@ -1,9 +1,13 @@
-/**
- * @file 		XPathProvenanceConditionFunction.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		PolicyEngine
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) XPathProvenanceConditionFunction.java       1.1 13/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.policyengine.cond;
 
@@ -32,14 +36,15 @@ import org.xmldb.api.base.XMLDBException;
 import com.provenance.cloudprovenance.policyengine.service.XPathProvenanceConditionUtility;
 
 /**
- * This class provides handles the XPath target function
- * 
+ * This class handles new condition functions to support provenance feature
+ *
+ * @version 1.1 13 Aug 2016
  * @author Mufy
- * 
+ * @Module PolicyEngine
  */
 public class XPathProvenanceConditionFunction extends FunctionBase {
 
-	// main function
+	// main functions
 	public static final String NAME_XPATH_PROVENANCE_NODE_MATCH = FUNCTION_NS_3_ORANGE
 			+ "ext:xpath-provenance-node-match";
 
@@ -68,7 +73,7 @@ public class XPathProvenanceConditionFunction extends FunctionBase {
 	public static final int ID_XPATH_PROV_NODE_MATCH = 0;
 	public static final int ID_XPATH_PROV_NODES_MATCH = 1;
 
-	String currentFunctionName;
+	String currentFunctionName = new String();
 
 	@Autowired
 	private XPathProvenanceConditionUtility xpathUtility;
@@ -81,13 +86,6 @@ public class XPathProvenanceConditionFunction extends FunctionBase {
 
 		return set;
 	}
-
-	/**
-	 * TODO - Incorporate the service ID to the function
-	 * 
-	 * @param functionName
-	 * @param serviceId
-	 */
 
 	public XPathProvenanceConditionFunction(String functionName) {
 
@@ -102,7 +100,7 @@ public class XPathProvenanceConditionFunction extends FunctionBase {
 
 	public static String getNodeMatchName(String functionName) {
 
-		logger.info("get function Name : " + functionName);
+		logger.debug("get function Name : " + functionName);
 
 		if (functionName.equals(FUNCTION_NS_3_ORANGE
 				+ "ext:xpath-provenance-node-match")) {
@@ -137,14 +135,13 @@ public class XPathProvenanceConditionFunction extends FunctionBase {
 
 			logger.debug("function Name Identifier for arguments : "
 					+ functionName + " param :" + 1);
-
 			return 1;
+
 		} else if (functionName.equals(FUNCTION_NS_3_ORANGE
 				+ "ext:xpath-provenance-nodes-match")) {
 
 			logger.debug("function Name Identifier for arguments : "
 					+ functionName + " param :" + 2);
-
 			return 2;
 		} else
 			return -1;
@@ -216,10 +213,12 @@ public class XPathProvenanceConditionFunction extends FunctionBase {
 			logger.debug("Function outcome: " + evalutionResult);
 
 			return EvaluationResult.getInstance(evalutionResult);
+
 		} else if (getFunctionId() == ID_XPATH_PROV_NODES_MATCH) {
 
 			logger.warn("Fuction:  " + currentFunctionName
 					+ " : To be implemented");
+
 			int parameterSize = inputs.size();
 
 			if (parameterSize == 2) {
@@ -252,19 +251,14 @@ public class XPathProvenanceConditionFunction extends FunctionBase {
 					return EvaluationResult.getInstance(evalutionResult);
 
 				} catch (XMLDBException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (URISyntaxException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (ParserConfigurationException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (SAXException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

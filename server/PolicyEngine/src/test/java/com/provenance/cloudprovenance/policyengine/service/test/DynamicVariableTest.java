@@ -1,9 +1,13 @@
-/**
- * @file 		DynamicVariableTest.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		PolicyEngine
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) DynamicVariableTest.java       1.1 14/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.policyengine.service.test;
 
@@ -25,11 +29,11 @@ import org.xml.sax.SAXException;
 import com.provenance.cloudprovenance.policyengine.service.PolicyEngine;
 
 /**
- * description: This class provide tests for variables (default, new and
- * ref)
+ * description: This class provide tests for variables (default, new and ref)
  * 
+ * @version 1.1 14 Aug 2016
  * @author Mufy
- * 
+ * @Module PolicyEngine
  */
 @Ignore
 public class DynamicVariableTest {
@@ -171,11 +175,11 @@ public class DynamicVariableTest {
 		log.info("\n *********************************************** CONDITIONAL DYNAMIC VARIABLE TEST :  6    ******************************************");
 
 		String outcome = TestUtility.executeTest(testPolicyId, type);
-	
+
 		Assert.assertTrue("Expected outcome ==> '" + expectedOutcome + "'",
 				outcome.contains(expectedOutcome));
 	}
-	
+
 	/**
 	 * Ref and New vairables within statements, should return true
 	 */
@@ -188,27 +192,24 @@ public class DynamicVariableTest {
 		log.info("\n *********************************************** CONDITIONAL DYNAMIC VARIABLE TEST :  7    ******************************************");
 
 		String outcome = TestUtility.executeTest(testPolicyId, type);
-	
+
 		Assert.assertTrue("Expected outcome ==> '" + expectedOutcome + "'",
 				outcome.contains(expectedOutcome));
 	}
 
-
 	@Test
-	public void srefWithTwoAgentsVairableWithin_Statements() throws URISyntaxException {
+	public void srefWithTwoAgentsVairableWithin_Statements()
+			throws URISyntaxException {
 		int testPolicyId = 8;
 		String expectedOutcome = "Permit";
 
 		log.info("\n *********************************************** CONDITIONAL DYNAMIC VARIABLE TEST :  8    ******************************************");
 
 		String outcome = TestUtility.executeTest(testPolicyId, type);
-	
+
 		Assert.assertTrue("Expected outcome ==> '" + expectedOutcome + "'",
 				outcome.contains(expectedOutcome));
 	}
-
-	
-	
 
 	@Ignore
 	@Test

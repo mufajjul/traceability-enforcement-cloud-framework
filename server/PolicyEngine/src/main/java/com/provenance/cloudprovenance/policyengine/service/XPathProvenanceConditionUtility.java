@@ -1,9 +1,13 @@
-/**
- * @file 		XPathProvenanceConditionUtility.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		PolicyEngine
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) XPathProvenanceConditionUtility.java       1.1 14/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.policyengine.service;
 
@@ -32,10 +36,11 @@ import com.provenance.cloudprovenance.storagecontroller.persistence.exception.Pr
 import com.provenance.cloudprovenance.storagecontroller.persistence.xpath.XPathUtility;
 
 /**
- * This class represent the Utilities for the Xpath functions
+ * This class is the main class that handles the core functionalities of the Xpath functions
  * 
+ * @version 1.1 14 Aug 2016
  * @author Mufy
- * 
+ * @Module PolicyEngine
  */
 public class XPathProvenanceConditionUtility {
 
@@ -77,7 +82,6 @@ public class XPathProvenanceConditionUtility {
 				xpUtility);
 
 		// change the generated Entity with the previous Used entity
-
 		logger.debug("Checking for transitive node dependencies !!! "
 				+ transitiveNode);
 
@@ -91,19 +95,13 @@ public class XPathProvenanceConditionUtility {
 
 				Node currentNode = tempChildNodeList.item(k);
 				if (currentNode.getNodeName().equals("prov:generatedEntity")) {
-					// replace the values
-					// Node attributeNode =
-					// currentNode.getAttributes().getNamedItem(provAttributeName);
-					// get transitiveNode att Value
 
+					// get transitiveNode att Value
 					Node transitiveNodeAtt = transitiveNode.getAttributes()
 							.getNamedItem(provAttributeName);
 
 					logger.info("Transtive Node Attribute Values :"
 							+ transitiveNodeAtt.getNodeValue());
-
-					// currentNode.getAttributes().removeNamedItem(
-					// provAttributeName);
 
 					Node currentNodeAttribute = currentNode.getAttributes()
 							.getNamedItem(provAttributeName);
@@ -126,13 +124,10 @@ public class XPathProvenanceConditionUtility {
 
 			logger.debug("Check for variables ....");
 
-			// check dynamic variable for the node identification ...
-
-			// check dynamic variable for the node and child elements.
+			// check dynamic variable for the node identification & child
+			// elements
 			NodeList matchedDvariables = matchedDVariablesChildNodes(
 					cprovlPolicyNode, xpUtility);
-
-			// logger.debug("match dydnamic variable length is: "+);
 
 			if (matchedDvariables != null && matchedDvariables.getLength() > 0) {
 				// go through each dVariable and try to obtain its value from
@@ -155,12 +150,6 @@ public class XPathProvenanceConditionUtility {
 					NodeList matchedNodeList = xpUtility
 							.getMatchNodeListWithXquery(xpath);
 
-					// Check if the variable values already exists
-					// Variable content store for later use
-					// logger.debug("Retrived matched dynamic Variable Type ==> "
-					// + matchedNodeList.item(0).getNodeName()+
-					// matchedNodeList.item(1).getNodeName());
-
 					// Check if the Id already exists
 					if (matchedNodeList != null
 							&& matchedNodeList.getLength() != 0) {
@@ -179,21 +168,9 @@ public class XPathProvenanceConditionUtility {
 							matchedNodeList = currentNode.getChildNodes();
 
 							logger.debug("removing the root node !!");
-
-							/*
-							 * for (int a = 0; a < matchedNodeList.getLength();
-							 * a++) {
-							 * 
-							 * logger.info(matchedNodeList.item(a)
-							 * .getNodeName() + " " +
-							 * matchedNodeList.item(a).getNodeName()); }
-							 */
-
 						}
 
 						// check if the dynamic value is a child element
-
-						// logger.info("Node content:"+currentDva);
 						if (currentDvar.getAttributes()
 								.getNamedItem("prov:ref") != null) {
 
@@ -210,48 +187,14 @@ public class XPathProvenanceConditionUtility {
 							Node myNode = currentDvar.getAttributes()
 									.getNamedItem("prov:id");
 
-							// myNode.
-
-							// DocumentBuilderFactory factory =
-							// DocumentBuilderFactory.newInstance();
-							// try {
-							// DocumentBuilder builder =
-							// factory.newDocumentBuilder();
-							// Document document = builder.newDocument();
-
-							// Element el = document.createElement("prov:ref");
-							// el.setNodeValue(myNode.getNodeValue());
-
-							// currentDvar.getAttributes().removeNamedItem("prov:id");
-							// currentDvar.getAttributes().setNamedItem(el);
-
-							// myNode.
-
-							// }catch (ParserConfigurationException
-							// parserException) {
-							// parserException.printStackTrace();
-							// }
-
-							// if it contains children remove them.
 							for (int j = 0; j < matchedNodeList.getLength(); j++) {
-								// if (matchedNodeList.item(j) == null) {
-								// continue;
-								// }
 								logger.debug("Before removal: Element nodes "
 										+ matchedNodeList.item(j)
 												.getTextContent());
 
 								NodeList childNodes = matchedNodeList.item(j)
 										.getChildNodes();
-
-								// childNodes.
-								// logger.debug("Element nodes child size: "+j+
-								// " :"+ childNodes.getLength());
-
 								while (childNodes.getLength() != 0) {
-
-									// Node childNodeElement = this.clean ()
-
 									Node nodeToBeRemoved = childNodes
 											.item(childNodes.getLength() - 1);
 
@@ -263,13 +206,11 @@ public class XPathProvenanceConditionUtility {
 
 									matchedNodeList.item(j).removeChild(
 											nodeToBeRemoved);
-									// matchedNodeList.
 								}
 
 								logger.debug("After removal: Element nodes: "
 										+ matchedNodeList.item(j)
 												.getTextContent());
-
 							}
 
 							logger.debug("Value storing: " + dynamicVarIdRef);
@@ -294,11 +235,6 @@ public class XPathProvenanceConditionUtility {
 							logger.error("Could not store, varibale key does not exist !!! ==> "
 									+ dynamicVarIdRef);
 						}
-
-						// Only applies the wasDerivedFrom
-
-						// TODO - currently done for one node, in the future
-						// apply it multiple node
 
 						if (currentNodeName.equals(TRANSITIVE_NODE)) {
 
@@ -339,11 +275,8 @@ public class XPathProvenanceConditionUtility {
 		List<String> attributeMatchedValuesList = new ArrayList<String>();
 
 		for (int i = 0; i < matchedNodes.getLength(); i++) {
-
 			Node selectedNode = (Node) matchedNodes.item(i);
-
 		}
-
 		return null;
 
 	}
@@ -356,8 +289,6 @@ public class XPathProvenanceConditionUtility {
 		Node matchedNode = xpUtility
 				.getMatchNodewithXQuery(constructXpathExpression(id));
 
-		// logger.info("Root node name: "+ matchedNode.getNodeName());
-
 		if (matchedNode == null) {
 			logger.warn("No match found !!!");
 			return false;
@@ -365,7 +296,6 @@ public class XPathProvenanceConditionUtility {
 			return false;
 		} else if (matchedNode.getNodeName().equalsIgnoreCase(
 				TRACEABILITY_ROOT_NODENAME)) {
-			// matchedNode = matchedNode.getFirstChild();
 
 			NodeList allMatchedChildNodes = (clean(matchedNode))
 					.getChildNodes();
@@ -461,7 +391,6 @@ public class XPathProvenanceConditionUtility {
 		}
 
 		// Get attribute of the root element, if it is a variable
-
 		NodeList childrenList = policyElement.getChildNodes();
 
 		if (childrenList != null) {
@@ -528,8 +457,6 @@ public class XPathProvenanceConditionUtility {
 						for (int k = 0; k < dynamicVaribleList.getLength(); k++) {
 							Node variableElement = dynamicVaribleList.item(k);
 
-							// xpathConstruction +=
-							// variableElement.getNodeName();
 							// Not using the node name of the variable, but the
 							// original value
 							xpathConstruction += childElementNodeName;
@@ -680,10 +607,6 @@ public class XPathProvenanceConditionUtility {
 
 	public String constructXpathExpression(String id) {
 
-		// String exp = "/cprov:traceabilityDocument//*[@prov:id='" + id + "']";
-
-		// COMMENT: this is to handle sublevel of traceabilityDocument within
-		// traceabilityDocument
 		String exp_plus = "/cprov:traceabilityDocument//*[@prov:id='" + id
 				+ "'] | " + "/*[@prov:id='" + id + "'] ";
 
@@ -699,7 +622,6 @@ public class XPathProvenanceConditionUtility {
 	}
 
 	// Get rid of empty text node
-
 	public Node clean(Node node) {
 		NodeList childNodes = node.getChildNodes();
 
@@ -736,8 +658,6 @@ public class XPathProvenanceConditionUtility {
 
 		return null;
 	}
-
-	// public
 
 	public NodeList matchedDVariablesChildNodes(Node provNode,
 			XPathUtility xpUtility) throws XPathExpressionException,
@@ -856,9 +776,6 @@ public class XPathProvenanceConditionUtility {
 		Node desMatchedNode = xpUtility
 				.getMatchNodewithXQuery(constructXpathExpression(destinationNode));
 
-		// logger.info("No of elements in source NodeList: "
-		// + varibleListSourceNodes.getLength());
-
 		if (srcMatchedNode == null) {
 			logger.warn("No match found !!!");
 			return false;
@@ -867,8 +784,6 @@ public class XPathProvenanceConditionUtility {
 		} else if (desMatchedNode.getNodeName().equalsIgnoreCase(
 				TRACEABILITY_ROOT_NODENAME)) {
 			logger.info("Node is TRACEABILTIY root node");
-
-			// matchedNode = matchedNode.getFirstChild();
 
 			NodeList allMatchedChildSourceNodes = (clean(srcMatchedNode))
 					.getChildNodes();

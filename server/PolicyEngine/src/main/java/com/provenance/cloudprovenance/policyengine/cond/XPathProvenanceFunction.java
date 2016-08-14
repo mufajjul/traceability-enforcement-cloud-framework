@@ -1,9 +1,13 @@
-/**
- * @file 		XPathProvenanceFunction.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		PolicyEngine
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) XPathProvenanceFunction.java       1.1 13/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.policyengine.cond;
 
@@ -40,10 +44,11 @@ import com.provenance.cloudprovenance.policyengine.service.DynamicVariableHolder
 import com.provenance.cloudprovenance.policyengine.service.XPathProvenanceConditionUtility;
 
 /**
- * This class handles the XPath condition function
+ * This class handles new target functions to handle provenance data.
  * 
+ * @version 1.1 13 Aug 2016
  * @author Mufy
- * 
+ * @Module PolicyEngine
  */
 public class XPathProvenanceFunction extends FunctionBase {
 
@@ -60,9 +65,7 @@ public class XPathProvenanceFunction extends FunctionBase {
 	public static final int NO_OF_ARGS = 2;
 
 	private String XPATH_PROVENANCE_DYNAMIC_VARIABLE_CATEGORY = "urn:com:provenance:cloudprovenance:cprovl:1.0:attribute-category:cprov:newvar";
-
 	private String XPATH_PROVENANCE_S_DYNAMIC_VARIABLE_CATEGORY = "urn:com:provenance:cloudprovenance:cprovl:1.0:attribute-id:cprov:s-ref";
-
 	private String XPATH_PROVENANCE_D_DYNAMIC_VARIABLE_CATEGORY = "urn:com:provenance:cloudprovenance:cprovl:1.0:attribute-id:cprov:d-ref";
 
 	static Logger logger = Logger.getLogger(XPathProvenanceFunction.class);
@@ -125,14 +128,11 @@ public class XPathProvenanceFunction extends FunctionBase {
 		XPathAttribute xpathAttribute = ((XPathAttribute) argValues[0]);
 		String xpathValue = xpathAttribute.getValue();
 		String category = xpathAttribute.getXPathCategory();
-		// String attCategory = xpathAttribute.getXPathCategory();
 		String attributeId = xpathAttribute.getAttributeId();
 
 		switch (getFunctionId()) {
 		case ID_XPATH__PROVENANCE_S_ID_MATCH: {
-
 			boolean evalutionResult = false;
-
 			logger.info("xpath Value: " + xpathValue + ", category: "
 					+ category);
 
@@ -161,12 +161,6 @@ public class XPathProvenanceFunction extends FunctionBase {
 
 			logger.debug("Attribute type ==> " + argValues[0]
 					+ " XPATH-D-ID-MATCH");
-
-			logger.info("Policy Attribute value is:" + xpathValue);
-			logger.info("Policy Attribute category val is:" + category);
-			logger.info("Policy Attribute type is:" + attributeId);
-
-			// Handle multiple values of same type.
 
 			// Handle new variable type
 			if (category.equals(XPATH_PROVENANCE_DYNAMIC_VARIABLE_CATEGORY)) {
@@ -199,11 +193,6 @@ public class XPathProvenanceFunction extends FunctionBase {
 						logger.debug("Context content: "
 								+ att.getContent().toString());
 
-					logger.debug("Request Attribute ID: " + att.getId());
-					logger.debug("Request Attribute Cat: " + att.getCategory());
-					logger.debug("Request Context no of Children: "
-							+ att.getAttributes().size());
-
 					if (att.getAttributes().size() > 0) {
 						Set<Attribute> attc = att.getAttributes();
 
@@ -228,6 +217,7 @@ public class XPathProvenanceFunction extends FunctionBase {
 											.size() == 0) {
 
 										logger.debug("Old key does not contain value, spliting contents again");
+
 										String tokenizeInput[] = attVal
 												.encode().split(";");
 										ArrayList<String> tokenizedArrayList = new ArrayList<String>(
@@ -235,7 +225,6 @@ public class XPathProvenanceFunction extends FunctionBase {
 														.asList(tokenizeInput)));
 
 										// add the first value to the list
-
 										attributeMatchedValuesList
 												.add(tokenizedArrayList.get(0));
 
@@ -244,7 +233,6 @@ public class XPathProvenanceFunction extends FunctionBase {
 
 										multipleEntriesInputMap.put(category,
 												tokenizedArrayList);
-
 									}
 
 									ArrayList<String> currentList = multipleEntriesInputMap

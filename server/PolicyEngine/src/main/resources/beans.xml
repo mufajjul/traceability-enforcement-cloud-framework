@@ -16,16 +16,15 @@
 	
 	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"
 		/>
-	<!-- <import resource="classpath:META-INF/cxf/cxf.xml" /> <import resource="classpath:META-INF/cxf/cxf-servlet.xml"
-		/> <import resource="classpath:META-INF/cxf/cxf-extension-jaxrs-binding.xml" />
-		-->
-	<!--  service ID: MMC, ConfidenShare, ETC -->
+
+		<!--  service ID: MMC, ConfidenShare, ETC -->
 	<bean id="xPathUtility" class="com.provenance.cloudprovenance.storagecontroller.persistence.xpath.XPathUtility">
 		<property name="serviceId" value="ConfidenShare" />
 		<property name="traceabilityType" value="ServiceTraceability" />
 		<property name="conn" ref="xmlDbConnector" />
 		<property name="service" ref="xmlDBservice" />
 	</bean>
+	
 	<bean id="cprovNamespacePrefixMapper" class="com.provenance.cloudprovenance.traceabilitystore.ns.CprovNamespacePrefixMapper">
 		<property name="nsSuffixCprov" value="http://labs.orange.com/uk/cprov#" />
 		<property name="nsSuffixProv" value="http://www.w3.org/ns/prov#" />
@@ -42,7 +41,6 @@
 		<property name="driver" value="org.exist.xmldb.DatabaseImpl" />
 	</bean>
 	
-	
 	<bean id="xmlDBservice" class="com.provenance.cloudprovenance.storagecontroller.presistence.xmldb.XmlDbService">
 		<property name ="cProvNameSpace" ref ="cprovNamespacePrefixMapper" />
 		<property name="store" value="/db/TraceabilityStore" />
@@ -57,24 +55,11 @@
 		<property name="xpUtility" ref="xPathUtility" />
 	</bean>
 	
-	
 	<!-- Look at the list of properties ..... -->
 	<bean id="policyEngine" class="com.provenance.cloudprovenance.policyengine.service.PolicyEngine"
 		/>
 	
-	
 	<context:component-scan base-package="com.provenance.cloudprovenance.policyengine.service.controller"
 		/>
-	<!-- <jaxrs:server id="myService" address="/"> <jaxrs:serviceBeans> <ref bean="xacmlPolicyWebController"
-		/> </jaxrs:serviceBeans> <jaxrs:extensionMappings> <entry key="xml" value="application/xml"
-		/> </jaxrs:extensionMappings> </jaxrs:server> <bean id="xacmlPolicyWebController"
-		class="com.provenance.cloudprovenance.policyengine.service.controller.XacmlPolicyWebController">
-		<property name="cProvlPolicyDirectoryPath" value="/WEB-INF/classes/service/confidenShare/policies/cprovl"
-		/> <property name="xacmlPolicyConverterFile" value="/WEB-INF/classes/service/confidenShare/transformer/cprovl-to-xacml-policy-converter-v.1.0.xsl"
-		/> <property name="xacmlPolicyDirectoryPath" value="/WEB-INF/classes/service/confidenShare/policies/xacml"
-		/> <property name="cProvlRequestDirectoryPath" value="/WEB-INF/classes/service/confidenShare/request/cprovl"
-		/> <property name="xacmlRequestConverterFile" value="/WEB-INF/classes/service/confidenShare/transformer/cprovl-to-xacml-request-converter-v.1.0.xsl"
-		/> <property name="xacmlRequestDirectoryPath" value="/WEB-INF/classes/service/confidenShare/request/xacml"
-		/> </bean> -->
 	
 </beans>

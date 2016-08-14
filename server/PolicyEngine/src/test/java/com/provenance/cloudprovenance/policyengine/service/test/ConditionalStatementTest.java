@@ -1,9 +1,13 @@
-/**
- * @file 		ConditionalStatementTest.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		PolicyEngine
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) ConditionalStatementTest.java       1.1 14/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.policyengine.service.test;
 
@@ -25,12 +29,13 @@ import org.xml.sax.SAXException;
 import com.provenance.cloudprovenance.policyengine.service.PolicyEngine;
 
 /**
- * description: This class provide tests for cProv statements (entity, activity, etc))
+ * This class provide tests for cProv statements (entity, activity, etc))
  * 
+ * @version 1.1 14 Aug 2016
  * @author Mufy
- * 
+ * @Module PolicyEngine
  */
-@Ignore
+//@Ignore
 public class ConditionalStatementTest {
 	
 	static Logger logger = Logger.getLogger(ConditionalStatementTest.class);
@@ -105,7 +110,6 @@ public class ConditionalStatementTest {
 	}
 		
 	/** This test uses the ConfidenShare service traceability data and therefore will fail with the MMC traceability data */ 
-	
 	@Test
 	public void conditionalStatementWithDrefTargetTest()
 			throws URISyntaxException {

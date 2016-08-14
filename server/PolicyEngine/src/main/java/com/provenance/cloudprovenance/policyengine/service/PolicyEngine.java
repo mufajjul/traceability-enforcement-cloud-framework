@@ -1,9 +1,13 @@
-/**
- * @file 		PolicyEngine.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		PolicyEngine
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) PolicyEngine.java       1.1 14/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.policyengine.service;
 
@@ -31,8 +35,9 @@ import org.wso2.balana.finder.impl.FileBasedPolicyFinderModule;
 /**
  * This class represent the XACML policy Engine
  * 
+ * @version 1.1 14 Aug 2016
  * @author Mufy
- * 
+ * @Module PolicyEngine
  */
 public class PolicyEngine {
 
@@ -88,16 +93,16 @@ public class PolicyEngine {
 		}
 		return outcome;
 	}
-	
-	public String executeWebPolicy(String policyPath, String policyRequest,
-			 String serviceId) throws URISyntaxException {
 
-		//String policyAbsolutePath = this.getAbsolutePath(this
-			//	.getURIpath(policyPath));
-		
+	public String executeWebPolicy(String policyPath, String policyRequest,
+			String serviceId) throws URISyntaxException {
+
+		// String policyAbsolutePath = this.getAbsolutePath(this
+		// .getURIpath(policyPath));
+
 		policyLocations.add(policyPath);
 
-		//logger.debug("Policy Path ==> " + policyAbsolutePath);
+		// logger.debug("Policy Path ==> " + policyAbsolutePath);
 
 		logger.info("\n------------------------------------------------------XACML Request ------------------------------------------------ \n"
 				+ policyRequest);
@@ -110,13 +115,12 @@ public class PolicyEngine {
 				+ outcome);
 		return outcome;
 	}
-	
-	
-	public String executePolicy(String xacmlRequest, File policyPath){
-		
+
+	public String executePolicy(String xacmlRequest, File policyPath) {
+
 		policyLocations.add(this.getAbsolutePath(policyPath.toURI()));
 		PDP pdp = this.initilizePolicyEngine();
-		
+
 		logger.info("\n------------------------------------------------------XACML Request ------------------------------------------------ \n"
 				+ xacmlRequest);
 
@@ -127,8 +131,7 @@ public class PolicyEngine {
 
 		return outcome;
 	}
-	
-	
+
 	public String executePolicy(String policyPath, String requestPath,
 			String responsePath) throws URISyntaxException {
 
@@ -154,8 +157,9 @@ public class PolicyEngine {
 
 		logger.info("Policy Path ==> " + absolutePathToPolicyFiles);
 
-		String requestContent = this.readFileContentAsString(new File(requestPath).getAbsoluteFile());
-		
+		String requestContent = this.readFileContentAsString(new File(
+				requestPath).getAbsoluteFile());
+
 		logger.info("\n------------------------------------------------------XACML Request ------------------------------------------------ \n"
 				+ requestContent);
 
@@ -176,7 +180,7 @@ public class PolicyEngine {
 			resFile.createNewFile();
 
 			FileWriter fWriter = new FileWriter(resFile);
-			
+
 			fWriter.write(outcome);
 			fWriter.close();
 			logger.info("Response written to ==> " + resFile.getName());
