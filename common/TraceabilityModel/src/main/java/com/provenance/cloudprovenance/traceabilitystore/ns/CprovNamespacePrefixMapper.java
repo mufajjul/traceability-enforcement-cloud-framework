@@ -1,9 +1,13 @@
-/**
- * @file 		CprovNamespacePrefixMapper.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		TraceabilityModel
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) CprovNamespacePrefixMapper.java       1.1 14/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.traceabilitystore.ns;
 
@@ -15,10 +19,11 @@ import javax.xml.namespace.NamespaceContext;
 import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
 
 /**
- * Prefix of namespaces
+ * This class handles the prefix namespace issue
  * 
+ * @version 1.1 14 Aug 2016
  * @author Mufy
- * 
+ * @Module TraceabilityModel
  */
 public class CprovNamespacePrefixMapper extends NamespacePrefixMapper implements
 		NamespaceContext {
@@ -34,9 +39,8 @@ public class CprovNamespacePrefixMapper extends NamespacePrefixMapper implements
 
 	@Override
 	public String getPreferredPrefix(String uri, String arg1, boolean arg2) {
-		/**
-		 * arg1 and arg2 are not used
-		 */
+
+		// arg1 and arg2 are not used
 
 		if (uri.equals(nsSuffixCprov)) {
 			return "cprov";
@@ -68,8 +72,7 @@ public class CprovNamespacePrefixMapper extends NamespacePrefixMapper implements
 			return nsSuffixCprov;
 		} else if (prefix.equals("prov")) {
 			return nsSuffixProv;
-		}
-		else if (prefix.equals("cprovl")) {
+		} else if (prefix.equals("cprovl")) {
 			return nsSuffixCprovl;
 		} else if (prefix.equals("cprovd")) {
 			return nsSuffixCProvd;
@@ -94,8 +97,7 @@ public class CprovNamespacePrefixMapper extends NamespacePrefixMapper implements
 			return "cprov";
 		} else if (suffix.equals(nsSuffixProv)) {
 			return "prov";
-		}
-		else if (suffix.equals(nsSuffixCprovl)) {
+		} else if (suffix.equals(nsSuffixCprovl)) {
 			return "cprovl";
 		} else if (suffix.equals(nsSuffixCProvd)) {
 			return "cprovd";
@@ -112,9 +114,13 @@ public class CprovNamespacePrefixMapper extends NamespacePrefixMapper implements
 		}
 	}
 
+	/*
+	 * TODO - To be compelted
+	 * 
+	 * @see javax.xml.namespace.NamespaceContext#getPrefixes(java.lang.String)
+	 */
 	@Override
 	public Iterator getPrefixes(String namespaceURI) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
