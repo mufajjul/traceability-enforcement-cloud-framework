@@ -37,3 +37,8 @@ xmlns = {
 package com.provenance.cloudprovenance.traceabilityLanguage.generated;
 
 import javax.xml.bind.annotation.XmlNs;
+
+
+- Create few tests for the schema
+
+
