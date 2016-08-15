@@ -14,6 +14,7 @@ TECHNOLOGIES
 ==============================================
 - SPRING Framework
 - XPath/XQuery
+- ExistDB
 
 System Requirements
 ===================

@@ -1,9 +1,13 @@
-/**
- * @file 		NamespaceResolver.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		StorageController
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) NamespaceResolver.java       1.1 14/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.storagecontroller.persistence.xpath;
 
@@ -15,10 +19,11 @@ import javax.xml.namespace.NamespaceContext;
 import org.w3c.dom.Document;
 
 /**
- * This class returns suffix of a namespace
+ * This class is used to resolve namespace prefixes
  * 
+ * @version 1.1 14 Aug 2016
  * @author Mufy
- * 
+ * @Module StorageController
  */
 public class NamespaceResolver implements NamespaceContext {
 
@@ -48,7 +53,7 @@ public class NamespaceResolver implements NamespaceContext {
 		} else if (prefix.equals("prov")) {
 			return "http://www.w3.org/ns/prov#";
 		}
-		
+
 		else if (prefix.equals("confidenshare")) {
 			return "http://labs.orange.com/uk/confidenshare#";
 		}

@@ -1,9 +1,13 @@
-/**
- * @file 		TraceabilityPolicyTest.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		StorageController
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) TraceabilityPolicyTest.java       1.1 16/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.storagecontroller.persistence.traceability.policy.test;
 
@@ -18,8 +22,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.provenance.cloudprovenance.storagecontroller.presistence.traceabilitystore.policy.XmlDbPolicyTraceability;
 
 /**
- * @author Mufy
+ * This class tests various methods related to policy 
  * 
+ * @version 1.1 16 Aug 2016
+ * @author Mufy
+ * @Module StorageController
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:beans.xml")

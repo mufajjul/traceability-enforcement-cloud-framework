@@ -1,9 +1,13 @@
-/**
- * @file 		XmlDbServiceTraceability.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		StorageController
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) XmlDbServiceTraceability.java       1.1 15/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.storagecontroller.presistence.traceabilitystore.service;
 
@@ -43,12 +47,12 @@ import com.provenance.cloudprovenance.storagecontroller.persistence.xpath.Namesp
 import com.provenance.cloudprovenance.storagecontroller.presistence.xmldb.XmlDbService;
 
 /**
- * Provenance store interface implementation
+ * This class implements all the methods of provenace store interface
  * 
+ * @version 1.1 15 Aug 2016
  * @author Mufy
- * 
+ * @Module StorageController
  */
-
 @SuppressWarnings("unused")
 public class XmlDbServiceTraceability implements ServiceTraceability<String> {
 
@@ -164,9 +168,7 @@ public class XmlDbServiceTraceability implements ServiceTraceability<String> {
 
 			BufferedWriter writer;
 			writer = new BufferedWriter(new FileWriter(traceabilityFile));
-
 			writer.write(content);
-
 			writer.close();
 
 			dbService.addTraceabilityResource(serviceId, traceabilityType,
@@ -174,7 +176,6 @@ public class XmlDbServiceTraceability implements ServiceTraceability<String> {
 			return true;
 
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			return false;
 		} catch (XMLDBException e) {
@@ -190,8 +191,6 @@ public class XmlDbServiceTraceability implements ServiceTraceability<String> {
 	public String[] getAllTraceabilityInstances(String serviceId,
 			String traceabilityType) {
 
-		// TODO - conver resource to string content .... prob better to use
-		// collection ...
 		try {
 			Resource[] res = dbService.getAlltraceabilityResources(serviceId,
 					traceabilityType);
@@ -213,18 +212,15 @@ public class XmlDbServiceTraceability implements ServiceTraceability<String> {
 			return (String) content.getContent();
 
 		} catch (XMLDBException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
 	}
 
 	/** Update the traceability file in XMLDB store */
-
 	public boolean updateTraceabilityEntry(String serviceId,
 			String traceabilityType, String instanceId, String entryType,
 			String entryItem) {
@@ -235,31 +231,6 @@ public class XmlDbServiceTraceability implements ServiceTraceability<String> {
 					+ "; traceabilityType:" + traceabilityType
 					+ "; instanceId:" + instanceId + "; entryType:" + entryType
 					+ ";\n entryItem: " + entryItem.length());
-
-			// String traceabilityElementsOnly =
-			// selectAllTraceabilityElements(entryItem);
-
-			/*
-			 * String pattern1 = "<cprov:traceabilityDocument.*?>"; Pattern p =
-			 * Pattern.compile(pattern1, Pattern.DOTALL); String
-			 * removeRootNodeOpenNode = p.matcher(entryItem).replaceFirst("");
-			 * //true String removeRootNodeCloseNode =
-			 * removeRootNodeOpenNode.replaceFirst
-			 * ("</cprov:traceabilityDocument>", "");
-			 * 
-			 * String pattern2 = "<\\?xml.*?\\?>"; Pattern p2 =
-			 * Pattern.compile(pattern2, Pattern.DOTALL); String
-			 * removeRootNodeNoXML =
-			 * p2.matcher(removeRootNodeCloseNode).replaceFirst(""); //true
-			 * 
-			 * String removeBlankLine = removeRootNodeNoXML.replaceFirst("\n",
-			 * "");
-			 * 
-			 * logger.info("After the removal :"+removeBlankLine);
-			 */
-
-			// Names space is a problem for XQuery, needs to be removed and XML
-			// declaration
 
 			String pattern2 = "<\\?xml.*?\\?>";
 			Pattern p2 = Pattern.compile(pattern2, Pattern.DOTALL);
@@ -346,20 +317,15 @@ public class XmlDbServiceTraceability implements ServiceTraceability<String> {
 
 		XPathFactory xPathFactory = XPathFactory.newInstance();
 
-		// Create XPath object from XPathFactory
 		XPath xpath = xPathFactory.newXPath();
 		xpath.setNamespaceContext(new NamespaceResolver(storeFileDoc));
 
-		// Compile the XPath expression for getting all brands
 		XPathExpression xPathExpr;
-
-		// logger.info("XPath expression ==> " + xpathMatch);
 
 		xPathExpr = xpath.compile("cprov:traceabilityDocument");
 		Object result = xPathExpr.evaluate(storeFileDoc, XPathConstants.NODE);
 
-		Node currNode = (Node) result;// storeFileDoc.getElementsByTagName(
-		// "cprov:traceabilityDocument").item(0);
+		Node currNode = (Node) result;
 		logger.info("Text Content==> content:" + currNode.getTextContent()
 				+ "; NodeType:" + currNode.getNodeType() + "; nodeName: "
 				+ currNode.getNodeName());
@@ -412,7 +378,7 @@ public class XmlDbServiceTraceability implements ServiceTraceability<String> {
 	}
 
 	/*
-	 * Generate a traceability template document TODO - Refactor - read from a
+	 * Generate a traceability template document. TODO - Refactor - read from a
 	 * template file.
 	 */
 	private String[] createTraceabilityDocTemplate() {

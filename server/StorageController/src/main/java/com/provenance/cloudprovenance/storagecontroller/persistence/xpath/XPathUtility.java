@@ -1,9 +1,13 @@
-/**
- * @file 		XPathUtility.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		StorageController
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) NamespaceResolver.java       1.1 14/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.storagecontroller.persistence.xpath;
 
@@ -39,11 +43,12 @@ import com.provenance.cloudprovenance.storagecontroller.presistence.xmldb.XmlDbC
 import com.provenance.cloudprovenance.storagecontroller.presistence.xmldb.XmlDbService;
 
 /**
- * Methods for various xPath quires (searching, matching, etc) for XML-based
- * traceability files
+ * This class provides methods for various xPath quires (searching, matching,
+ * etc) for XML-based traceability files
  * 
+ * @version 1.1 14 Aug 2016
  * @author Mufy
- * 
+ * @Module StorageController
  */
 public class XPathUtility {
 
@@ -81,16 +86,14 @@ public class XPathUtility {
 			URISyntaxException, ParserConfigurationException, SAXException,
 			IOException {
 
-		// TODO - Update with xPath ................
+		Object result = null;
 
 		Resource resourceList[] = service.getAlltraceabilityResources(
 				serviceId, traceabilityType);
 
 		logger.info("Store resourse found ==> " + resourceList.length);
-		Object result = null;
 
 		for (int i = 0; i < resourceList.length; i++) {
-
 			String xmlContent = (String) resourceList[i].getContent();
 
 			logger.debug("Store content ==> " + xmlContent);
@@ -99,20 +102,18 @@ public class XPathUtility {
 					.newInstance();
 			factory.setNamespaceAware(true);
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			;
 
 			InputSource is = new InputSource(new StringReader(xmlContent));
 			Document doc = builder.parse(is);
 
 			// Create XPathFactory for creating XPath Object
 			XPathFactory xPathFactory = getXpathFactory();
-			// XPathFactory.newInstance();
 
 			// Create XPath object from XPathFactory
 			XPath xpath = xPathFactory.newXPath();
 			xpath.setNamespaceContext(new NamespaceResolver(doc));
 
-			// Compile the XPath expression for getting all brands
+			// Compile the XPath expression
 			XPathExpression xPathExpr;
 
 			try {
@@ -138,7 +139,6 @@ public class XPathUtility {
 			throws XMLDBException, URISyntaxException,
 			ParserConfigurationException, SAXException, IOException {
 
-		// Object result = null;
 		String aggratedXmlContent = service
 				.getAllTraceabilityxQueryRefinedResources(serviceId,
 						traceabilityType, xpathMatch);
@@ -149,7 +149,6 @@ public class XPathUtility {
 			return null;
 		} else {
 			// wrap it using the provenance root node
-
 			aggratedXmlContent = service
 					.wrapNodesUsingCProvRootNode(aggratedXmlContent);
 
@@ -159,7 +158,6 @@ public class XPathUtility {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setNamespaceAware(true);
 		DocumentBuilder builder = factory.newDocumentBuilder();
-		;
 
 		InputSource is = new InputSource(new StringReader(aggratedXmlContent));
 		Document doc = builder.parse(is);
@@ -167,21 +165,18 @@ public class XPathUtility {
 		logger.debug("Doc element : "
 				+ doc.getDocumentElement().getTextContent());
 
-		{
-			return doc.getDocumentElement();
-		}
+		return doc.getDocumentElement();
 
 	}
 
-	// NOTE - Updated with xQuery
+	// Updated with xQuery
 	public NodeList getMatchedNodeListFromStore(String xpathMatch)
 			throws URISyntaxException, XMLDBException,
 			ParserConfigurationException, SAXException, IOException {
 
 		Object result = null;
 		String xmlContent = service.getAllTraceabilityxQueryRefinedResources(
-				serviceId, traceabilityType, xpathMatch); // (String)
-															// resourceList[i].getContent();
+				serviceId, traceabilityType, xpathMatch);
 
 		logger.debug("Store content ==> " + xmlContent);
 
@@ -192,15 +187,11 @@ public class XPathUtility {
 		InputSource is = new InputSource(new StringReader(xmlContent));
 		Document doc = builder.parse(is);
 
-		// Create XPathFactory for creating XPath Object
 		XPathFactory xPathFactory = getXpathFactory();
-		// XPathFactory.newInstance();
-
-		// Create XPath object from XPathFactory
 		XPath xpath = xPathFactory.newXPath();
 		xpath.setNamespaceContext(new NamespaceResolver(doc));
 
-		// Compile the XPath expression for getting all brands
+		// Compile the XPath expression
 		XPathExpression xPathExpr;
 
 		try {
@@ -218,18 +209,12 @@ public class XPathUtility {
 			return (NodeList) result;
 
 		} catch (XPathExpressionException e) {
-			// TODO Auto-generated catch block
-
 			e.printStackTrace();
-			// return false;
 		}
-		// }
 		return (NodeList) result;
-
-		// return null;
 	}
 
-	// NOTE - Replaced with XQuery
+	// Replaced with XQuery
 	public NodeList getMatchNodeListWithXquery(String xpathMatch)
 			throws XMLDBException, URISyntaxException,
 			ParserConfigurationException, SAXException, IOException {
@@ -254,7 +239,6 @@ public class XPathUtility {
 			return null;
 		} else {
 			// wrap it using the provenance root node
-
 			matchedResourceXmlContent = service
 					.wrapNodesUsingCProvRootNode(matchedResourceXmlContent);
 
@@ -265,25 +249,16 @@ public class XPathUtility {
 		factory.setNamespaceAware(true);
 		DocumentBuilder builder = factory.newDocumentBuilder();
 
-		// factory.setN
 		InputSource is = new InputSource(new StringReader(
 				matchedResourceXmlContent));
 		Document doc = builder.parse(is);
 
-		// Create XPathFactory for creating XPath Object
 		XPathFactory xPathFactory = getXpathFactory();
-		// XPathFactory.newInstance();
-
-		// Create XPath object from XPathFactory
 		XPath xpath = xPathFactory.newXPath();
 		xpath.setNamespaceContext(new NamespaceResolver(doc));
-
-		// Compile the XPath expression for getting all brands
 		XPathExpression xPathExpr;
 
 		try {
-			// logger.info("XPath expression ==> " + xpathMatch);
-
 			xpathMatch = "//*";
 
 			xPathExpr = xpath.compile(xpathMatch);
@@ -294,14 +269,10 @@ public class XPathUtility {
 						+ ((NodeList) result).getLength());
 
 			printXpathResult(result);
-
 			return (NodeList) result;
 
 		} catch (XPathExpressionException e) {
-			// TODO Auto-generated catch block
-
 			e.printStackTrace();
-			// return false;
 		}
 		return (NodeList) result;
 	}
@@ -314,29 +285,17 @@ public class XPathUtility {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setNamespaceAware(true);
 		DocumentBuilder builder = factory.newDocumentBuilder();
-		;
 
-		// InputSource is = new InputSource(new StringReader(xmlContent));
 		Document doc = builder.parse(targetFile);
-
-		// Create XPathFactory for creating XPath Object
-		// XPathFactory xPathFactory = XPathFactory.newInstance();
-
-		// Create XPathFactory for creating XPath Object
 
 		try {
 
 			XPathFactory xPathFactory = getXpathFactory();
-
-			// Create XPath object from XPathFactory
 			XPath xpath = xPathFactory.newXPath();
 			xpath.setNamespaceContext(new NamespaceResolver(doc));
-
-			// Compile the XPath expression for getting all brands
 			XPathExpression xPathExpr;
 
 			logger.debug("Document ==> " + doc.getTextContent());
-
 			logger.info("XPath expression ==> " + xpathMatch);
 			logger.debug("Matching file ==> " + targetFile.getAbsolutePath()
 					+ "  " + targetFile.exists());
@@ -382,36 +341,21 @@ public class XPathUtility {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setNamespaceAware(true);
 		DocumentBuilder builder = factory.newDocumentBuilder();
-		;
-
-		// InputSource is = new InputSource(new StringReader(xmlContent));
 		Document doc = builder.parse(targetFile);
 
-		// Create XPathFactory for creating XPath Object
 		XPathFactory xPathFactory = getXpathFactory();
-		// XPathFactory.newInstance();
-
-		// Create XPath object from XPathFactory
 		XPath xpath = xPathFactory.newXPath();
 		xpath.setNamespaceContext(new NamespaceResolver(doc));
-
-		// Compile the XPath expression for getting all brands
 		XPathExpression xPathExpr;
 
 		try {
 			logger.debug("XPath expression ==> " + xpathMatch);
-			// logger.info("Matching file ==> "+ targetFile.getAbsolutePath()
-			// +"  "+ targetFile.exists());
-
 			xPathExpr = xpath.compile(xpathMatch);
 			result = xPathExpr.evaluate(provNode, XPathConstants.NODESET);
 
 			if (result != null)
 				logger.info("Matched node ==> "
 						+ ((NodeList) result).getLength());
-
-			// Contents;
-
 			NodeList tempList = (NodeList) result;
 
 			for (int i = 0; i < tempList.getLength(); i++) {
@@ -511,11 +455,9 @@ public class XPathUtility {
 			NodeList actualChildren = actualElement.getChildNodes();
 
 			logger.debug("---------------expected children ---------------");
-
 			printXpathResult(expectedChildren);
 
 			logger.debug("---------------actual children ---------------");
-
 			printXpathResult(actualChildren);
 
 			if (expectedChildren.getLength() != actualChildren.getLength()) {
@@ -560,7 +502,6 @@ public class XPathUtility {
 					+ "  Node type ==> " + nodes.item(i).getNodeType()
 					+ " Node value ==> " + nodes.item(i).getNodeValue()
 					+ " Node content ==> " + nodes.item(i).getTextContent());
-
 			if (nodes.item(i).getNodeName().equals("#text")) {
 				continue;
 			}

@@ -1,19 +1,15 @@
-/**
- * @file 		TraceabilityPolicyTest.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		StorageController
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) TraceabilityDBTest.java       1.1 16/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.storagecontroller.persistence.traceability.test;
-
-/**
- * @file 		DBTest.java
- * @project 	CloudProvenance
- * @Module		ProvenanceStore
- * @date 		18 05 2013
- * @version 	1.0
- */
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -22,7 +18,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 import org.apache.log4j.Logger;
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -38,10 +33,11 @@ import org.xmldb.api.base.XMLDBException;
 import com.provenance.cloudprovenance.storagecontroller.presistence.xmldb.XmlDbService;
 
 /**
- * Test XML DB operations (insert, delete, search etc)
+ * This class tests various XML DB operations (insert, delete, search etc)
  * 
+ * @version 1.1 16 Aug 2016
  * @author Mufy
- * 
+ * @Module StorageController
  */
 @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -127,8 +123,7 @@ public class TraceabilityDBTest {
 			Assert.fail(e.toString());
 		}
 	}
-	
-	
+		
 	@Test 
 	public void getFileSize(){
 		
@@ -139,9 +134,7 @@ public class TraceabilityDBTest {
 
 		logger.info("********************************** Get  Resource File sizes ********************");
 		
-		
 		try {
-
 			int fileSize = service.getResourceSize(serviceId, traceabilityType, traceabilityFileId);
 			
 			logger.info("file size: "+fileSize);
@@ -150,7 +143,6 @@ public class TraceabilityDBTest {
 			e.printStackTrace();
 			Assert.fail(e.toString());
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Assert.fail(e.toString());
 		}
@@ -168,9 +160,6 @@ public class TraceabilityDBTest {
 
 		logger.info("********************************** Update Resource via xQuery ********************");
 
-		// String entryItem = " <prov:agent prov:id=\"ex:ag001224\">"
-		// + "<prov:label>phil</prov:label>" + "</prov:agent> ";
-
 		String entryItem = " <cprov:cResource prov:id=\"ex:e001\">"
 				+ "<cprov:type>data</cprov:type>"
 				+ " <cprov:userTrustDegree>1</cprov:userTrustDegree>"
@@ -182,8 +171,6 @@ public class TraceabilityDBTest {
 
 		logger.info(entryItem);
 
-		// XmlDbStore dbStore = new XmlDbStore();
-
 		long total = 0;
 		try {
 			for (int i = 0; i < 10; i++) {
@@ -193,7 +180,6 @@ public class TraceabilityDBTest {
 						traceabilityFileId, resourceType, entryItem);
 
 				long endTime = System.currentTimeMillis();
-
 				total += endTime - startTime;
 
 				logger.info("Insertition Time: " + i + " : "
@@ -202,11 +188,11 @@ public class TraceabilityDBTest {
 			}
 
 			logger.info("Total time : " + total);
+
 		} catch (XMLDBException e) {
 			e.printStackTrace();
 			Assert.fail(e.toString());
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Assert.fail(e.toString());
 		}
@@ -271,10 +257,7 @@ public class TraceabilityDBTest {
 
 			e.printStackTrace();
 		}
-
 	}
-
-	
 	
 	@AfterClass
 	public static void removeTempFile() {
@@ -282,12 +265,7 @@ public class TraceabilityDBTest {
 		File f = new File(traceabilityFileId);
 		if (f.exists()) {
 			f.delete();
-
 		}
-
-		//TODO remove the file 
-		
-		//removeResource();
 	}
 
 	private String templateData() {

@@ -1,9 +1,13 @@
-/**
- * @file 		XmlDbService.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		StorageController
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) XmlDbService.java       1.1 16/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.storagecontroller.presistence.xmldb;
 
@@ -22,11 +26,13 @@ import org.xmldb.api.base.XMLDBException;
 
 import com.provenance.cloudprovenance.traceabilitystore.ns.CprovNamespacePrefixMapper;
 
+
 /**
  * Generic XML DB operations implementation
  * 
+ * @version 1.1 16 Aug 2016
  * @author Mufy
- * 
+ * @Module StorageController
  */
 public class XmlDbService {
 
@@ -40,13 +46,6 @@ public class XmlDbService {
 	private String userName;
 	private String password;
 	private String store;
-
-	// TODO - inject
-
-	// final String CPROV_NAMESEPACE = "http://labs.orange.com/uk/cprov#";
-	// final String PROV_NAMESPACE = "http://www.w3.org/ns/prov#";
-	// final String EX_NAMESPACE = "http://labs.orange.com/uk/ex#";
-	// final String CPROVD_NAMESPACE = "http://labs.orange.com/uk/cprovd#";
 
 	public XmlDbService() throws ClassNotFoundException,
 			InstantiationException, IllegalAccessException, XMLDBException {
@@ -87,8 +86,6 @@ public class XmlDbService {
 			String serviceId, String traceabilityType)
 			throws URISyntaxException, XMLDBException {
 
-		// Boolean queryResult =false;
-
 		String fileURI = constructTraceabilityURI(serviceId, traceabilityType);
 
 		logger.debug("file URI : " + fileURI + ":   Resource URI (Db comm : "
@@ -105,7 +102,6 @@ public class XmlDbService {
 		RemoteXPathQueryService service = (RemoteXPathQueryService) col
 				.getService("XPathQueryService", "3.0");
 		service.setProperty("indent", "yes");
-
 		service.setNamespace("prov", cProvNameSpace.getNsSuffixProv());
 		service.setNamespace("cprov", cProvNameSpace.getNsSuffixCprov());
 		service.setNamespace("ex", cProvNameSpace.getNsSuffixEx());
@@ -129,14 +125,6 @@ public class XmlDbService {
 					+ resultSet.getSize());
 
 			if (resultSet.getSize() != 0) {
-				// ResourceIterator ri = resultSet.getIterator();
-
-				// while (ri.hasMoreResources()) {
-				// Resource r = ri.nextResource();
-				// logger.info(this.removeExtraNameSpaceDeclaration((String)
-				// r.getContent()));
-				// logger.debug((String) r.getContent());
-				// }
 				return true;
 			}
 		}
@@ -145,12 +133,12 @@ public class XmlDbService {
 	}
 
 	public int getResourceSize(String serviceId, String traceabilityType,
-			String traceabilityFileId)
-			throws XMLDBException, URISyntaxException {
+			String traceabilityFileId) throws XMLDBException,
+			URISyntaxException {
 
+		int sumResult = 0;
 		String fileURI = constructTraceabilityURI(serviceId, traceabilityType);
 		String xPathExpression = "//cprov:traceabilityDocument/count(*)";
-				
 
 		logger.debug("file URI : " + this.getDbCommURI()
 				+ ":   Resource URI : " + fileURI);
@@ -177,16 +165,14 @@ public class XmlDbService {
 		ResourceSet resultSet = service.query(xQuery);
 		logger.info("Result is: " + resultSet.getSize());
 
-		int sumResult = 0;
 		if (resultSet.getSize() != 0) {
 			ResourceIterator ri = resultSet.getIterator();
 
 			while (ri.hasMoreResources()) {
 				Resource r = ri.nextResource();
-				logger.info("result is: "+(String) r.getContent());
-				sumResult+= Integer.parseInt((String)r.getContent());
+				logger.info("result is: " + (String) r.getContent());
+				sumResult += Integer.parseInt((String) r.getContent());
 			}
-			
 			return sumResult;
 		}
 
@@ -270,9 +256,6 @@ public class XmlDbService {
 
 					logger.debug((String) r.getContent());
 
-					// TODO - replace removeExtraNameSpace declaration
-					// totalMatchNodes +=
-					// removeExtraNameSpaceDeclaration((String)r.getContent());
 					totalMatchNodes += (String) r.getContent() + "\n";
 				}
 			}
@@ -332,10 +315,6 @@ public class XmlDbService {
 			service.setNamespace("confidenshare",
 					cProvNameSpace.getNsSuffixCOnfidenshare());
 
-			// String xQuery = " update insert  " + traceabilityFileContent
-			// + "  following   doc(\"" + fileURI
-			// + "\")/cprov:traceabilityDocument/*[1]";
-
 			String xQuery = " update insert  " + traceabilityFileContent
 					+ "  into   doc(\"" + fileURI
 					+ "\")/cprov:traceabilityDocument";
@@ -349,19 +328,9 @@ public class XmlDbService {
 
 			ResourceSet result = service.query(xQuery);
 
-			// System.out.println("XQuery Service working2");
-			// ResourceIterator i = result.getIterator();
-
-			// while (i.hasMoreResources()) {
-			// Resource r = i.nextResource();
-			// System.out.println((String) r.getContent());
-			// }
-
 		} catch (XMLDBException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -459,12 +428,12 @@ public class XmlDbService {
 		if (elementWithNameSpace.contains(provFullNamepace)) {
 			elementWithNameSpace = elementWithNameSpace.replaceFirst(
 					provFullNamepace, "");
-
 		}
 
 		return elementWithNameSpace;
 	}
 
+	// TODO - Use a config file
 	public String wrapNodesUsingCProvRootNode(String provenanceNodes) {
 
 		String tDoc = new String();
@@ -478,7 +447,6 @@ public class XmlDbService {
 				+ " xsi:schemaLocation=\"http://labs.orange.com/uk/cprov# file:/Users/mufy/Dropbox/EngD/year3/schema/cProv-inherited/cProv-v1.2.xsd\"> \n");
 
 		tDoc += provenanceNodes + " \n";
-
 		tDoc += ("</cprov:traceabilityDocument> \n");
 
 		return tDoc;

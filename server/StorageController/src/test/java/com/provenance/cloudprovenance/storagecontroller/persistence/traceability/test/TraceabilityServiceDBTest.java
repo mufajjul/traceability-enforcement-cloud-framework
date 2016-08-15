@@ -1,19 +1,15 @@
-/**
- * @file 		TraceabilityServiceDBTest.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		StorageController
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) TraceabilityServiceDBTest.java       1.1 16/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.storagecontroller.persistence.traceability.test;
-
-/**
-
- * @project 	CloudProvenance
- * @Module		ProvenanceStore
- * @date 		18 05 2013
- * @version 	1.0
- */
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -32,18 +28,16 @@ import org.xmldb.api.base.XMLDBException;
 import com.provenance.cloudprovenance.storagecontroller.presistence.traceabilitystore.service.XmlDbServiceTraceability;
 
 /**
- * Test XML DB operations (insert, delete, search etc)
+ * This class tests various XML DB operations (insert, delete, search etc)
  * 
+ * @version 1.1 16 Aug 2016
  * @author Mufy
- * 
+ * @Module StorageController
  */
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:beans.xml")
 public class TraceabilityServiceDBTest {
 
-	// @Autowired
-	// private XmlDbConnector conn;
 	@Autowired
 	private XmlDbServiceTraceability service;
 
@@ -52,7 +46,6 @@ public class TraceabilityServiceDBTest {
 
 	@Before
 	public void setUp() {
-		// addResourceTest();
 
 		String serviceId = "ConfidenShare";
 		String traceabilityType = "ServiceTraceability";
@@ -178,7 +171,6 @@ public class TraceabilityServiceDBTest {
 		}
 
 		// TODO remove the file
-
 		// removeResource();
 	}
 
