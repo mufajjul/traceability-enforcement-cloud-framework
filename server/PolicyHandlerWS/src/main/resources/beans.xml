@@ -111,7 +111,6 @@
 		class=" com.provenance.cloudprovenance.policyhandler.ws.support.PolicyResponseGenerator">
 	</bean>
 
-
 	<bean id="policyResponseConverter"
 		class="com.provenance.cloudprovenance.sconverter.PolicyResponseConverter">
 		<property name="cProvPrefixMapper" ref="cprovNamespacePrefixMapper">
@@ -120,8 +119,6 @@
 			value="classpath:binding/translate/xacml-to-cprovl-response-converter-v0.1.xsl">
 		</property>
 	</bean>
-
-
 
 	<util:map id="policyrefMap" map-class="java.util.HashMap">
 		<entry key="reg.share.confidenshare.labs.orange.com" value="policy1-cprovl.xml,policy1-xacml.xml" />

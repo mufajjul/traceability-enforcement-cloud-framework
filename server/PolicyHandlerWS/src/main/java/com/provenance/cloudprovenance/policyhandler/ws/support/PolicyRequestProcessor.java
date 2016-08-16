@@ -1,11 +1,14 @@
-/**
- * @file 		PolicyRequestProcessor.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		PolicyHandlerWS
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) PolicyRequestProcessor.java       1.1 16/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
-
 package com.provenance.cloudprovenance.policyhandler.ws.support;
 
 import java.io.File;
@@ -37,11 +40,12 @@ import com.provenance.cloudprovenance.sconverter.translate.ResourceTranslator;
 import com.provenance.cloudprovenance.traceabilitystore.ns.CprovNamespacePrefixMapper;
 
 /**
-* 
-* @author Mufy
-* 
-*/
-
+ * This class processes a policy request received from the client
+ * 
+ * @version 1.1 16 Aug 2016
+ * @author Mufy
+ * @Module PolicyHandlerWS
+ */
 public class PolicyRequestProcessor {
 
 	@Autowired
@@ -49,8 +53,7 @@ public class PolicyRequestProcessor {
 	@Autowired
 	CprovNamespacePrefixMapper cProvMapper;
 
-	// String xpathToDocumentId;
-
+	// Values obtained from the spring bean
 	private String cProvlPolicyDirectoryPath;
 	private String xacmlPolicyConverterFile;
 	private String xacmlPolicyDirectoryPath;
@@ -75,16 +78,18 @@ public class PolicyRequestProcessor {
 
 		String xacmlPolicyRequest = rsConverter.convertAcProvRequestToXACML(
 				cprovlPolicyRequest, styleSheetPath);
-		
-		logger.info("conversion to XACML policy request successful: "+xacmlPolicyRequest);
+
+		logger.info("conversion to XACML policy request successful: "
+				+ xacmlPolicyRequest);
 
 		// convert policy
 		resourceConversion(request);
 
 		// getPolicyAbsolutePath
-		String policyPathRef = request.getRealPath(xacmlPolicyDirectoryPath)+"/"+policyToSelectId[1];
-		
-		logger.info("path to policy one Id: "+policyPathRef);
+		String policyPathRef = request.getRealPath(xacmlPolicyDirectoryPath)
+				+ "/" + policyToSelectId[1];
+
+		logger.info("path to policy one Id: " + policyPathRef);
 
 		// String executionOutcome = policyEngine.executePolicy(
 		String policyExecutionOutcome = policyEngine.executeWebPolicy(
@@ -98,16 +103,10 @@ public class PolicyRequestProcessor {
 			throws IOException, URISyntaxException,
 			ParserConfigurationException, SAXException, TransformerException {
 
-		// store request
-		// this.storeRequest(policyRequestId, policyRequestContent, request);
-
-		// convert request
-
 		// convert policies
 		this.resourceConversion(request);
 
 		// execute policy
-
 		String executionOutcome = policyEngine.executePolicy(
 				request.getRealPath(xacmlPolicyDirectoryPath + "/policy"
 						+ policyId + "-xacml.xml"),
@@ -137,31 +136,11 @@ public class PolicyRequestProcessor {
 			throws URISyntaxException, ParserConfigurationException,
 			SAXException, IOException, TransformerException {
 
-		// generate the XACML policies
-
-		// long startTime = System.currentTimeMillis();
-
 		rsConverter.directoryFilesConverter(
 				request.getRealPath(cProvlPolicyDirectoryPath),
 				request.getRealPath(xacmlPolicyConverterFile),
 				request.getRealPath(xacmlPolicyDirectoryPath));
 
-		// long endTime = System.currentTimeMillis();
-		// logger.info("Policy translation took: start time: " + startTime
-		// + " ; endTime: " + endTime + " ; Diff:" + (endTime - startTime));
-
-		// generate the XACML requests
-
-		// startTime = System.currentTimeMillis();
-
-		// converter.directoryFilesConverter(
-		// request.getRealPath(cProvlRequestDirectoryPath),
-		// request.getRealPath(xacmlRequestConverterFile),
-		// request.getRealPath(xacmlRequestDirectoryPath));
-
-		// endTime = System.currentTimeMillis();
-		// logger.info("Request translation took: start time: " + startTime
-		// + " ; endTime: " + endTime + " ; Diff:" + (endTime - startTime));
 	}
 
 	public String getIdforPolicyMatch(String responseContent,
@@ -175,7 +154,7 @@ public class PolicyRequestProcessor {
 
 		InputSource is = new InputSource(new StringReader(responseContent));
 		Document doc = builder.parse(is);
-		
+
 		XPathFactory xPathFactory = XPathFactory.newInstance();
 		XPath xpath = xPathFactory.newXPath();
 		xpath.setNamespaceContext(cProvMapper);
@@ -183,12 +162,10 @@ public class PolicyRequestProcessor {
 		XPathExpression xPathExpr;
 		xPathExpr = xpath.compile(xpathToDocumentId);
 
-		logger.info("XpathExpression to match: "+xpathToDocumentId);
-
-		logger.info("Document to match is: "+responseContent);
+		logger.debug("XpathExpression to match: " + xpathToDocumentId);
+		logger.debug("Document to match is: " + responseContent);
 
 		return (String) xPathExpr.evaluate(doc, XPathConstants.STRING);
-
 	}
 
 	/**

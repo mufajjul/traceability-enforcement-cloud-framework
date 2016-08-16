@@ -1,9 +1,13 @@
-/**
- * @file 		PolicyRequestHandler.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		PolicyHandlerWS
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) PolicyRequestHandler.java       1.1 16/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.policyhandler.ws.controler;
 
@@ -35,8 +39,9 @@ import com.provenance.cloudprovenance.storagecontroller.presistence.traceability
 /**
  * REST implementations for service interactions
  * 
+ * @version 1.1 16 Aug 2016
  * @author Mufy
- * 
+ * @Module PolicyHandlerWS
  */
 @Path("/")
 @Produces("application/xml")
@@ -51,7 +56,7 @@ public class PolicyRequestHandler implements PolicyRequest<Response> {
 	@Autowired
 	PolicyRequestProcessor preqProcessor;
 	@Autowired
-	PolicyResponseConverter  policyResConv;
+	PolicyResponseConverter policyResConv;
 
 	static int counter = 1;
 	String requestFileNamePrefix;
@@ -60,10 +65,8 @@ public class PolicyRequestHandler implements PolicyRequest<Response> {
 	String traceabilityType;
 	String xpathToEnvironmentId;
 	String xpathToXACMLdecisionId;
-	
 
-	static HashMap<String,String[]> requestPolicyMappingMap;
-
+	static HashMap<String, String[]> requestPolicyMappingMap;
 	static HashMap<String, String> policyResponseMap = new HashMap<String, String>();
 
 	@Override
@@ -72,57 +75,50 @@ public class PolicyRequestHandler implements PolicyRequest<Response> {
 	public Response policyRequest(@PathParam("serviceId") String serviceId,
 			@Context HttpServletRequest request) {
 
+		boolean outcome = false;
+		String constructFileName, environmentId, response, responseURI, responseContent, policyRequestMsg;
+		String[] policyToSelect;
+		
 		try {
-
-			String constructFileName = requestFileNamePrefix + counter + "."
+			constructFileName = requestFileNamePrefix + counter + "."
 					+ fileNameSuffix;
-			String policyRequestMsg = getBody(request);
+			policyRequestMsg = getBody(request);
 
 			// Store the request to the policy traceability (in traceability
 			// store)
-			boolean outcome = policyTraceability.createRequestInstance(
-					serviceId, traceabilityType, constructFileName,
-					policyRequestMsg);
+			outcome = policyTraceability.createRequestInstance(serviceId,
+					traceabilityType, constructFileName, policyRequestMsg);
 			logger.info("Saved policy request to the policy traceability store");
 
-			// Call the policy controller to validate the policy, remove namespace
-			String environmentId = (preqProcessor
-					.getIdforPolicyMatch(policyRequestMsg,
-							xpathToEnvironmentId)).split(":")[1];
+			// Call the policy controller to validate the policy, remove
+			// namespace
+			environmentId = (preqProcessor.getIdforPolicyMatch(
+					policyRequestMsg, xpathToEnvironmentId)).split(":")[1];
 
 			logger.info("The environment id to match a policy is: "
 					+ environmentId);
-			// TODO - need to find a way to map a request to an policy !!!!
-			
-			String[] policyToSelect = requestPolicyMappingMap.get(environmentId);
 
-			logger.info("policy id is: "+policyToSelect[0]);
-			
-			String response = preqProcessor.executePolicyRequest(serviceId, policyRequestMsg, policyToSelect, request);
+			policyToSelect = requestPolicyMappingMap.get(environmentId);
+			logger.info("policy id is: " + policyToSelect[0]);
 
-			logger.info("policy execution response: "+response);
-			
-			
-			// TODO - replace it with regular expression
-		//	String xacmlDecisionValue = preqProcessor
-			//		.getIdforPolicyMatch(response,
-				//			xpathToXACMLdecisionId);
+			response = preqProcessor.executePolicyRequest(serviceId,
+					policyRequestMsg, policyToSelect, request);
+			logger.info("policy execution response: " + response);
 
-//			logger.info ("policy response is: "+ xacmlDecisionValue);
-			
-			// TODO - Convert the XACML response a cProvl response
+			responseURI = request.getScheme() + "://" + request.getServerName()
+					+ ":" + request.getServerPort() + request.getRequestURI()
+					+ "/" + responseFileNamePrefix + counter;
 
-			String responseURI = request.getScheme() + "://"
-					+ request.getServerName() + ":" + request.getServerPort()
-					+ request.getRequestURI() + "/" + responseFileNamePrefix +counter;
-			
 			// TODO - process the response store in in the hashmap
-			String responseContent = policyResponseGen.genPolicyIdResponse(serviceId,
-					 requestFileNamePrefix+counter, responseFileNamePrefix +counter,responseURI);
-			
-			logger.info("Storing response in a map: Key=> "+(responseFileNamePrefix +counter));
-			//Store the response to the HashTable 
-			policyResponseMap.put((responseFileNamePrefix +counter), response);
+			responseContent = policyResponseGen.genPolicyIdResponse(serviceId,
+					requestFileNamePrefix + counter, responseFileNamePrefix
+							+ counter, responseURI);
+
+			logger.info("Storing response in a map: Key=> "
+					+ (responseFileNamePrefix + counter));
+
+			// Store the response to the HashTable
+			policyResponseMap.put((responseFileNamePrefix + counter), response);
 
 			if (response != null) {
 				ResponseBuilder rBuilder = Response.status(201);
@@ -138,8 +134,6 @@ public class PolicyRequestHandler implements PolicyRequest<Response> {
 			return rBuilder.build();
 
 		}
-
-		// return "<response> to be implemented </reponse>";
 	}
 
 	@Override
@@ -148,19 +142,18 @@ public class PolicyRequestHandler implements PolicyRequest<Response> {
 	public Response policyResponse(@PathParam("serviceId") String serviceId,
 			@PathParam("responseId") String responseId) {
 
-		String constructFileName = responseFileNamePrefix + (counter++) + "."
+		boolean outcome = false;
+		String constructFileName, response, responseContent;
+
+		constructFileName = responseFileNamePrefix + (counter++) + "."
 				+ fileNameSuffix;
-		
-		logger.info ("Response Id received from the user: "+responseId);
+		logger.info("Response Id received from the user: " + responseId);
 
-		String response = policyResponseMap.get(responseId);
+		response = policyResponseMap.get(responseId);
+		responseContent = policyResConv.XMLpolicyResponse(response);
 
-	
-		String responseContent =  policyResConv.XMLpolicyResponse(response);
-		
-		boolean outcome = policyTraceability.createResponseInstance(serviceId,
-				traceabilityType, constructFileName,
-				responseContent);
+		outcome = policyTraceability.createResponseInstance(serviceId,
+				traceabilityType, constructFileName, responseContent);
 
 		if (outcome == true) {
 			ResponseBuilder rBuilder = Response.status(201);
@@ -296,9 +289,8 @@ public class PolicyRequestHandler implements PolicyRequest<Response> {
 	}
 
 	public void setRequestPolicyMappingMap(
-			HashMap<String, String[]> requestPolicyMappingMap) {
-		this.requestPolicyMappingMap = requestPolicyMappingMap;
+			HashMap<String, String[]> requestPolMappingMap) {
+		requestPolicyMappingMap = requestPolMappingMap;
 	}
 
-	
 }
