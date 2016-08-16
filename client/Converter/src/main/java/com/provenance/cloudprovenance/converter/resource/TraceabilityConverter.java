@@ -1,9 +1,13 @@
-/**
- * @file 		TraceabilityConverter.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		Converter
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) PolicyRequestConverter.java       1.1 16/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.converter.resource;
 
@@ -24,8 +28,11 @@ import com.provenance.cloudprovenance.traceabilitystore.ns.CprovNamespacePrefixM
 import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
 
 /**
+ * This class provides implementation for traceability converter, based on the interface Resource Converter 
+ *
+ * @version 1.1 16 Aug 2016
  * @author Mufy
- * 
+ * @Module Converter
  */
 public class TraceabilityConverter implements
 		ResourceConverter<TraceabilityDocument> {

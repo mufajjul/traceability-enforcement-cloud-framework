@@ -1,9 +1,13 @@
-/**
- * @file 		TraceabilityConverterTest.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		Converter
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) TraceabilityConverterTest.java       1.1 16/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.converter.traceability.test;
 
@@ -24,8 +28,11 @@ import com.provenance.cloudprovenance.traceabilityModel.generated.ObjectFactory;
 import com.provenance.cloudprovenance.traceabilityModel.generated.TraceabilityDocument;
 
 /**
+ * This is a test class for traceability converter
+ *
+ * @version 1.1 16 Aug 2016
  * @author Mufy
- * 
+ * @Module Converter
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:beans.xml")
@@ -58,15 +65,12 @@ public class TraceabilityConverterTest {
 		InternationalizedString iStringDescription = new InternationalizedString();
 		iStringDescription.setValue("A test user");
 
-		// getRootNode().getInstance().add(agent);
-
 		traceabilityDoc.getEntityOrActivityOrWasGeneratedBy().add(agent);
 
 		String conversion = trConverter.marhsallObject(traceabilityDoc);
 		logger.info(conversion);
 
 		Assert.notNull(conversion);
-
 	}
 
 }
