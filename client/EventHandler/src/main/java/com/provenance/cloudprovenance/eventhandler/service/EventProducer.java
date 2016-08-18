@@ -1,9 +1,13 @@
-/**
- * @file 		EventProducer.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		EventHandler
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) EventProducer.java       1.1 18/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.eventhandler.service;
 
@@ -21,8 +25,13 @@ import org.springframework.jms.core.MessageCreator;
 import com.provenance.cloudprovenance.converter.ResourceConverter;
 
 /**
+ * This is an event producer class that receives events from a client. It
+ * determines if the event is a traceability statement or a policy request.
+ * Based on the type of event, it will send it to the appropriate queue.
+ *
+ * @version 1.1 18 Aug 2016
  * @author Mufy
- * 
+ * @Module EventHandler
  */
 public class EventProducer<T> {
 
@@ -42,10 +51,6 @@ public class EventProducer<T> {
 		this.tc = tc;
 	}
 
-	/*
-	 * public EventProducer(final JmsTemplate jmsTemplate) { this.jmsTemplate =
-	 * jmsTemplate; }
-	 */
 	public String sendEvent(T eventItem) {
 
 		// Marshall Item
@@ -53,8 +58,6 @@ public class EventProducer<T> {
 		String xmlTraceabilityContent = tc.marhsallObject(eventItem);
 		String policyEventResponse = sendToQueue(queueName,
 				xmlTraceabilityContent);
-		// logger.info("Sucessfully added to the following statements:"
-		// + xmlTraceabilityContent);
 
 		return policyEventResponse;
 
@@ -76,7 +79,6 @@ public class EventProducer<T> {
 			public Message createMessage(Session session) throws JMSException {
 				TextMessage message = session
 						.createTextMessage(resourceElements);
-				// message.setIntProperty("messageCount", i);
 				return message;
 			}
 		});
@@ -134,7 +136,7 @@ public class EventProducer<T> {
 
 		}
 		// did not recognise the message
-		return null; // policyResponseMsg;
+		return null;
 	}
 
 	public String getQueueName() {
