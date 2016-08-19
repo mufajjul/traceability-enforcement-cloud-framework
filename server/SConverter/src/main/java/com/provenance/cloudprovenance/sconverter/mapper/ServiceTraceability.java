@@ -1,9 +1,13 @@
-/**
- * @file 		ServiceTraceability.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		SConverter
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) CprovObjectTraceability.java       1.1 18/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.sconverter.mapper;
 
@@ -12,8 +16,9 @@ import java.util.Date;
 /**
  * This interface defines methods for nodes and edges for traceability model
  * 
+ * @version 1.1 18 Aug 2016
  * @author Mufy
- * 
+ * @Module SConverter
  */
 public interface ServiceTraceability<T> {
 	/**
@@ -29,12 +34,6 @@ public interface ServiceTraceability<T> {
 	public final String UNIQUE_IDENTIFIER_NS_PROV_SUFFIX = "http://www.w3.org/ns/prov#";
 	public final String UNIQUE_IDENTIFIER_NS_PROV_PREFIX = "prov";
 	
-	
-
-	//TODO - List all the other types 
-	
-	//TODO - Update type for each entry
-
 	// Nodes
 	public T pResource(String id, String resType, String ip, String MAC,
 			String hostType, Date timeStamp, String restrictionType, float trustValue);
@@ -50,7 +49,6 @@ public interface ServiceTraceability<T> {
 			String latitude, String longitude, String region);
 
 	// Node from Prov
-
 	public T Agent(String id, String name, String description);
 
 	// Edges
@@ -58,7 +56,6 @@ public interface ServiceTraceability<T> {
 			String type, String callComm, String callMedium, String callNetwork);
 
 	// TODO: Identify the differences between the both
-
 	public T wasExplicitCall(String id, String informed, String informant,
 			String type, String callComm, String callMedium, String callNetwork);
 
@@ -80,13 +77,6 @@ public interface ServiceTraceability<T> {
 	public T wasVirtualizedBy(String id, String generatedResource,
 			String processInvolved, Date time, String purpose);
 
-	// Transition related relations
-	//public T wasStatedBy( String id, String ProcessInvolved, String stateResource,
-		//	String method, Date time);
-
-	//public T hadParticipatedAt(String id, String generatedResource,
-		//	String stateResource, String method);
-
 	public T hadTransitionState_A(String id, String generatedResource,
 			String transResource, String method);
 	
@@ -97,7 +87,6 @@ public interface ServiceTraceability<T> {
 			String stateResource, String method);
 
 	// edge from Prov
-
 	public T used(String id, String processInvolved, String generatedResource,
 			Date date);
 
@@ -106,10 +95,5 @@ public interface ServiceTraceability<T> {
 			String accessNetwork);
 
 	public T getCurrentTraceabilityDocument();
-
 	
-	// TODO:Collection
-	// public T loadServiceTraceability(T2 documentEntry);
-	// public void updateServiceTraceability(T2 documentEntry);
-
 }

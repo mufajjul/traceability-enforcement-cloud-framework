@@ -1,9 +1,13 @@
-/**
- * @file 		PolicyResponseConverter.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		SConverter
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) PolicyResponseConverter.java       1.1 18/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.sconverter;
 
@@ -30,14 +34,17 @@ import com.provenance.cloudprovenance.traceabilityLanguage.generated.PolicyRespo
 import com.provenance.cloudprovenance.traceabilitystore.ns.CprovNamespacePrefixMapper;
 
 /**
- * @author Mufy
+ * This class converts an XACML response into a cProl response.
  * 
+ * @version 1.1 18 Aug 2016
+ * @author Mufy
+ * @Module SConverter
  */
 public class PolicyResponseConverter {
 
 	CprovNamespacePrefixMapper cProvPrefixMapper;
 	Resource pathToXACMLtoCprovResponse;
-	
+
 	String instanceDir;
 	ObjectFactory pFactory = new ObjectFactory();
 
@@ -91,38 +98,43 @@ public class PolicyResponseConverter {
 
 	public String XMLpolicyResponse(String XACMLResponse) {
 
-		logger.info("XACML response to be converted: "+XACMLResponse);
-		
-		StringReader reader = new StringReader(XACMLResponse);
-		StringWriter writer = new StringWriter();
+		StringReader reader;
+		StringWriter writer;
+		InputStream fsStylesheetIs;
+		TransformerFactory tFactory;
+		StreamSource stylesource;
+		Transformer transformer;
+		String result;
+
+		logger.info("XACML response to be converted: " + XACMLResponse);
+
+		reader = new StringReader(XACMLResponse);
+		writer = new StringWriter();
 
 		try {
 
-			InputStream fsStylesheetIs = pathToXACMLtoCprovResponse.getInputStream();
-			
+			fsStylesheetIs = pathToXACMLtoCprovResponse.getInputStream();
+
 			System.setProperty("javax.xml.transform.TransformerFactory",
 					"net.sf.saxon.TransformerFactoryImpl");
 
 			// Use a Transformer for output
-			TransformerFactory tFactory = TransformerFactory.newInstance();
-			StreamSource stylesource = new StreamSource(fsStylesheetIs);
-			Transformer transformer = tFactory.newTransformer(stylesource);
+			tFactory = TransformerFactory.newInstance();
+			stylesource = new StreamSource(fsStylesheetIs);
+			transformer = tFactory.newTransformer(stylesource);
 
 			transformer.transform(new javax.xml.transform.stream.StreamSource(
 					reader),
 					new javax.xml.transform.stream.StreamResult(writer));
 		} catch (TransformerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (FileNotFoundException ex) {
-			// TODO Auto-generated catch block
 			ex.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		String result = writer.toString();
+		result = writer.toString();
 
 		return result;
 	}
@@ -131,10 +143,8 @@ public class PolicyResponseConverter {
 		return pathToXACMLtoCprovResponse;
 	}
 
-	public void setPathToXACMLtoCprovResponse(Resource pathToXACMLtoCprovResponse) {
+	public void setPathToXACMLtoCprovResponse(
+			Resource pathToXACMLtoCprovResponse) {
 		this.pathToXACMLtoCprovResponse = pathToXACMLtoCprovResponse;
 	}
-
-	
-
 }

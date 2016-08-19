@@ -1,9 +1,13 @@
-/**
- * @file 		ServiceXmlDocumentTraceability.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		SConverter
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) ServiceXmlDocumentTraceability.java       1.1 18/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.sconverter.mapper;
 
@@ -12,8 +16,9 @@ import com.provenance.cloudprovenance.traceabilityModel.generated.TraceabilityDo
 /**
  * This interface defines specific methods related to XML based data traceability
  * 
+ * @version 1.1 18 Aug 2016
  * @author Mufy
- * 
+ * @Module SConverter
  */
 public interface ServiceXmlDocumentTraceability<T> extends ServiceTraceability<T> {
 
@@ -28,9 +33,4 @@ public interface ServiceXmlDocumentTraceability<T> extends ServiceTraceability<T
 	public T getCurrentTraceabilityDocument();
 	
 	public void setMaxStatementPerDocument(int max);
-	
-	
-	//TODO - may need to remove this.
-	//public TraceabilityEventCollector<T> getTraceabilityEventCollection();
-
 }
