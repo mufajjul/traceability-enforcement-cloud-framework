@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface PolicyRequest<T> {
 
-	
 	//TODO - use a property file
 	String POLICY_ENTRY_TYPE = "PolicyTraceabiity";
 	String SERVICE_ENTRY_TYPE = "ServiceTraceability";
@@ -32,7 +31,6 @@ public interface PolicyRequest<T> {
 	String PROV_NAMESPACE = "http://www.w3.org/ns/prov#";
 	String EX_NAMESPACE = "http://labs.orange.com/uk/ex#";
 	String CONF_NAMESPACE = "http://labs.orange.com/uk/confidenshare#";
-	
 	
 	// Method for handling policy request 
 	public T policyRequest(String serviceId, HttpServletRequest request);

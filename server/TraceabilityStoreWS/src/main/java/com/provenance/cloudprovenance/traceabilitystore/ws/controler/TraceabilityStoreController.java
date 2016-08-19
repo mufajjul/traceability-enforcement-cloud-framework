@@ -43,7 +43,6 @@ import com.provenance.cloudprovenance.traceabilitystore.ws.support.TraceabilityR
  * @author Mufy
  * @Module TraceabilityStoreWS
  */
-
 @Path("/")
 @Produces("application/xml")
 public class TraceabilityStoreController implements
