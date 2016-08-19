@@ -1,0 +1,35 @@
+==========================
+Traceability Model
+==========================
+
+This module models the traceability model as Java Objects from the cProv XML schema. 
+
+Key Features
+============
+
+TODO
+
+TECHNOLOGIES
+==============================================
+* SPRING Framework
+* JAXB 
+* APACHE JENA 
+
+System Requirements
+===================
+1. Minimum memory - 1 GB
+2. Processor      - Pentium 800MHz or equivalent at minimum
+3. JRE 1.6 or higher
+
+
+Installation and Running
+========================
+TODO
+
+Known Issues
+============
+TODO
+
+Issues Fixed In This Release
+============================
+TODO
