@@ -1,9 +1,13 @@
-/**
- * @file 		RequirementFiveTest.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		ServiceAPI
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) RequirementFiveTest.java       1.1 19/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.service.requirement_five.test;
 
@@ -13,6 +17,7 @@ import java.net.URISyntaxException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -26,8 +31,14 @@ import com.provenance.cloudprovenance.service.policy.api.ServiceCompliance;
 import com.provenance.cloudprovenance.service.traceability.api.ServiceXmlDocumentTraceability;
 
 /**
- * @author Mufy
+ * Policy request to validate against the following policy: A user (userA)
+ * logged in from an authorised region (EU) cannot share a ‘confidential’ or
+ * ‘restricted’ file with another user (userB) logged in from an unauthorised
+ * region (non-EU)
  * 
+ * @version 1.1 19 Aug 2016
+ * @author Mufy
+ * @Module ServiceAPI
  */
 @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -63,13 +74,11 @@ public class RequirementFiveTest {
 		String process = "share";
 		String environment1 = "region.share.confidenshare.labs.orange.com";
 
-		// srvCompliance.constructRequest(userAgent, resource, process,
-		// environment1); region.share.confidenshare.labs.orange.com
+		String actual_outcome = srvCompliance.constructRequest(new String[] {
+				userAgent, userAgent2 }, new String[] { resource },
+				new String[] { process }, environment1);
 
-		srvCompliance.constructRequest(new String[] { userAgent, userAgent2 },
-				new String[] { resource }, new String[] { process },
-				environment1);
+		Assert.assertTrue(actual_outcome.contains(expected_outcome));
 
 	}
-
 }

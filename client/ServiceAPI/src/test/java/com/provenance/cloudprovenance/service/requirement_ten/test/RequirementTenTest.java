@@ -1,9 +1,13 @@
-/**
- * @file 		RequirementTenTest.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		ServiceAPI
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) CProvRecordTen.java       1.1 19/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.service.requirement_ten.test;
 
@@ -26,8 +30,11 @@ import com.provenance.cloudprovenance.service.api.impl.CprovXmlProvenance;
 import com.provenance.cloudprovenance.service.api.impl.DynamicPolicyRequest;
 
 /**
- * @author Mufy
+ * Policy request to validate against the following policy: TODO
  * 
+ * @version 1.1 19 Aug 2016
+ * @author Mufy
+ * @Module ServiceAPI
  */
 @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)

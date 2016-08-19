@@ -52,8 +52,7 @@
 		<property name="nsSuffixCu" value="http://www.w3.org/1999/xhtml/datatypes/" />
 		<property name="nsSuffixCOnfidenshare" value="http://labs.orange.com/uk/confidenshare#" />
 	</bean>
-
-
+	
 	<!-- Message send to traceability queue -->
 	<bean id="eventProducer"
 		class="com.provenance.cloudprovenance.eventhandler.service.EventProducer"
@@ -76,9 +75,7 @@
 		<property name="responsePolicyQueueName" value="enforcementResponseQueue" />
 		<property name="responseTraceabilityQueueName" value="traceabilityResponseQueue" />
 		<property name="traceabilityStoreStorageAck" value="true" />
-
 	</bean>
-
 
 	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
 		<property name="connectionFactory" ref="connectionFactory" />
@@ -89,7 +86,6 @@
 		<property name="connectionFactory" ref="connectionFactory" />
 		<property name="defaultDestination" ref="defaultDestination1" />
 	</bean>
-
 
 	<bean id="amqConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
 		<constructor-arg index="0" value="tcp://localhost:61616" />
@@ -106,7 +102,6 @@
 	<bean id="defaultDestination1" class="org.apache.activemq.command.ActiveMQQueue">
 		<constructor-arg index="0" value="enforcementQueue" />
 	</bean>
-
 
 </beans>
 	

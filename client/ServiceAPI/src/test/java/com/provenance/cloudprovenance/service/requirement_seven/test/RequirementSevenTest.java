@@ -1,9 +1,13 @@
-/**
- * @file 		RequirementSevenTest.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		ServiceAPI
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) RequirementSevenTest.java       1.1 19/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.service.requirement_seven.test;
 
@@ -13,6 +17,7 @@ import java.net.URISyntaxException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -28,10 +33,14 @@ import com.provenance.cloudprovenance.service.policy.api.ServiceCompliance;
 import com.provenance.cloudprovenance.service.traceability.api.ServiceXmlDocumentTraceability;
 
 /**
- * @author Mufy
+ * Policy request to validate against the following policy: The storage of a new
+ * sensitive file (fileA) needs to reside in the same region as the registration
+ * of the user (userA), otherwise it is denied.
  * 
+ * @version 1.1 19 Aug 2016
+ * @author Mufy
+ * @Module ServiceAPI
  */
-
 @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:beans.xml")
@@ -65,8 +74,10 @@ public class RequirementSevenTest {
 		String process = "share";
 		String environment1 = "region.store.confidenshare.labs.orange.com";
 
-		srvCompliance.constructRequest(userAgent, resource, process,
+		String actual_outcome = srvCompliance.constructRequest(userAgent, resource, process,
 				environment1);
+		
+		Assert.assertTrue(actual_outcome.contains(expected_outcome));
 	}
 
 }

@@ -1,25 +1,25 @@
-/**
- * @file 		CprovObjectTraceability.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		ServiceAPI
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) CprovObjectTraceability.java       1.1 19/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.service.api.impl;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-
 import javax.xml.bind.JAXBElement;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.namespace.QName;
-
 import org.apache.log4j.Logger;
-
-import com.provenance.cloudprovenance.service.traceability.api.ServiceTraceability;
 import com.provenance.cloudprovenance.service.traceability.api.ServiceXmlDocumentTraceability;
 import com.provenance.cloudprovenance.traceabilityModel.generated.ActivityRef;
 import com.provenance.cloudprovenance.traceabilityModel.generated.Agent;
@@ -46,8 +46,12 @@ import com.provenance.cloudprovenance.traceabilityModel.generated.WasRepresentat
 import com.provenance.cloudprovenance.traceabilityModel.generated.WasVirtualizedBy;
 
 /**
- * @author Mufy
+ * This class implements all the method of the ServiceXMLDocumentTraceability, 
+ * interface, and returns resource as an Object
  * 
+ * @version 1.1 19 Aug 2016
+ * @author Mufy
+ * @Module ServiceAPI
  */
 public class CprovObjectTraceability implements
 		ServiceXmlDocumentTraceability<Object> {
@@ -63,40 +67,23 @@ public class CprovObjectTraceability implements
 
 	private ObjectFactory tModelFactory = new ObjectFactory();
 	private TraceabilityDocument traceabilityDoc;
-	// EventProducer<TraceabilityDocument> traceabilityEventProducer;
 
 	private Logger logger = Logger.getLogger("XmlTraceabilityModel");
-	private String currentTraceabilityDocument;
-	private final String JAXB_INSTANCE_DIR = "com.provenance.cloudprovenance.model.generated";
 	public String UNIQUE_IDENTIFIER_NS_SUFFIX = "http://labs.orange.com/uk/ex#";
 	public String UNIQUE_IDENTIFIER_NS_PREFIX = "ex";
-
-	private static int MAX_SIZE_GRAPH = 10;
-	private static int currentGraphSize = 1;
-
-	private boolean nodesOnly = false;
 
 	// Identifiers static index
 	public static int e_cRId = 0, ag_Id = 0, a_Id = 0, wic_Id = 0, wec_Id = 0,
 			wrc_Id = 0, ho_Id = 0, wro_Id = 0, wreo_Id = 0, wvb_Id = 0,
 			wsb_Id = 0, hpa_Id = 0, u_Id = 0, wicb_Id = 0, tr_id = 0;
 
-	// TraceabilityStatementsCollector<TraceabilityDocument>
-	// traceabilityEventCollector;
-
 	public CprovObjectTraceability() {
-		// EventProducer<TraceabilityDocument> traceabilityEventProducer,
-		// int collectionSize) {
-		// MAX_SIZE_GRAPH = collectionSize;
-		// this.traceabilityEventProducer = traceabilityEventProducer;
 	}
 
 	// Allow for service level - prefix and suffix
-
 	public CprovObjectTraceability(String serviceNSPrefix,
 			String ServiceNSSuffix) {
 
-		// this.traceabilityEventProducer = traceabilityEventProducer;
 		UNIQUE_IDENTIFIER_NS_PREFIX = serviceNSPrefix;
 		UNIQUE_IDENTIFIER_NS_SUFFIX = ServiceNSSuffix;
 	}
@@ -136,15 +123,6 @@ public class CprovObjectTraceability implements
 			}
 		}
 
-		/*
-		 * if (timeStamp != null){
-		 * 
-		 * try { // cResource.set(getXMLgregorialDate(timeStamp));
-		 * //cResource.set
-		 * 
-		 * } catch (DatatypeConfigurationException e) { e.printStackTrace(); } }
-		 */
-
 		cResource.setVResourceRef(vResourceRef);
 		cResource.setIsReplicable(isReplicable);
 		cResource.setUserTrustDegree(trustDegree);
@@ -158,13 +136,12 @@ public class CprovObjectTraceability implements
 				restrictionType, UNIQUE_IDENTIFIER_NS_PROVD_PREFIX);
 		// tr.setRegion(trRegionId);
 		cResource.getRestrictionType().add(trRestrictionType);
-		
-		if (des!= null){
+
+		if (des != null) {
 			cResource.setDes(des);
 		}
 
 		getRootNode().getInstance().add(cResource);
-		// validateAndStoreTraceabilityDocument();
 
 		return cResource;
 	}
@@ -207,8 +184,6 @@ public class CprovObjectTraceability implements
 		phResource.getRestrictionType().add(trRestrictionType);
 		phResource.setUserTrustDegree(trustDegree);
 
-		// validateAndStoreTraceabilityDocument();
-
 		getRootNode().getInstance().add(phResource);
 
 		return phResource;
@@ -247,8 +222,6 @@ public class CprovObjectTraceability implements
 
 		this.getRootNode().getEntityOrActivityOrWasGeneratedBy().add(agent);
 
-		// validateAndStoreTraceabilityDocument();
-
 		return agent;
 	}
 
@@ -283,8 +256,6 @@ public class CprovObjectTraceability implements
 		cProcess.setEndTime(null);
 
 		this.getRootNode().getInstance().add(cProcess);
-
-		// validateAndStoreTraceabilityDocument();
 
 		return cProcess;
 	}
@@ -321,8 +292,6 @@ public class CprovObjectTraceability implements
 
 		getRootNode().getRelation().add(tr);
 
-		// validateAndStoreTraceabilityDocument();
-
 		return tr;
 	}
 
@@ -351,11 +320,9 @@ public class CprovObjectTraceability implements
 				UNIQUE_IDENTIFIER_NS_PREFIX);
 
 		aRefInformed.setRef(informedRefId);
-
 		wic.setInformed(aRefInformed);
 
 		ActivityRef aRefInfromant = tModelFactory.createActivityRef();
-
 		QName informantRefId = new QName(UNIQUE_IDENTIFIER_NS_SUFFIX,
 				informant, UNIQUE_IDENTIFIER_NS_PREFIX);
 
@@ -377,7 +344,6 @@ public class CprovObjectTraceability implements
 		wic.setImplicitType(null);
 
 		getRootNode().getRelation().add(wic);
-		// validateAndStoreTraceabilityDocument();
 
 		return wic;
 	}
@@ -411,7 +377,6 @@ public class CprovObjectTraceability implements
 		wec.setCallNetwork(callNetworkId);
 
 		ActivityRef aRefInformed = tModelFactory.createActivityRef();
-
 		QName informedRefId = new QName(UNIQUE_IDENTIFIER_NS_SUFFIX, informed,
 				UNIQUE_IDENTIFIER_NS_PREFIX);
 
@@ -430,7 +395,6 @@ public class CprovObjectTraceability implements
 		wec.setExplicitType(null);
 
 		getRootNode().getRelation().add(wec);
-		// validateAndStoreTraceabilityDocument();
 
 		return wec;
 	}
@@ -477,8 +441,6 @@ public class CprovObjectTraceability implements
 
 		getRootNode().getRelation().add(wrc);
 
-		// validateAndStoreTraceabilityDocument();
-
 		return wrc;
 	}
 
@@ -520,8 +482,6 @@ public class CprovObjectTraceability implements
 		ho.setEntity(eRef);
 
 		getRootNode().getRelation().add(ho);
-
-		// validateAndStoreTraceabilityDocument();
 
 		return ho;
 	}
@@ -579,8 +539,6 @@ public class CprovObjectTraceability implements
 
 		getRootNode().getRelation().add(wro);
 
-		// validateAndStoreTraceabilityDocument();
-
 		return wro;
 	}
 
@@ -634,11 +592,7 @@ public class CprovObjectTraceability implements
 		// ************************************************
 		wReo.setRefType(null);
 
-		// return this.marshallObject(wReo);
-
 		getRootNode().getRelation().add(wReo);
-
-		// validateAndStoreTraceabilityDocument();
 
 		return wReo;
 	}
@@ -687,8 +641,6 @@ public class CprovObjectTraceability implements
 
 		getRootNode().getRelation().add(wvb);
 
-		// validateAndStoreTraceabilityDocument();
-
 		return wvb;
 	}
 
@@ -697,12 +649,7 @@ public class CprovObjectTraceability implements
 	public synchronized HadTransitionStateA hadTransitionState_A(String id,
 			String entityInvolved, String stateResource, String method) {
 
-		// this.hadTransitionalState_A(id, processInvolved, stateResource,
-		// method, time)
-
 		HadTransitionStateA htsa = tModelFactory.createHadTransitionStateA();
-
-		// WasStatedBy wsb = tModelFactory.createWasStatedBy();
 
 		if (id == null || id.equalsIgnoreCase("")) {
 			QName wsbId = new QName(UNIQUE_IDENTIFIER_NS_SUFFIX, "wsb"
@@ -722,7 +669,6 @@ public class CprovObjectTraceability implements
 
 		EntityRef enRef = tModelFactory.createEntityRef();
 
-		// ActivityRef acRef = tModelFactory.createActivityRef();
 		enRef.setRef(enRefId);
 		htsa.setUsedEntity(enRef);
 
@@ -749,12 +695,7 @@ public class CprovObjectTraceability implements
 	public synchronized HadTransitionStateB hadTransitionState_B(String id,
 			String processInvolved, String stateResource, String method) {
 
-		// this.hadTransitionalState_A(id, processInvolved, stateResource,
-		// method, time)
-
 		HadTransitionStateB htsb = tModelFactory.createHadTransitionStateB();
-
-		// WasStatedBy wsb = tModelFactory.createWasStatedBy();
 
 		if (id == null || id.equalsIgnoreCase("")) {
 			QName wsbId = new QName(UNIQUE_IDENTIFIER_NS_SUFFIX, "wsb"
@@ -781,16 +722,12 @@ public class CprovObjectTraceability implements
 
 		EntityRef enRef = tModelFactory.createEntityRef();
 		enRef.setRef(enRefId);
-		// htsa.setEntity(enRef);
 		htsb.setEntity(enRef);
 
 		// TODO set the XMLGegorian calender ....
 		// htsa.setTime(null);
 
-		// return this.marshallObject(wsb);
-
 		getRootNode().getRelation().add(htsb);
-		// validateAndStoreTraceabilityDocument();
 
 		return htsb;
 
@@ -801,12 +738,7 @@ public class CprovObjectTraceability implements
 	public synchronized HadTransitionStateC hadTransitionState_C(String id,
 			String agentInvolved, String stateResource, String method) {
 
-		// this.hadTransitionalState_A(id, processInvolved, stateResource,
-		// method, time)
-
 		HadTransitionStateC htsb = tModelFactory.createHadTransitionStateC();
-
-		// WasStatedBy wsb = tModelFactory.createWasStatedBy();
 
 		if (id == null || id.equalsIgnoreCase("")) {
 			QName wsbId = new QName(UNIQUE_IDENTIFIER_NS_SUFFIX, "wsb"
@@ -842,7 +774,6 @@ public class CprovObjectTraceability implements
 		// return this.marshallObject(wsb);
 
 		getRootNode().getRelation().add(htsb);
-		// validateAndStoreTraceabilityDocument();
 
 		return htsb;
 
@@ -890,8 +821,6 @@ public class CprovObjectTraceability implements
 		// getRootNode().getRelation().add(used);
 
 		this.getRootNode().getEntityOrActivityOrWasGeneratedBy().add(used);
-
-		// validateAndStoreTraceabilityDocument();
 
 		return used;
 	}
@@ -946,8 +875,6 @@ public class CprovObjectTraceability implements
 		wicb.setAccessNetwork(accessNetworkId);
 
 		getRootNode().getRelation().add(wicb);
-
-		// validateAndStoreTraceabilityDocument();
 
 		return wicb;
 	}
@@ -1026,18 +953,6 @@ public class CprovObjectTraceability implements
 
 	}
 
-	/*
-	 * private void validateAndStoreTraceabilityDocument() {
-	 * 
-	 * if (currentGraphSize == this.MAX_SIZE_GRAPH) {
-	 * //traceabilityEventCollector.addStatement(getRootNode());
-	 * traceabilityEventProducer.sendEvent(getRootNode());
-	 * 
-	 * resetRootNode(); currentGraphSize = 1; // } else {
-	 * 
-	 * currentGraphSize++; } }
-	 */
-
 	// TODO - This is a dirty work around. Find a proper solution.
 	private String removeExtraNameSpaceDeclaration(String elementWithNameSpace) {
 
@@ -1057,8 +972,6 @@ public class CprovObjectTraceability implements
 
 	@Override
 	public void setMaxStatementPerDocument(int max) {
-		// TODO Auto-generated method stub
 
 	}
-
 }

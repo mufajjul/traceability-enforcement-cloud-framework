@@ -1,9 +1,13 @@
-/**
- * @file 		CprovXmlProvenance.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		ServiceAPI
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) CprovXmlProvenance.java       1.1 19/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.service.api.impl;
 
@@ -47,11 +51,16 @@ import com.provenance.cloudprovenance.traceabilityModel.generated.WasRepresentat
 import com.provenance.cloudprovenance.traceabilityModel.generated.WasVirtualizedBy;
 
 /**
- * @author Mufy
+ * This class implements all the method of the ServiceXMLDocumentTraceability,
+ * interface, and returns resource's Id
  * 
+ * @version 1.1 19 Aug 2016
+ * @author Mufy
+ * @Module ServiceAPI
  */
 public class CprovXmlProvenance implements
-		ServiceXmlDocumentTraceability<String>, ServiceTraceabilityCallback<String> {
+		ServiceXmlDocumentTraceability<String>,
+		ServiceTraceabilityCallback<String> {
 
 	public final String PREVIOUS_ID = "link_previous";
 	public final String AUTO_ID = "auto_gen";
@@ -68,23 +77,17 @@ public class CprovXmlProvenance implements
 
 	private Logger logger = Logger.getLogger("XmlTraceabilityModel");
 	private String currentTraceabilityDocument;
-	private final String JAXB_INSTANCE_DIR = "com.provenance.cloudprovenance.model.generated";
 	public static String UNIQUE_IDENTIFIER_NS_SUFFIX = "http://labs.orange.com/uk/ex#";
 	public static String UNIQUE_IDENTIFIER_NS_PREFIX = "ex";
 
 	private static int MAX_SIZE_GRAPH = 10;
 	private static int currentGraphSize = 1;
 
-	private boolean nodesOnly = false;
-
 	// Identifiers static index
 	public static int e_cRId = 0, ag_Id = 0, a_Id = 0, wic_Id = 0, wec_Id = 0,
 			wrc_Id = 0, ho_Id = 0, wro_Id = 0, wreo_Id = 0, wvb_Id = 0,
 			wsb_Id = 0, hpa_Id = 0, u_Id = 0, wicb_Id = 0, tr_id = 0,
 			htsa_Id = 0, htsb_Id = 0, htsc_Id = 0;
-
-	// TraceabilityStatementsCollector<TraceabilityDocument>
-	// traceabilityEventCollector;
 
 	public CprovXmlProvenance(
 			EventProducer<TraceabilityDocument> traceabilityEventProducer,
@@ -94,7 +97,6 @@ public class CprovXmlProvenance implements
 	}
 
 	// Allow for service level - prefix and suffix
-
 	public CprovXmlProvenance(
 			EventProducer<TraceabilityDocument> traceabilityEventProducer,
 			String serviceNSPrefix, String ServiceNSSuffix, int collectionSize) {
@@ -102,12 +104,9 @@ public class CprovXmlProvenance implements
 		this.traceabilityEventProducer = traceabilityEventProducer;
 		UNIQUE_IDENTIFIER_NS_PREFIX = serviceNSPrefix;
 		UNIQUE_IDENTIFIER_NS_SUFFIX = ServiceNSSuffix;
-		this.MAX_SIZE_GRAPH = collectionSize;
+		MAX_SIZE_GRAPH = collectionSize;
 	}
 
-	
-	
-	
 	/**
 	 * A node that represents a Cloud resource TODO - Add validation, check if
 	 * it is null (
@@ -144,15 +143,6 @@ public class CprovXmlProvenance implements
 			}
 		}
 
-		/*
-		 * if (timeStamp != null){
-		 * 
-		 * try { // cResource.set(getXMLgregorialDate(timeStamp));
-		 * //cResource.set
-		 * 
-		 * } catch (DatatypeConfigurationException e) { e.printStackTrace(); } }
-		 */
-
 		cResource.setVResourceRef(vResourceRef);
 		cResource.setIsReplicable(isReplicable);
 		cResource.setUserTrustDegree(trustDegree);
@@ -164,14 +154,11 @@ public class CprovXmlProvenance implements
 
 		QName trRestrictionType = new QName(UNIQUE_IDENTIFIER_NS_PROVD_SUFFIX,
 				restrictionType, UNIQUE_IDENTIFIER_NS_PROVD_PREFIX);
-		// tr.setRegion(trRegionId);
-		// cResource.setRestrictionType(trRestrictionType);
 
 		// TODO: Change the restrictionType input to an Array
 		cResource.getRestrictionType().add(trRestrictionType);
-		// cResource.set§
-		
-		if (des != null){
+
+		if (des != null) {
 			cResource.setDes(des);
 		}
 
@@ -220,7 +207,6 @@ public class CprovXmlProvenance implements
 		phResource.setUserTrustDegree(trustDegree);
 
 		getRootNode().getInstance().add(phResource);
-
 		validateAndStoreTraceabilityDocument();
 
 		return id;
@@ -254,8 +240,6 @@ public class CprovXmlProvenance implements
 
 		InternationalizedString iStringDescription = new InternationalizedString();
 		iStringDescription.setValue(description);
-
-		// getRootNode().getInstance().add(agent);
 
 		this.getRootNode().getEntityOrActivityOrWasGeneratedBy().add(agent);
 
@@ -345,13 +329,12 @@ public class CprovXmlProvenance implements
 
 		if (event != null && (!(id.equalsIgnoreCase("")))) {
 
-			QName trEventId = new QName(UNIQUE_IDENTIFIER_NS_SUFFIX,
-					event, UNIQUE_IDENTIFIER_NS_PREFIX);
+			QName trEventId = new QName(UNIQUE_IDENTIFIER_NS_SUFFIX, event,
+					UNIQUE_IDENTIFIER_NS_PREFIX);
 			tr.setEvent(trEventId);
 		}
 
 		getRootNode().getInstance().add(tr);
-
 		validateAndStoreTraceabilityDocument();
 
 		return id;
@@ -382,11 +365,9 @@ public class CprovXmlProvenance implements
 				UNIQUE_IDENTIFIER_NS_PREFIX);
 
 		aRefInformed.setRef(informedRefId);
-
 		wic.setInformed(aRefInformed);
 
 		ActivityRef aRefInfromant = tModelFactory.createActivityRef();
-
 		QName informantRefId = new QName(UNIQUE_IDENTIFIER_NS_SUFFIX,
 				informant, UNIQUE_IDENTIFIER_NS_PREFIX);
 
@@ -403,7 +384,7 @@ public class CprovXmlProvenance implements
 
 		wic.setCallNetwork(callNetworkId);
 
-		// TODO
+		// TODO add values
 		wic.setCallComm(null);
 		wic.setImplicitType(null);
 
@@ -507,7 +488,6 @@ public class CprovXmlProvenance implements
 		}
 
 		getRootNode().getRelation().add(wrc);
-
 		validateAndStoreTraceabilityDocument();
 
 		return id;
@@ -551,7 +531,6 @@ public class CprovXmlProvenance implements
 		ho.setEntity(eRef);
 
 		getRootNode().getRelation().add(ho);
-
 		validateAndStoreTraceabilityDocument();
 
 		return id;
@@ -600,7 +579,6 @@ public class CprovXmlProvenance implements
 		wro.setGeneratedEntity(eRef);
 
 		EntityRef eUsedRef = tModelFactory.createEntityRef();
-
 		QName eRefUsedId = new QName(UNIQUE_IDENTIFIER_NS_SUFFIX, usedResource,
 				UNIQUE_IDENTIFIER_NS_PREFIX);
 
@@ -611,7 +589,6 @@ public class CprovXmlProvenance implements
 		wro.setGeneration(null);
 
 		getRootNode().getRelation().add(wro);
-
 		validateAndStoreTraceabilityDocument();
 
 		return id;
@@ -670,7 +647,6 @@ public class CprovXmlProvenance implements
 		// return this.marshallObject(wReo);
 
 		getRootNode().getRelation().add(wReo);
-
 		validateAndStoreTraceabilityDocument();
 
 		return id;
@@ -720,7 +696,6 @@ public class CprovXmlProvenance implements
 		wvb.setTime(null);
 
 		getRootNode().getRelation().add(wvb);
-
 		validateAndStoreTraceabilityDocument();
 
 		return id;
@@ -731,12 +706,7 @@ public class CprovXmlProvenance implements
 	public synchronized String hadTransitionState_A(String id,
 			String entityInvolved, String stateResource, String method) {
 
-		// this.hadTransitionalState_A(id, processInvolved, stateResource,
-		// method, time)
-
 		HadTransitionStateA htsa = tModelFactory.createHadTransitionStateA();
-
-		// WasStatedBy wsb = tModelFactory.createWasStatedBy();
 
 		if (id == null || id.equalsIgnoreCase("")) {
 			QName wsbId = new QName(UNIQUE_IDENTIFIER_NS_SUFFIX, "htsa"
@@ -756,7 +726,6 @@ public class CprovXmlProvenance implements
 
 		EntityRef enRef = tModelFactory.createEntityRef();
 
-		// ActivityRef acRef = tModelFactory.createActivityRef();
 		enRef.setRef(enRefId);
 		htsa.setUsedEntity(enRef);
 
@@ -765,7 +734,6 @@ public class CprovXmlProvenance implements
 
 		EntityRef enGenRef = tModelFactory.createEntityRef();
 		enGenRef.setRef(enGenRefId);
-		// htsa.setEntity(enRef);
 		htsa.setGeneratedEntity(enGenRef);
 
 		// TODO set the XMLGegorian calender ....
@@ -783,12 +751,7 @@ public class CprovXmlProvenance implements
 	public synchronized String hadTransitionState_B(String id,
 			String processInvolved, String stateResource, String method) {
 
-		// this.hadTransitionalState_A(id, processInvolved, stateResource,
-		// method, time)
-
 		HadTransitionStateB htsb = tModelFactory.createHadTransitionStateB();
-
-		// WasStatedBy wsb = tModelFactory.createWasStatedBy();
 
 		if (id == null || id.equalsIgnoreCase("")) {
 			QName wsbId = new QName(UNIQUE_IDENTIFIER_NS_SUFFIX, "htsb"
@@ -821,8 +784,6 @@ public class CprovXmlProvenance implements
 		// TODO set the XMLGegorian calender ....
 		// htsa.setTime(null);
 
-		// return this.marshallObject(wsb);
-
 		getRootNode().getRelation().add(htsb);
 		validateAndStoreTraceabilityDocument();
 
@@ -835,12 +796,7 @@ public class CprovXmlProvenance implements
 	public synchronized String hadTransitionState_C(String id,
 			String agentInvolved, String stateResource, String method) {
 
-		// this.hadTransitionalState_A(id, processInvolved, stateResource,
-		// method, time)
-
 		HadTransitionStateC htsb = tModelFactory.createHadTransitionStateC();
-
-		// WasStatedBy wsb = tModelFactory.createWasStatedBy();
 
 		if (id == null || id.equalsIgnoreCase("")) {
 			QName wsbId = new QName(UNIQUE_IDENTIFIER_NS_SUFFIX, "htsc"
@@ -873,13 +829,10 @@ public class CprovXmlProvenance implements
 		// TODO set the XMLGegorian calender ....
 		// htsa.setTime(null);
 
-		// return this.marshallObject(wsb);
-
 		getRootNode().getRelation().add(htsb);
 		validateAndStoreTraceabilityDocument();
 
 		return id;
-
 	}
 
 	// Node and Edge from Prov
@@ -924,7 +877,6 @@ public class CprovXmlProvenance implements
 		// getRootNode().getRelation().add(used);
 
 		this.getRootNode().getEntityOrActivityOrWasGeneratedBy().add(used);
-
 		validateAndStoreTraceabilityDocument();
 
 		return id;
@@ -958,16 +910,13 @@ public class CprovXmlProvenance implements
 				UNIQUE_IDENTIFIER_NS_PREFIX);
 
 		agentRef.setRef(aRefId);
-
 		wicb.setAgent(agentRef);
 
 		ActivityRef acRef = tModelFactory.createActivityRef();
-
 		QName acRefId = new QName(UNIQUE_IDENTIFIER_NS_SUFFIX, processInvolved,
 				UNIQUE_IDENTIFIER_NS_PREFIX);
 
 		acRef.setRef(acRefId);
-
 		wicb.setActivity(acRef);
 
 		QName accessMediumId = new QName(UNIQUE_IDENTIFIER_NS_PROVD_SUFFIX,
@@ -978,9 +927,7 @@ public class CprovXmlProvenance implements
 				accessNetwork, UNIQUE_IDENTIFIER_NS_PROVD_PREFIX);
 
 		wicb.setAccessNetwork(accessNetworkId);
-
 		getRootNode().getRelation().add(wicb);
-
 		validateAndStoreTraceabilityDocument();
 
 		return id;
@@ -993,8 +940,8 @@ public class CprovXmlProvenance implements
 		myCal.setTime(currentDate);
 
 		XMLGregorianCalendar xgcal;
-
 		xgcal = DatatypeFactory.newInstance().newXMLGregorianCalendar(myCal);
+
 		return xgcal;
 
 	}
@@ -1024,7 +971,6 @@ public class CprovXmlProvenance implements
 	public void InitilizeTraceabilityDocument() {
 
 		logger.debug("Emptying the Traceability Document ");
-		// traceabilityDoc = tModelFactory.createTraceabilityDocument();
 		this.setCurrentTraceabilityDocument("");
 		notify();
 	}
@@ -1062,15 +1008,15 @@ public class CprovXmlProvenance implements
 
 	private void validateAndStoreTraceabilityDocument() {
 
-		if (currentGraphSize == this.MAX_SIZE_GRAPH) {
-			// traceabilityEventCollector.addStatement(getRootNode());
-			String traceabilityOutput = traceabilityEventProducer.sendEvent(getRootNode());
+		if (currentGraphSize == MAX_SIZE_GRAPH) {
+			String traceabilityOutput = traceabilityEventProducer
+					.sendEvent(getRootNode());
 
-			logger.info("Traceability storage outcome: "+traceabilityOutput);
-			
-			//callback method
+			logger.info("Traceability storage outcome: " + traceabilityOutput);
+
+			// callback method
 			traceabilityStored();
-			
+
 			resetRootNode();
 			currentGraphSize = 1;
 			//
@@ -1080,36 +1026,15 @@ public class CprovXmlProvenance implements
 		}
 	}
 
-	// TODO - This is a dirty work around. Find a proper solution.
-	
-	/*
-	private String removeExtraNameSpaceDeclaration(String elementWithNameSpace) {
-
-		// String removeThisText =
-		// " xmlns:ex=\"http://labs.orange.com/uk/ex#\" xmlns:prov=\"http://www.w3.org/ns/prov#\" xmlns:cprov=\"http://labs.orange.com/uk/cprov#\"";
-		String removeThisText = "<cprov:traceabilityDocument xmlns:prov=\"http://www.w3.org/ns/prov#\" xmlns:confidenshare=\"http://labs.orange.com/uk/confidenshare#\" xmlns:cprov=\"http://labs.orange.com/uk/cprov#\">";
-
-		String removeThisTextAsWell = "</cprov:traceabilityDocument>";
-
-		elementWithNameSpace = elementWithNameSpace.replaceFirst(
-				removeThisText, "");
-		elementWithNameSpace = elementWithNameSpace.replaceFirst(
-				removeThisTextAsWell, "");
-		return elementWithNameSpace;
-
-	}
-	*/
-
 	@Override
 	public void setMaxStatementPerDocument(int max) {
 
-		this.MAX_SIZE_GRAPH = max;
+		MAX_SIZE_GRAPH = max;
 
 	}
 
 	@Override
 	public String traceabilityStored() {
-		// TODO Auto-generated method stub
 		return "traceabilityStoredSuccessfully";
 	}
 }

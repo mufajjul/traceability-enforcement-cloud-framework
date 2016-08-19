@@ -1,9 +1,13 @@
-/**
- * @file 		DynamicPolicyRequest.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		ServiceAPI
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) DynamicPolicyRequest.java       1.1 19/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.service.api.impl;
 
@@ -24,8 +28,11 @@ import com.provenance.cloudprovenance.traceabilityLanguage.generated.REntity;
 import com.provenance.cloudprovenance.traceabilityLanguage.generated.REntity.CategoryValue;
 
 /**
- * @author Mufy
+ * This class implements all the method of the Service Compliance interface
  * 
+ * @version 1.1 19 Aug 2016
+ * @author Mufy
+ * @Module ServiceAPI
  */
 public class DynamicPolicyRequest implements ServiceCompliance<String> {
 
@@ -44,10 +51,9 @@ public class DynamicPolicyRequest implements ServiceCompliance<String> {
 
 	private String policyResponse = null;
 
-	private EventProducer<PolicyRequest> eventProducer;// =
-														// "com.provenance.cloudprovenance.pap.cprovl_policystore.generated";
+	private EventProducer<PolicyRequest> eventProducer;
 	private static Logger logger = Logger.getLogger("DynamicPolicyRequest");
-	
+
 	ServiceTraceabilityCallback<String> stCallback;
 
 	public DynamicPolicyRequest(EventProducer<PolicyRequest> eventProducer) {
@@ -55,13 +61,14 @@ public class DynamicPolicyRequest implements ServiceCompliance<String> {
 		this.eventProducer = eventProducer;
 	}
 
-	public DynamicPolicyRequest(EventProducer<PolicyRequest> eventProducer, ServiceTraceabilityCallback<String> stCallback) {
+	public DynamicPolicyRequest(EventProducer<PolicyRequest> eventProducer,
+			ServiceTraceabilityCallback<String> stCallback) {
 
 		this.eventProducer = eventProducer;
-		this.stCallback = stCallback; 
-		
+		this.stCallback = stCallback;
+
 	}
-	
+
 	public DynamicPolicyRequest(EventProducer<PolicyRequest> eventProducer,
 			String prefix, String suffix) {
 
@@ -93,7 +100,6 @@ public class DynamicPolicyRequest implements ServiceCompliance<String> {
 			}
 
 			// TODO - Look into where the ID will different from the value
-
 			REntity prosEntity = constructField(resourceId, false, fieldType,
 					prefix + resourceId, pFactory, null);
 			pRequest.getEntity().add(prosEntity);
@@ -131,8 +137,6 @@ public class DynamicPolicyRequest implements ServiceCompliance<String> {
 		policyResponse = eventProducer.sendEvent(pRequest);
 		return policyResponse;
 
-		// TODO - event consumer for the response .... Synchrnized mode .....
-		// return "request sent successfully";
 	}
 
 	public String constructRequest(String requestUserId,
@@ -151,7 +155,6 @@ public class DynamicPolicyRequest implements ServiceCompliance<String> {
 		if (resourceId != null) {
 
 			String fieldType = "Resource";
-
 			String prefix = "ex:";
 
 			if (UNIQUE_IDENTIFIER_NS_SERVICE_PREFIX != null) {
@@ -159,7 +162,6 @@ public class DynamicPolicyRequest implements ServiceCompliance<String> {
 			}
 
 			// TODO - Look into where the ID will different from the value
-
 			REntity prosEntity = constructField(resourceId, resourceIdRef,
 					fieldType, prefix + resourceId, pFactory, resourceDesc);
 			pRequest.getEntity().add(prosEntity);
@@ -180,9 +182,6 @@ public class DynamicPolicyRequest implements ServiceCompliance<String> {
 
 		}
 		return eventProducer.sendEvent(pRequest);
-
-		// TODO - event consumer for the response .... Synchrnized mode .....
-		// return "request sent successfully";
 	}
 
 	private Agent constructAgent(String requestUserId,
@@ -193,7 +192,6 @@ public class DynamicPolicyRequest implements ServiceCompliance<String> {
 
 		if (requestUserIdRef != null) {
 
-			// srcAgent.s
 			srcAgent.setIsRef(requestUserIdRef.booleanValue());
 		} else {
 			srcAgent.setIsRef(true);
@@ -213,7 +211,6 @@ public class DynamicPolicyRequest implements ServiceCompliance<String> {
 		srcAgent.setId(srcAgeRefId);
 
 		reAgRef.setRef(srcAgeRefId);
-		// pRequest.setAgent(srcAgent);
 
 		return srcAgent;
 	}
@@ -233,16 +230,10 @@ public class DynamicPolicyRequest implements ServiceCompliance<String> {
 		}
 
 		resEntity.setId(srcAgeRefId);
-		// resEntity.setId(null);
 
 		QName reqFieldType = new QName(UNIQUE_IDENTIFIER_NS_PROVD_SUFFIX,
 				fieldType, UNIQUE_IDENTIFIER_NS_PROVD_PREFIX);
-		/*
-		 * if (UNIQUE_IDENTIFIER_NS_SERVICE_PREFIX != null) {
-		 * 
-		 * reqFieldType = new QName(UNIQUE_IDENTIFIER_NS_SERVICE_SUFFIX,
-		 * fieldType, UNIQUE_IDENTIFIER_NS_SERVICE_PREFIX); }
-		 */
+
 		resEntity.setCategoryType(reqFieldType);
 
 		CategoryValue fValue = new REntity.CategoryValue();
@@ -261,7 +252,6 @@ public class DynamicPolicyRequest implements ServiceCompliance<String> {
 
 	}
 
-	// TODO: Do the implementation
 	public HadOwnership getOwnership(String id, QName entityId, QName agentId,
 			String ownershipType) {
 
@@ -325,7 +315,6 @@ public class DynamicPolicyRequest implements ServiceCompliance<String> {
 		if (resourceIds != null) {
 
 			String fieldType = "Resource";
-
 			String prefix = "ex:";
 
 			if (UNIQUE_IDENTIFIER_NS_SERVICE_PREFIX != null) {
@@ -373,10 +362,10 @@ public class DynamicPolicyRequest implements ServiceCompliance<String> {
 
 		}
 
-		if (stCallback != null){
-			// wait for the traceability storage to be completed 
+		if (stCallback != null) {
+			// wait for the traceability storage to be completed
 			stCallback.traceabilityStored();
-			
+
 		}
 		return eventProducer.sendEvent(pRequest);
 

@@ -1,9 +1,13 @@
-/**
- * @file 		CProvRecordSeven.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		ServiceAPI
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) CProvRecordSeven.java       1.1 19/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.service.requirement_seven.test;
 
@@ -13,12 +17,17 @@ import com.provenance.cloudprovenance.service.api.impl.CprovXmlProvenance;
 import com.provenance.cloudprovenance.service.traceability.api.ServiceXmlDocumentTraceability;
 
 /**
- * @author Mufy
+ * Provenance graph to validate against the following policy: The storage of a new
+ * sensitive file (fileA) needs to reside in the same region as the registration
+ * of the user (userA), otherwise it is denied.
  * 
+ * @version 1.1 19 Aug 2016
+ * @author Mufy
+ * @Module ServiceAPI
  */
 public class CProvRecordSeven {
 
-	@Autowired 
+	@Autowired
 	private ServiceXmlDocumentTraceability<String> cProvApi;
 
 	public CProvRecordSeven(ServiceXmlDocumentTraceability<String> cProvApi) {
@@ -28,9 +37,8 @@ public class CProvRecordSeven {
 
 	public void genPreStatements() {
 
-		
 		cProvApi.setMaxStatementPerDocument(24);
-		
+
 		// agent to register
 		String agent1Id = cProvApi.Agent("Bob", "Bob", "Smith");
 
@@ -60,16 +68,7 @@ public class CProvRecordSeven {
 
 		cProvApi.wasVirtualizedBy(null, cres3Id, cprocess1Id, null, null);
 
-		
-		// cResource("e-loginSuccessful", "", "=bob[=]!:uuid:f81d4fae",
-		// "[=]!:pid:g81d4fde-password", "192.168.1.34", true,
-		// null, null);
-
-		// cProvApi.wasStatedBy(null, cprocess1Id, cres4Id,
-		// null, null);
-
-		
-		// creation process
+			// creation process
 		String cprocess2Id = cProvApi.cProcess("create",
 				"=bob[=]!:uuid:f81d4fae", "[=]!:pid:g81d4fde-00create",
 				"192.168.1.34", null);
@@ -87,30 +86,29 @@ public class CProvRecordSeven {
 		cProvApi.wasVirtualizedBy(null, cres5Id, cprocess2Id, null, null);
 
 		// add transition
-		
-		String cres4Id = cProvApi.transition(null, "source", null, null, null, "EU", "event1");
+		String cres4Id = cProvApi.transition(null, "source", null, null, null,
+				"EU", "event1");
 		cProvApi.hadTransitionState_C(null, agent1Id, cres4Id, null);
 
-		//	cProvApi.hadTransitionState_B(null, cprocess1Id, cres4Id, null);
-
-		String cres6Id = cProvApi.transition(null, "source", null, null, null, "EU", "event1");
+		String cres6Id = cProvApi.transition(null, "source", null, null, null,
+				"EU", "event1");
 		cProvApi.hadTransitionState_B(null, cprocess1Id, cres6Id, null);
 
-		
-		//cres3Id
-		
-		String cres7Id = cProvApi.transition(null, "source", null, null, null, "EU", "event1");
+		// cres3Id
+
+		String cres7Id = cProvApi.transition(null, "source", null, null, null,
+				"EU", "event1");
 		cProvApi.hadTransitionState_A(null, cres3Id, cres7Id, null);
 
-
-		String cres8Id = cProvApi.transition(null, "source", null, null, null, "US", "event1");
+		String cres8Id = cProvApi.transition(null, "source", null, null, null,
+				"US", "event1");
 		cProvApi.hadTransitionState_B(null, cprocess2Id, cres8Id, null);
 
-		
-		String cres9Id = cProvApi.transition(null, "source", null, null, null, "US", "event1");
+		String cres9Id = cProvApi.transition(null, "source", null, null, null,
+				"US", "event1");
 		cProvApi.hadTransitionState_B(null, cres5Id, cres9Id, null);
 
-//		
+		//
 		/***************** Share fail *********************************/
 	}
 

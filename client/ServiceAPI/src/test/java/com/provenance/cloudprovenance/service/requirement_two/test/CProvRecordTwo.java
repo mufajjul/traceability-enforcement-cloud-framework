@@ -1,9 +1,13 @@
-/**
- * @file 		CProvRecordTwo.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		ServiceAPI
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) CProvRecordTwo.java       1.1 19/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.service.requirement_two.test;
 
@@ -13,8 +17,14 @@ import com.provenance.cloudprovenance.service.api.impl.CprovXmlProvenance;
 import com.provenance.cloudprovenance.service.traceability.api.ServiceXmlDocumentTraceability;
 
 /**
- * @author Mufy
+ * Provenance graph to validate against the following policy: If a file (fileA)
+ * is marked as ‘confidential’, only the originator is allowed to share it with
+ * another user (userB), re-sharing by the receiver (userB) to another user
+ * (userC) is not allowed.
  * 
+ * @version 1.1 19 Aug 2016
+ * @author Mufy
+ * @Module ServiceAPI
  */
 public class CProvRecordTwo {
 
@@ -34,7 +44,6 @@ public class CProvRecordTwo {
 		String agent1Id = cProvApi.Agent("Bob", "Bob", "smith");
 
 		// share process
-
 		String cprocess1Id = cProvApi.cProcess("share", "http://127.0.0.1/bob",
 				"http://127.0.0.1/bob/Linux/vProcess1",
 				"127.0.0.1/Linux/pProcess1Share", null);
@@ -55,17 +64,6 @@ public class CProvRecordTwo {
 
 		// TODO - review originator
 		cProvApi.hadOwnership(null, cres1Id, agent1Id, "possession");
-
-		// String cres2Id = cProvApi.cResource(null, "",
-		// "http:127.0.0.1/bob@yahoo.com", "http://127.0.0.1/bob/res/pw",
-		// "127.0.0.1", true, null, null, "general", 1.0f);
-
-		// cProvApi.wasVirtualizedBy(null, cres1Id, cprocess2Id, null,
-		// "resource");
-
-		// cProvApi.wasVirtualizedBy(null, cres2Id, cprocess1Id, null, "share");
-
-		// String used2Id = cProvApi.used(null, cprocess1Id, cres2Id, null);
 
 		// create a copy
 		String cprocess2Id = cProvApi.cProcess("referenceGen",

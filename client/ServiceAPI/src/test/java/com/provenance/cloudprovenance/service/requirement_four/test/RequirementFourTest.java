@@ -1,9 +1,13 @@
-/**
- * @file 		RequirementFourTest.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		ServiceAPI
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) RequirementFourTest.java       1.1 19/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.service.requirement_four.test;
 
@@ -29,10 +33,14 @@ import com.provenance.cloudprovenance.service.policy.api.ServiceCompliance;
 import com.provenance.cloudprovenance.service.traceability.api.ServiceXmlDocumentTraceability;
 
 /**
- * @author Mufy
+ * Policy request to validate against the following policy: If a file (fileA) is
+ * labelled as ‘general’, any user (UserA) can share the file with other users
+ * (UserX)
  * 
+ * @version 1.1 19 Aug 2016
+ * @author Mufy
+ * @Module ServiceAPI
  */
-
 @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:beans.xml")
@@ -58,30 +66,27 @@ public class RequirementFourTest {
 			throws URISyntaxException, ParserConfigurationException,
 			SAXException, IOException, TransformerException {
 
-		int policyId = 1;
-		int requestId = 1;
 		String expected_outcome = "Permit";
 
 		// convert resources
-
 		String userAgent = "Bob";
 		String resource = "fileA";
 		String process = "share";
 		String environment1 = "general.share.confidenshare.labs.orange.com";
 
-		srvCompliance.constructRequest(userAgent, resource, process,
-				environment1);
+		String actual_outcome = srvCompliance.constructRequest(userAgent,
+				resource, process, environment1);
+
+		Assert.assertTrue(actual_outcome.contains(expected_outcome));
+
 	}
 
-	
 	@Ignore
 	@Test
 	public void shareConfidentialfileReshareByReceivedAuthorTest() {
 
 		String expectedOutcome = "Deny";
-
 		Assert.fail("Not yet implemented ");
 
 	}
-
 }

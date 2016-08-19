@@ -1,9 +1,13 @@
-/**
- * @file 		CProvRecordEight.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		ServiceAPI
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) CProvRecordEight.java       1.1 19/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.service.requirement_eight.test;
 
@@ -12,8 +16,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.provenance.cloudprovenance.service.traceability.api.ServiceXmlDocumentTraceability;
 
 /**
- * @author Mufy
+ * A provenance graph to test the following policy: A system cannot replicate a
+ * file if the user explicitly marks it as non-replicable, at creation time.
  * 
+ * @version 1.1 19 Aug 2016
+ * @author Mufy
+ * @Module ServiceAPI
  */
 public class CProvRecordEight {
 
@@ -43,14 +51,6 @@ public class CProvRecordEight {
 				"=bob[=]!:uuid:f81d4fae", "[=]!:pid:g81d4fde-document",
 				"192.168.1.34", false, null, null, "general", 1.0f, null);
 
-		// String cres2Id = cProvApi.cResource("restricted", "",
-		// "=bob[=]!:uuid:f81d4fae", "[=]!:pid:g81d4fde-restrict",
-		// "192.168.1.34", true, null, null, "general", 1.0f);
-
-		// String used1Id = cProvApi.used(null, cprocess1Id, cres1Id, null);
-
-		// String used2Id = cProvApi.used(null, cprocess1Id, cres2Id, null);
-
 		// Add ownership
 		cProvApi.hadOwnership(null, cres1Id, agent1Id, "Originator");
 
@@ -69,14 +69,11 @@ public class CProvRecordEight {
 				"192.168.1.34", true, null, null, "general", 1.0f, null);
 
 		cProvApi.wasVirtualizedBy(null, cres1Id, cprocess1Id, null, null);
-
 		cProvApi.wasVirtualizedBy(null, cres3Id, cprocess2Id, null, null);
-
 		cProvApi.wasRepresentationOf(null, cres3Id, cres1Id, cprocess2Id, null,
 				null, null);
 	}
 
 	public void genPostStatements() {
-
 	}
 }

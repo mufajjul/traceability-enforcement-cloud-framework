@@ -1,9 +1,13 @@
-/**
- * @file 		RequirementNineTest.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		ServiceAPI
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) RequirementNineTest.java       1.1 19/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.service.requirement_nine.test;
 
@@ -29,10 +33,14 @@ import com.provenance.cloudprovenance.service.policy.api.ServiceCompliance;
 import com.provenance.cloudprovenance.service.traceability.api.ServiceXmlDocumentTraceability;
 
 /**
- * @author Mufy
+ * Policy request to validate against the following policy: A user (userA) can
+ * share a file (fileA), with non-modifiable preference, to another user
+ * (userB). This user (userB) cannot share a modified version of fileA (fileAA)
  * 
+ * @version 1.1 19 Aug 2016
+ * @author Mufy
+ * @Module ServiceAPI
  */
-
 @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:beans.xml")
@@ -51,9 +59,8 @@ public class RequirementNineTest {
 
 		CProvRecordNine genProvRecord = new CProvRecordNine(cProvApi);
 		genProvRecord.genPreStatements();
-
 	}
-	
+
 	@Test
 	public void shareAsOwnershipOfaFileTest() throws URISyntaxException,
 			ParserConfigurationException, SAXException, IOException,
@@ -66,11 +73,10 @@ public class RequirementNineTest {
 		String process = "share";
 		String environment1 = "mod.share.confidenshare.labs.orange.com";
 
-		String outcome = srvCompliance.constructRequest(userAgent, resource, process,
-				environment1);
+		String actual_outcome = srvCompliance.constructRequest(userAgent,
+				resource, process, environment1);
 
-		Assert.assertNotNull(outcome);
-		
+		Assert.assertTrue(actual_outcome.contains(expected_outcome));
+
 	}
-
 }

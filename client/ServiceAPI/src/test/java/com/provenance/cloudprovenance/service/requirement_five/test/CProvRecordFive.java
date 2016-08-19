@@ -1,9 +1,13 @@
-/**
- * @file 		RequirementEightTest.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		ServiceAPI
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) CProvRecordFive.java       1.1 19/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.service.requirement_five.test;
 
@@ -15,29 +19,33 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.provenance.cloudprovenance.service.traceability.api.ServiceXmlDocumentTraceability;
 
 /**
- * @author Mufy
+ * A provenance graph to validate against the following policy: A user (userA)
+ * logged in from an authorised region (EU) cannot share a ‘confidential’ or
+ * ‘restricted’ file with another user (userB) logged in from an unauthorised
+ * region (non-EU)
  * 
+ * @version 1.1 19 Aug 2016
+ * @author Mufy
+ * @Module ServiceAPI
  */
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:beans.xml")
 public class CProvRecordFive {
 
-	@Autowired 
+	@Autowired
 	private ServiceXmlDocumentTraceability<String> cProvApi;
 
-	public CProvRecordFive(ServiceXmlDocumentTraceability<String>  cProvApi) {
+	public CProvRecordFive(ServiceXmlDocumentTraceability<String> cProvApi) {
 		this.cProvApi = cProvApi;
 	}
 
 	public void genPreStatements() {
-		
-	cProvApi.setMaxStatementPerDocument(44);
-		
+
+		cProvApi.setMaxStatementPerDocument(44);
+
 		// agent to register
 		String agent1Id = cProvApi.Agent("Bob", "Bob", "Smith");
 
-		
 		// registration process
 		String cprocess1Id = cProvApi.cProcess("login",
 				"=bob[=]!:uuid:f81d4fae", "[=]!:pid:g81d4fde-000login",
@@ -64,7 +72,6 @@ public class CProvRecordFive {
 
 		cProvApi.wasVirtualizedBy(null, cres3Id, cprocess1Id, null, null);
 
-				
 		// creation process
 		String cprocess2Id = cProvApi.cProcess("share",
 				"=bob[=]!:uuid:f81d4fae", "[=]!:pid:g81d4fde-00share",
@@ -77,16 +84,11 @@ public class CProvRecordFive {
 				"=bob[=]!:uuid:f81d4fae", "[=]!:pid:g81d4fde-document",
 				"192.168.1.34", true, null, null, "general", 1.0f, null);
 
-		// Add ownership
 		cProvApi.hadOwnership(null, cres5Id, agent1Id, "originator");
 
-		//cProvApi.wasVirtualizedBy(null, cres5Id, cprocess2Id, null, null);
 		cProvApi.used(null, cprocess2Id, cres5Id, null);
-		// add transition
-		
-		
-		// phil login 
-		
+
+		// phil login
 		String agent11Id = cProvApi.Agent("Phil", "Phil", "Smith");
 
 		// registration process
@@ -114,58 +116,61 @@ public class CProvRecordFive {
 				"192.165.1.34", true, null, null, "general", 1.0f, null);
 
 		cProvApi.wasVirtualizedBy(null, cres31Id, cprocess11Id, null, null);
-		
+
 		// Notification ....
 		String cprocess3Id = cProvApi.cProcess("notification",
 				"=phil[=]!:uuid:f81d4fae", "[=]!:pid:g81d4fde-000notif",
 				"192.165.1.34", null);
 
 		String wic2Id = cProvApi.wasRecurrentlyCalledBy(null, cprocess3Id,
-				cprocess2Id, "","wifi", 10000);
-	
+				cprocess2Id, "", "wifi", 10000);
+
 		String wicb21Id = cProvApi.wasInitiallyCalledBy(null, cprocess3Id,
 				agent11Id, "", "Laptop", "wifi");
-		
-// Transitions .......		
-		
-		String cres4Id = cProvApi.transition(null, "source", null, null, null, "EU", "event1");
-	
+
+		// Transitions .......
+
+		String cres4Id = cProvApi.transition(null, "source", null, null, null,
+				"EU", "event1");
+
 		cProvApi.hadTransitionState_C(null, agent1Id, cres4Id, null);
 
-		//	cProvApi.hadTransitionState_B(null, cprocess1Id, cres4Id, null);
+		// cProvApi.hadTransitionState_B(null, cprocess1Id, cres4Id, null);
 
-		String cres6Id = cProvApi.transition(null, "source", null, null, null, "EU", "event1");
+		String cres6Id = cProvApi.transition(null, "source", null, null, null,
+				"EU", "event1");
 		cProvApi.hadTransitionState_B(null, cprocess1Id, cres6Id, null);
 
-		
-		//cres3Id
-		
-		String cres7Id = cProvApi.transition(null, "source", null, null, null, "EU", "event1");
+		// cres3Id
+
+		String cres7Id = cProvApi.transition(null, "source", null, null, null,
+				"EU", "event1");
 		cProvApi.hadTransitionState_A(null, cres3Id, cres7Id, null);
 
-
-		String cres8Id = cProvApi.transition(null, "source", null, null, null, "EU", "event1");
+		String cres8Id = cProvApi.transition(null, "source", null, null, null,
+				"EU", "event1");
 		cProvApi.hadTransitionState_B(null, cprocess2Id, cres8Id, null);
 
-		
-		String cres9Id = cProvApi.transition(null, "source", null, null, null, "EU", "event1");
+		String cres9Id = cProvApi.transition(null, "source", null, null, null,
+				"EU", "event1");
 		cProvApi.hadTransitionState_B(null, cres5Id, cres9Id, null);
 
-		//String cres10Id = cProvApi.transition(null, "source", null, null, null, "EU", "event1");
-		
-	
-		String cres50Id = cProvApi.transition(null, "source", null, null, null, "US", "event1");
+		String cres50Id = cProvApi.transition(null, "source", null, null, null,
+				"US", "event1");
 		cProvApi.hadTransitionState_C(null, agent11Id, cres50Id, null);
-		
-		String cres51Id = cProvApi.transition(null, "source", null, null, null, "US", "event1");
+
+		String cres51Id = cProvApi.transition(null, "source", null, null, null,
+				"US", "event1");
 		cProvApi.hadTransitionState_B(null, cprocess11Id, cres51Id, null);
-		
-		String cres52Id = cProvApi.transition(null, "source", null, null, null, "US", "event1");
+
+		String cres52Id = cProvApi.transition(null, "source", null, null, null,
+				"US", "event1");
 		cProvApi.hadTransitionState_A(null, cres31Id, cres52Id, null);
-	
-		String cres53Id = cProvApi.transition(null, "destination", null, null, null, "US", "event1");
+
+		String cres53Id = cProvApi.transition(null, "destination", null, null,
+				null, "US", "event1");
 		cProvApi.hadTransitionState_B(null, cprocess3Id, cres53Id, null);
-		
+
 	}
 
 	public void genPostStatements() {

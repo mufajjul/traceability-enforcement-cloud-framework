@@ -1,9 +1,13 @@
-/**
- * @file 		RequirementTwoTest.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		ServiceAPI
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) RequirementTwoTest.java       1.1 19/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
 package com.provenance.cloudprovenance.service.requirement_two.test;
 
@@ -28,8 +32,14 @@ import com.provenance.cloudprovenance.service.policy.api.ServiceCompliance;
 import com.provenance.cloudprovenance.service.traceability.api.ServiceXmlDocumentTraceability;
 
 /**
- * @author Mufy
+ * Policy request to validate against the following policy: If a file (fileA) is
+ * marked as ‘confidential’, only the originator is allowed to share it with
+ * another user (userB), re-sharing by the receiver (userB) to another user
+ * (userC) is not allowed.
  * 
+ * @version 1.1 19 Aug 2016
+ * @author Mufy
+ * @Module ServiceAPI
  */
 @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -58,24 +68,20 @@ public class RequirementTwoTest {
 			throws URISyntaxException, ParserConfigurationException,
 			SAXException, IOException, TransformerException {
 
-		int policyId = 1;
-		int requestId = 1;
 		String expected_outcome = "Permit";
 
 		// convert resources
-
 		String userAgent = "Bob";
 		String resource = "fileA";
 		String process = "share";
 		String environment1 = "confidential.share.confidenshare.labs.orange.com";
 
-		String outcome = srvCompliance.constructRequest(userAgent, resource,
-				process, environment1);
+		String actual_outcome = srvCompliance.constructRequest(userAgent,
+				resource, process, environment1);
 
-		logger.info("Response: " + outcome);
+		logger.info("Response: " + actual_outcome);
 
-		Assert.assertNotNull(outcome);
-
+		Assert.assertTrue(actual_outcome.contains(expected_outcome));
 	}
 
 	@Ignore
