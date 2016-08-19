@@ -9,7 +9,6 @@
  * accordance with the terms of the license agreement you entered into
  * with Provenance Intelligence Consultancy Limited.
  */
-
 package com.provenance.cloudprovenance.connector.policy;
 
 import java.net.URL;

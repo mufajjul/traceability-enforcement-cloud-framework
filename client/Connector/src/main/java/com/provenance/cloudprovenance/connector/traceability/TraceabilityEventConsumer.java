@@ -1,11 +1,14 @@
-/**
- * @file 		ConnectorService.java
- * @project 	traceability-enforcement-cloud-framework
- * @Module		Connector
- * @date 		18 05 2013
- * @version 	1.0
+/*
+ * @(#) TraceabilityEventConsumer.java       1.1 13/8/2016
+ *
+ * Copyright (c)  Provenance Intelligence Consultancy Limited.
+ * 
+ * This software is the confidential and proprietary information of 
+ * Provenance Intelligence Consultancy Limited.  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Provenance Intelligence Consultancy Limited.
  */
-
 package com.provenance.cloudprovenance.connector.traceability;
 
 import java.io.IOException;
@@ -27,8 +30,11 @@ import org.xml.sax.SAXException;
 import com.provenance.cloudprovenance.connector.traceability.response.ResponseExtraction;
 
 /**
- * @author Mufy
+ * This class handles the async traceability JMS messages it received
  *
+ * @version 1.1 13 Aug 2016
+ * @author Mufy
+ * @Module Connector
  */
 public class TraceabilityEventConsumer implements MessageListener {
 
@@ -83,19 +89,6 @@ public class TraceabilityEventConsumer implements MessageListener {
 							|| traceabilityRecordResponse == "") {
 
 						logger.info("Resource URI does not exist, creation a new resource with content");
-
-						// get existing record ID
-
-						/*
-						 * traceabilityRecordId = (resExtraction
-						 * .getResponseId(traceabilityRecordResponse));//
-						 * .split(":")[1]; logger.info(
-						 * "Sucessfully retrieved traceability record Id : " +
-						 * traceabilityRecordId);
-						 * 
-						 * logger.info("Updating record: " +
-						 * traceabilityRecordId);
-						 */
 
 						traceabilityRecordUri = (resExtraction
 								.getResponseURI(traceabilityRecordResponse));
