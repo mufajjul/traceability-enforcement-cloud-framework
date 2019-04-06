@@ -20,17 +20,38 @@ Key Features
 MODULES
 ==============================================
 
-POLICY-ENGINE -  Provenance-aware XACML Policy Engine, based on the extension of the open-source Balana XACML 3.0 engine.
-POLICY-HANDLER-WS - Web service that exposes a number of APIs for interfacing with the policy engine. 
-SCONVERTER - Module designed to handle the server side conversion requirements for Java Objects to XML elements and vice-versa.
-CONVERTER - Module designed to handle the client side conversion of Java Objects to XML elements. 
-CONNECTOR - Designed to transfer the traceability elements and policy request from the client to the server end.
-SERVICE-API - APIs to integrate provenance capabilities to a service, also allows a service to construct a policy request.  
-EVENT-HANDLER - Handles multiple generation of a provenance statements (uses JMS)
-TRACEABILITY-MODEL - Represents the traceability model, it defines the schema that presents the traceable nodes, edges, and associated properties.  
-TRACEABILIY-LANGUAGE - Represents the policy language, it defines the schema that provides the structure of a policy, rules and other constraints.
-TRACEABILITY-STORE-WS - Web service that exposes a number of APIs for interacting with the Traceability Store.
-STORAGE-CONTROLLER - Module design to handle the interaction with the ExistDB 
+# POLICY-ENGINE  
+Provenance-aware XACML Policy Engine, based on the extension of the open-source Balana XACML 3.0 engine.
+
+# POLICY-HANDLER-WS 
+Web service that exposes a number of APIs for interfacing with the policy engine. 
+
+# SCONVERTER 
+Module designed to handle the server side conversion requirements for Java Objects to XML elements and vice-versa.
+
+# CONVERTER 
+Module designed to handle the client side conversion of Java Objects to XML elements. 
+
+# CONNECTOR 
+Designed to transfer the traceability elements and policy request from the client to the server end.
+
+# SERVICE-API 
+APIs to integrate provenance capabilities to a service, also allows a service to construct a policy request.  
+
+# EVENT-HANDLER
+Handles multiple generation of a provenance statements (uses JMS)
+
+# TRACEABILITY-MODEL
+Represents the traceability model, it defines the schema that presents the traceable nodes, edges, and associated properties.  
+
+# TRACEABILIY-LANGUAGE
+Represents the policy language, it defines the schema that provides the structure of a policy, rules and other constraints.
+
+# TRACEABILITY-STORE-WS 
+Web service that exposes a number of APIs for interacting with the Traceability Store.
+
+# STORAGE-CONTROLLER
+Module design to handle the interaction with the ExistDB 
 
 System Requirements
 ===================
