@@ -1,6 +1,4 @@
-========================================
-Traceability Enforcement Cloud Framework
-========================================
+$ Traceability Enforcement Cloud Framework
 
 Welcome to the Traceability Enforcement Cloud Framework. This framework is designed to aid the development of provenance-aware cloud services with enforcement capabilities. 
 It provides necessary APIs for a service to enable capturing of its traceability data, processing capabilities, and assertions on the traceability data via the cProvl policy language.  
