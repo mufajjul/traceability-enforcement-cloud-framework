@@ -1,8 +1,17 @@
 Traceability Enforcement Cloud Framework
 ========================================
 
-Welcome to the Traceability Enforcement Cloud Framework. This framework is designed to aid the development of provenance-aware cloud services with enforcement capabilities. 
-It provides necessary APIs for a service to enable capturing of its traceability data, processing capabilities, and assertions on the traceability data via the cProvl policy language.  
+Traceability Enforcement Cloud Framework (TECF) is designed to support cloud applications or services with provenance capabilities, such as modelling, capturing, encoding and sotrage of provenance data. The framework provides two stacks (server side and Client side) to facilitate ease of provenance integration with services via APIs. It hides all the underlying complex mechanisms of modelling and ecoding & storage of provenance data. On top of that, it provides facilities for enabling provenance-based access control, based on the novel cProvl policy language.
+
+## What is Provenance?
+
+Provenance defines the origin of something. In painting, artifacts such as the year, location, painter and other contextual information are used to determine the value or worthiness of the painting. provenance in software can be used for:
+
+* __Data Quality__ - Check the source of origin to determine the quality of the data
+* __Audit trails__ - Check for the satisfaction of necessary SLAs
+* __Replication__ - Reproduce an experiment based on the provenance data
+* __Attribution__ - Determine various contributors for attributions
+* __Lineage__ - Determine the origin of a piece of data based on its lineage
 
 Key Features
 ============
